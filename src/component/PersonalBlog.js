@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Comment from "./Comment";
 
-export default function PersonalBlog({ myname, color }) {
+export default function PersonalBlog({ myname, color, toggle }) {
 
     const history = useNavigate();
 
@@ -11,8 +11,8 @@ export default function PersonalBlog({ myname, color }) {
 
     return (
         <>
-            <Comment myname={myname} color={color} onClick={main}/>
-            <button onClick={main} style={{
+            <Comment myname={myname} color={color} toggle={toggle}/>
+            <button onClick={toggle?main:undefined} style={{
                 margin:"auto",
                 backgroundColor:"#76c3ea",
                 border:"0",

@@ -1,4 +1,4 @@
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
@@ -8,11 +8,12 @@ const Comments = styled.textarea`
     margin-top:20px;
     border:0;
     resize:none;
+    margin-bottom:20px;
 `;
 
-export default function Comment({ myname, color }) {
+export default function Comment({ myname, color, toggle }) {
 
-    //const history = useNavigate();
+    const history = useNavigate();
     const [text, setText] = useState("");
     const day = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
@@ -28,6 +29,7 @@ export default function Comment({ myname, color }) {
     function information() {
         (info == null) ? setInfo([comment]) : setInfo([...info, comment]);
         setText("");
+        //history("/blog",{state:{name:myname}});
     };
 
     useEffect(() => {
@@ -44,7 +46,7 @@ export default function Comment({ myname, color }) {
             <div className="show" style={{ backgroundColor: `#${color}` }}>
                 {myname}에게 댓글을 남겨주세요!
                 <Comments value={text} onChange={inputText} />
-                <button type="submit" onClick={text !== "" ? information : () => { alert("내용을 입력해주세요")}}>전송</button>
+                <button type="submit" onClick={toggle?(text !== "" ? information : () => {alert("내용을 입력해주세요")}):undefined}>전송</button>
             </div>
         </>
     );
