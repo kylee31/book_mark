@@ -31,7 +31,7 @@ export default function Header() {
 
     return (
         <div>
-            <Title><Link to="/">MINI BLOG</Link></Title>
+            <Title><Link to="/">COMMENT BLOG</Link></Title>
             <p style={{
                 display: "flex",
                 justifyContent: "center",

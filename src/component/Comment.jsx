@@ -11,6 +11,13 @@ const Comments = styled.textarea`
     margin-bottom:20px;
 `;
 
+const Box=styled.div`
+    width:250px;
+    height:40px;
+    margin:20px auto;
+    background-color:white;
+`;
+
 export default function Comment({ myname, color, toggle }) {
 
     const history = useNavigate();
@@ -45,7 +52,7 @@ export default function Comment({ myname, color, toggle }) {
         <>
             <div className="show" style={{ backgroundColor: `#${color}` }}>
                 {myname}에게 댓글을 남겨주세요!
-                <Comments value={text} onChange={inputText} />
+                {toggle?<Comments value={text} onChange={inputText} />:<Box/>}
                 <button type="submit" onClick={toggle?(text !== "" ? information : () => {alert("내용을 입력해주세요")}):undefined}>전송</button>
             </div>
         </>

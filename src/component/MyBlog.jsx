@@ -63,7 +63,7 @@ export default function MyBlog() {
                         }
                     </div> : "💬"}
             </div>
-            <button onClick={firstLocation} style={{ marginBottom: "20px" }}>뒤로 가기</button>
+            <button onClick={firstLocation} style={{ marginBottom: "20px" }}>돌아가기</button>
         </div>
     );
 }
