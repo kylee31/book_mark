@@ -4,15 +4,17 @@ import MyBlog from './component/MyBlog';
 import BlogList from './component/BlogList';
 import Header from './component/Header';
 import AddBlog from './component/AddBlog';
+import ScrollTop from './component/ScrollTop';
 
 function App() {
 
   return (
     <BrowserRouter>
+    <ScrollTop/>
       <Header/>
       <Routes>
         <Route path="/" element={<BlogList/>} />
-        <Route path="/blog" element={<MyBlog/>}/>
+        <Route path="/blog/:name" element={<MyBlog/>}/>
         <Route path="/createblog" element={<AddBlog/>}/>
       </Routes>
     </BrowserRouter>

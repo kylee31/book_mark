@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
 }
+body{
+}
 .show {
     width: 300px;
     padding-top:20px;
@@ -84,4 +86,9 @@ button{
     justify-content: center;
     align-items: center;
     margin-left:20px;
+}
+.showcomment{
+    width:600px;
+    height:150px;
+    overflow: auto;
 }

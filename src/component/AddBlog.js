@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InfoList from "./InfoList";
 import styled from "styled-components";
 import blog from "../db/blog.json";
@@ -35,8 +35,23 @@ function AddBlog() {
 
     function addInfo(){
         if(name!=="💬"&&color!=="") {
-            blog.push(info);
-            history("/");
+            fetch("http://localhost:3001/users",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({
+                    name,
+                    color,
+                }),
+            })
+            .then(res=>{
+                if(res.ok){
+                    alert("생성 완료! 블로그를 확인해보세요");
+                    history("/");
+                }
+            });
+            //blog.push(info);
         }
         else{
             alert("ID와 Color 모두 작성해주세요!");

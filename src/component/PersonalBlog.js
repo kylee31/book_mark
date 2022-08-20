@@ -6,7 +6,7 @@ export default function PersonalBlog({ myname, color, toggle }) {
     const history = useNavigate();
 
     function main() {
-        history(`/blog`,{state:{myname:myname, text:""}});
+        history(`/blog/${myname}`,{state:{myname:myname, text:""}});
     }
 
     return (

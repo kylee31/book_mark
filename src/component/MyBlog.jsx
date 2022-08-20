@@ -49,7 +49,7 @@ export default function MyBlog() {
             <div style={{ margin: "40px" }}>
                 {/*{text} {text?time:"💬"} */}
                 {empty() !== 0 ?
-                    <div>
+                    <div className="showcomment">
                         {
                             showInfo.map((c, index) => {
                                 if (c.name === myname) {
@@ -61,9 +61,9 @@ export default function MyBlog() {
                             }
                             )
                         }
-                    </div> : "💬"}
+                    </div> : <div style={{width:"600px",padding:"65px 0"}}>💬</div>}
             </div>
-            <button onClick={firstLocation} style={{ marginBottom: "20px" }}>돌아가기</button>
+            <button onClick={firstLocation} style={{marginBottom: "20px",height:"20px"}}>돌아가기</button>
         </div>
     );
 }

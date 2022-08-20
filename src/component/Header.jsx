@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate} from "react-router-dom";
 import styled from "styled-components";
-import { useState } from "react";
 
 const Title = styled.h1`
     text-align:center;
@@ -18,13 +17,6 @@ const AddBlogButton=styled.button`
 export default function Header() {
     const history=useNavigate();
 
-    const [theme, setTheme] = useState("light");
-
-    function myTheme() {
-        if (theme === "light") setTheme("dark");
-        else setTheme("light");
-    }
-
     function AddBlog(){
         history("/createblog")
     }
@@ -37,9 +29,6 @@ export default function Header() {
                 justifyContent: "center",
                 marginTop: "10px"
             }}>
-                <button onClick={myTheme} className={theme}>
-                    {(theme === "dark") ? "다크 모드" : "라이트 모드"}
-                </button>
             </p>
             <AddBlogButton onClick={AddBlog}>blog 만들기</AddBlogButton>
         </div>
