@@ -1,12 +1,14 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import InfoList from "./InfoList";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import Info from "./Info";
 
 const Button = styled.p`
 display:flex;
 justify-content: center;
 align-items: center;
+margin-bottom:20px;
 `;
 
 function AddBlog() {
@@ -79,6 +81,19 @@ function AddBlog() {
                 </div>
             </div>
             <InfoList myname={name} color={color} img={img} toggle={false} />
+            <div className="blog" style={{ backgroundColor: `#${color}` }}>
+                <div>
+                    <Info myname={name} img={img} /><br />
+                    {name}님에게 남긴 댓글을 확인해보세요
+                </div>
+                <div style={{ margin: "40px", width:"600px",height:"150px"}}>
+                    <div style={{ backgroundColor: "#fff", fontWeight: "900", borderRadius: "5px", marginBottom: "5px" }}>
+                        <span style={{ padding: "0 5px" }}>예시입니다. 완성된 블로그를 확인해보세요!</span>
+                        <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>2022. 8. 21. 오후 12:03:10</span>
+                    </div>
+                </div>
+                <button style={{ marginBottom: "20px", height: "20px" }}>돌아가기</button>
+            </div>
             <Button><button onClick={addInfo}>저장하기</button></Button>
         </>
     );

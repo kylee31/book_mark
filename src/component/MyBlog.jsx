@@ -7,6 +7,7 @@ export default function MyBlog() {
     const myname = location.state.myname;
 
     const [img,setImg]=useState("https://ifh.cc/g/Z2nHMb.jpg");
+    const [color,setColor]=useState("#E0F0FF")
 
     useEffect(()=>{
         fetch("http://localhost:3001/users")
@@ -14,8 +15,9 @@ export default function MyBlog() {
             return res.json()
         })
         .then(e=>{
-            const img=e.filter(data=>data.name===myname);
-            setImg(img[0].img);
+            const blog=e.filter(data=>data.name===myname);
+            setImg(blog[0].img);
+            setColor(blog[0].color);
         })
     },[])
 
@@ -54,7 +56,7 @@ export default function MyBlog() {
         history("/");
     };
     return (
-        <div onLoad={Comments} className="blog">
+        <div onLoad={Comments} className="blog" style={{backgroundColor:`#${color}`}}>
             <div>
                 <Info myname={myname} img={img}/><br />
                 {myname}님에게 남긴 댓글을 확인해보세요
