@@ -1,11 +1,10 @@
 import React from "react";
-import profile from "../img/person.jpg";
 
-export default function Info({ myname }) {
+export default function Info({ myname, img }) {
 
     return (
         <div className="id">
-            <img style={{margin:"auto"}} src={profile} alt="" />
+            <img className="profileImg" style={{margin:"auto"}} src={img} alt="" />
             <p style={{ paddingTop: "20px"}}>반갑습니다! {myname}입니다.</p>
         </div>
     )

@@ -1,10 +1,23 @@
-import React, { useState} from "react";
+import React, { useState,useEffect} from "react";
 import Info from "./Info";
 import { useNavigate, useLocation } from "react-router";
 
 export default function MyBlog() {
     const location = useLocation();
     const myname = location.state.myname;
+
+    const [img,setImg]=useState("https://ifh.cc/g/Z2nHMb.jpg");
+
+    useEffect(()=>{
+        fetch("http://localhost:3001/users")
+        .then(res=>{
+            return res.json()
+        })
+        .then(e=>{
+            const img=e.filter(data=>data.name===myname);
+            setImg(img[0].img);
+        })
+    },[])
 
     const history = useNavigate();
 
@@ -43,7 +56,7 @@ export default function MyBlog() {
     return (
         <div onLoad={Comments} className="blog">
             <div>
-                <Info myname={myname} /><br />
+                <Info myname={myname} img={img}/><br />
                 {myname}님에게 남긴 댓글을 확인해보세요
             </div>
             <div style={{ margin: "40px" }}>

@@ -19,7 +19,7 @@ export default function BlogList() {
 
     return (
         blog.map((person, index) => {
-            return <InfoList key={index} myname={person.name} color={person.color} toggle={true}/>
+            return <InfoList key={index} myname={person.name} color={person.color} img={person.img} toggle={true}/>
         })
     );
 }

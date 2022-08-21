@@ -33,21 +33,27 @@ export default function Comment({ myname, color, toggle }) {
 
     const [info, setInfo] = useState(JSON.parse(localStorage.getItem("data")) == null ? [] : JSON.parse(localStorage.getItem("data")));
 
+    //1동작 완료후
     function information() {
         (info == null) ? setInfo([comment]) : setInfo([...info, comment]);
         setText("");
-        //history("/blog",{state:{name:myname}});
+        setTimeout(() => {
+            history(`/blog/${myname}`,{state:{myname:myname}});
+        }, 200);
     };
 
     useEffect(() => {
-        //console.log(info);
         localStorage.setItem("data", JSON.stringify(info));
     }, [info]);
+
+    //2이렇게 동작시키고 싶다. 어떻게 해야하나.
+    //setTimeout 사용해서 렌더링 후(useEffect 동작함) history 이동
 
     function inputText(e) {
         setText(e.target.value);
     }
     //그니까 전송을 누르면 이게 바로 저장이 안된다.. 왜..? state 비동기 특성때문
+    //useEffect 사용하여 해결
     return (
         <>
             <div className="show" style={{ backgroundColor: `#${color}` }}>
