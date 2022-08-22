@@ -9,6 +9,7 @@ const Comments = styled.textarea`
     border:0;
     resize:none;
     margin-bottom:20px;
+    font-family:Arial;
 `;
 
 const Box=styled.div`
