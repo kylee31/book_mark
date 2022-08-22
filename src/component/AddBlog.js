@@ -26,7 +26,7 @@ function AddBlog() {
     }
 
     function myColor(e) {
-        //console.log((e.target.value).replace("#",""));
+        console.log((e.target.value));
         setColor((e.target.value).replace("#", ""));
     }
 
@@ -88,7 +88,7 @@ function AddBlog() {
                 </div>
                 <div style={{ margin: "40px", width:"600px",height:"150px"}}>
                     <div style={{ backgroundColor: "#fff", fontWeight: "900", borderRadius: "5px", marginBottom: "5px" }}>
-                        <span style={{ padding: "0 5px" }}>예시입니다. 완성된 블로그를 확인해보세요!</span>
+                        <span style={{ padding: "0 5px" }}>예시입니다(생성될 블로그 미리보기).</span>
                         <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>2022. 8. 21. 오후 12:03:10</span>
                     </div>
                 </div>
