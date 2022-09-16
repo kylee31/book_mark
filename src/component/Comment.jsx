@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import styled from "styled-components";
 
 const Comments = styled.textarea`
@@ -12,7 +12,7 @@ const Comments = styled.textarea`
     font-family:Arial;
 `;
 
-const Box=styled.div`
+const Box = styled.div`
     width:250px;
     height:40px;
     margin:20px auto;
@@ -21,35 +21,36 @@ const Box=styled.div`
 
 export default function Comment({ myname, color, toggle }) {
 
-    const history = useNavigate();
+    //const history = useNavigate();
     const [text, setText] = useState("");
     const day = new Date().toLocaleDateString();
     const time = new Date().toLocaleTimeString();
 
-    const comment = {
-        name: myname,
-        txt: text,
-        time: day.concat(" ", time),
-    };
-
-    const [info, setInfo] = useState(JSON.parse(localStorage.getItem("data")) == null ? [] : JSON.parse(localStorage.getItem("data")));
-
     //1동작 완료후
     function information() {
-        (info == null) ? setInfo([comment]) : setInfo([...info, comment]);
         setText("");
-        setTimeout(() => {
-            history(`/blog/${myname}`,{state:{myname:myname}});
-        }, 200);
+        //history(`/blog/${myname}`, { state: { myname: myname } });
+        
+        fetch(`http://localhost:3001/comments/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify({
+                name: myname,
+                txt: text,
+                time: day.concat(" ", time),
+            }),
+        })
+        .then(res => {
+            if (res.ok) {
+                console.log("setting ok");
+            }
+        });
     };
-
-    useEffect(() => {
-        localStorage.setItem("data", JSON.stringify(info));
-    }, [info]);
 
     //2이렇게 동작시키고 싶다. 어떻게 해야하나.
     //setTimeout 사용해서 렌더링 후(useEffect 동작함) history 이동
-
     function inputText(e) {
         setText(e.target.value);
     }
@@ -59,8 +60,8 @@ export default function Comment({ myname, color, toggle }) {
         <>
             <div className="show" style={{ backgroundColor: `#${color}` }}>
                 {myname}에게 댓글을 남겨주세요!
-                {toggle?<Comments value={text} onChange={inputText} />:<Box/>}
-                <button type="submit" onClick={toggle?(text !== "" ? information : () => {alert("내용을 입력해주세요")}):undefined}>전송</button>
+                {toggle ? <Comments value={text} onChange={inputText} /> : <Box />}
+                <button type="submit" onClick={toggle ? (text !== "" ? information : () => { alert("내용을 입력해주세요") }) : undefined}>전송</button>
             </div>
         </>
     );

@@ -1,5 +1,4 @@
-import InfoList from "./InfoList"
-//import blog from "../db/blog.json";
+import BlogInfo from "../component/BlogInfo"
 import { useEffect, useState } from "react";
 
 export default function BlogList() {
@@ -19,7 +18,7 @@ export default function BlogList() {
 
     return (
         blog.map((person, index) => {
-            return <InfoList key={index} myname={person.name} color={person.color} img={person.img} toggle={true}/>
+            return <BlogInfo key={index} myname={person.name} color={person.color} img={person.img} toggle={true}/>
         })
     );
 }

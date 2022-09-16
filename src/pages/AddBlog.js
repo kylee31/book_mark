@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import InfoList from "./InfoList";
+import BlogInfo from "../component/BlogInfo";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Info from "./Info";
+import Profile from "../component/Profile";
 
 const Button = styled.p`
 display:flex;
@@ -26,14 +26,13 @@ function AddBlog() {
     }
 
     function myColor(e) {
-        console.log((e.target.value));
         setColor((e.target.value).replace("#", ""));
     }
 
     function myImg(e) {
         //console.log(e.target.value);
         //setImg(e.target.value);
-        let reader = new FileReader()
+        let reader = new FileReader();
 
         if (e.target.files[0]) {
             reader.readAsDataURL(e.target.files[0])
@@ -55,7 +54,7 @@ function AddBlog() {
                 body: JSON.stringify({
                     name,
                     color,
-                    img,
+                    img
                 }),
             })
                 .then(res => {
@@ -80,10 +79,10 @@ function AddBlog() {
                     <label>COLOR선택 <input type="color" onChange={myColor} /></label>
                 </div>
             </div>
-            <InfoList myname={name} color={color} img={img} toggle={false} />
+            <BlogInfo myname={name} color={color} img={img} toggle={false} />
             <div className="blog" style={{ backgroundColor: `#${color}` }}>
                 <div>
-                    <Info myname={name} img={img} /><br />
+                    <Profile myname={name} img={img} /><br />
                     {name}님에게 남긴 댓글을 확인해보세요
                 </div>
                 <div style={{ margin: "40px", width:"600px",height:"150px"}}>
@@ -92,7 +91,7 @@ function AddBlog() {
                         <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>2022. 8. 21. 오후 12:03:10</span>
                     </div>
                 </div>
-                <button style={{ marginBottom: "20px", height: "20px" }}>돌아가기</button>
+                <button style={{ marginBottom: "20px", height: "20px" ,cursor:"default"}}>돌아가기</button>
             </div>
             <Button><button onClick={addInfo}>저장하기</button></Button>
         </>

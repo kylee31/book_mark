@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Info({ myname, img }) {
+export default function Profile({ myname, img }) {
 
     return (
         <div className="id">

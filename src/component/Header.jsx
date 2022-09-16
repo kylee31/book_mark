@@ -2,16 +2,21 @@ import React from "react";
 import { Link, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 
-const Title = styled.h1`
-    text-align:center;
-    margin-top:20px;
-`;
+const Div=styled.div`
+    margin:0 180px;
+    h1{
+        text-align:center;
+        margin-top:40px;  
+    }
+`
 
 const AddBlogButton=styled.button`
     float:right;
-    margin-right:180px;
     background-color:blue;
     color:white;
+    &+&{
+        margin-right:20px;
+    }
 `;
 
 export default function Header() {
@@ -22,15 +27,10 @@ export default function Header() {
     }
 
     return (
-        <div>
-            <Title><Link to="/">COMMENT BLOG</Link></Title>
-            <p style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "10px"
-            }}>
-            </p>
+        <Div>
+            <h1><Link to="/">COMMENT BLOG</Link></h1>
             <AddBlogButton onClick={AddBlog}>blog 만들기</AddBlogButton>
-        </div>
+            <AddBlogButton onClick={()=>{}}>로그인</AddBlogButton>
+        </Div>
     );
 }
