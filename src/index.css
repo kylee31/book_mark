@@ -3,23 +3,17 @@
     padding: 0;
 }
 body{
-    background-color: rgb(248, 252, 255);
+    background-color: #f8fcff;
 }
 .show {
-    width: 300px;
+    width: 650px;
+    height:180px;
     padding-top:20px;
 }
 img {
     width: 50px;
     height: 50px;
     border-radius: 20px;
-}
-
-.id {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top:50px;
 }
 
 .light {
@@ -46,16 +40,15 @@ a {
 }
 .blog{
     margin:auto;
-    margin-top:60px;
     margin-bottom: 50px;
     display:flex;
     flex-direction: column;
     text-align: center;
     justify-content: center;
     align-items: center;
-    background-color: rgb(224, 241, 255);
+    background-color: #e0f1ff;
     width:900px;
-    height:450px;
+    min-height:450px;
     border-radius: 20px;
     box-shadow: 8px 8px 5px rgba(133, 133, 133, 0.3);
 }
@@ -64,7 +57,7 @@ button{
     height:40px;
     border-radius: 10px;
     border:2px solid grey;
-    background-color:rgb(232, 232, 232);
+    background-color:#e8e8e8;
     font-weight: 800;
     cursor:pointer;
 }
@@ -76,6 +69,20 @@ button{
 }
 .showcomment{
     width:600px;
-    height:150px;
-    overflow: auto;
+    min-height:150px;
+}
+
+.showcomment::-webkit-scrollbar{
+    width:3px;
+}
+.showcomment::-webkit-scrollbar-thumb {
+    background-color: #76c3ea; /*스크롤바의 색상*/
+    border-radius: 10px;
+}
+.showcomment::-webkit-scrollbar-track {
+    background-color:#e0f1ff; /*스크롤바 트랙 색상*/
+}
+
+.link:hover{
+    color:rgb(21, 0, 255);
 }

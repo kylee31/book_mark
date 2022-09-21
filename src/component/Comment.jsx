@@ -1,68 +1,139 @@
-import { useNavigate } from "react-router-dom";
-import { useState} from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-
-const Comments = styled.textarea`
-    width:250px;
-    height:40px;
-    margin-top:20px;
-    border:0;
-    resize:none;
-    margin-bottom:20px;
-    font-family:Arial;
-`;
+import star from "../db/star.png";
 
 const Box = styled.div`
-    width:250px;
-    height:40px;
-    margin:20px auto;
-    background-color:white;
+    margin:auto;
+    display: flex;
+    align-items:center;
+    text-align: center;
+    width: 900px;
+    background-color: rgb(224, 240, 255);
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px rgba(133, 133, 133, 0.3);
+    margin-bottom: 50px;
+    padding-left:20px;
+    font-weight:900;
+    pointer-events:${props => props.$data === "" ? "none" : "default"};
 `;
 
-export default function Comment({ myname, color, toggle }) {
 
-    //const history = useNavigate();
+const Comments = styled.textarea`
+    width:240px;
+    height:40px;
+    margin-top:0px;
+    border:0;
+    resize:none;
+    margin-bottom:0px;
+    font-family:Arial;
+    &+&{
+        margin-left:20px;
+    }
+`;
+
+export default function Comment() {
+
+    const [data, setData] = useState([]);
     const [text, setText] = useState("");
-    const day = new Date().toLocaleDateString();
-    const time = new Date().toLocaleTimeString();
+    const [title, setTitle] = useState("");
+    const [link, setLink] = useState("");
+    const [name, setName] = useState("");
+    const [img, setImg] = useState(star);
+    const [color, setColor] = useState("");
 
-    //1동작 완료후
     function information() {
         setText("");
-        //history(`/blog/${myname}`, { state: { myname: myname } });
-        
+        setTitle("");
+        setLink("");
         fetch(`http://localhost:3001/comments/`, {
             method: "POST",
             headers: {
                 "Content-Type": 'application/json; charset=UTF-8',
             },
             body: JSON.stringify({
-                name: myname,
+                name: name,
+                title: title,
+                link: link,
                 txt: text,
-                time: day.concat(" ", time),
             }),
         })
-        .then(res => {
-            if (res.ok) {
-                console.log("setting ok");
-            }
-        });
+            .then(res => {
+                if (res.ok) {
+                    console.log("setting ok");
+                }
+            });
     };
 
-    //2이렇게 동작시키고 싶다. 어떻게 해야하나.
-    //setTimeout 사용해서 렌더링 후(useEffect 동작함) history 이동
-    function inputText(e) {
+    function onSetText(e) {
         setText(e.target.value);
     }
-    //그니까 전송을 누르면 이게 바로 저장이 안된다.. 왜..? state 비동기 특성때문
-    //useEffect 사용하여 해결
+    function onSetTitle(e) {
+        setTitle(e.target.value);
+    }
+    function onSetLink(e) {
+        setLink(e.target.value);
+    }
+    function onSetCate(e) {
+        setName(e.target.value);
+    }
+    const onSetImg = () => {
+        data.map((item) => {
+            if (item.name === name) {
+                setImg(item.img);
+            }
+        });
+    }
+    const onSetColor = () => {
+        data.map((item) => {
+            if (item.name === name) {
+                setColor(item.color);
+            }
+        });
+    }
+
+    useEffect(() => {
+        fetch(`http://localhost:3001/users`)
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                if (data.length !== 0) {
+                    setData(data);
+                    setName(data[0].name);
+                    setImg(data[0].img);
+                    setColor(data[0].color);
+                }
+            });
+    }, [name]);
+
+    useEffect(() => {
+        setName(name);
+        onSetImg();
+        onSetColor();
+    }, [name]);
+
     return (
-        <>
-            <div className="show" style={{ backgroundColor: `#${color}` }}>
-                {myname}에게 댓글을 남겨주세요!
-                {toggle ? <Comments value={text} onChange={inputText} /> : <Box />}
-                <button type="submit" onClick={toggle ? (text !== "" ? information : () => { alert("내용을 입력해주세요") }) : undefined}>전송</button>
+        <Box $data={name}>
+            <div style={{ width: "200px" }}>
+                <img src={img} alt="" /><br />
+                {name === "" ? undefined :
+                    <select className="cate" onChange={onSetCate} style={{ textAlign: "center" }}>
+                        {data.map((item, index) => {
+                            return (<option key={item.id} name="cate" value={item.name}>{item.name}</option>)
+                        })}
+                    </select>
+                }
+                <br /><span>북마크</span>
             </div>
-        </>
+            <div className="show" style={{ backgroundColor: `#${color}` }}>
+                <div>
+                    <Comments placeholder="title" value={title} onChange={onSetTitle} />
+                    <Comments placeholder="link" value={link} onChange={onSetLink} />
+                </div>
+                <Comments style={{ width: "500px", height: "80px" }} placeholder="content" value={text} onChange={onSetText} /><br />
+                <button type="submit" onClick={title !== "" && link !== "" ? information : () => { alert("제목과 링크 모두 입력해주세요") }}>저장</button>
+            </div>
+        </Box>
     );
 }

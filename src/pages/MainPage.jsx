@@ -1,10 +1,12 @@
-import BlogList from "../component/BlogList";
+import BookMarkList from "../component/BookMarkList";
+import Comment from "../component/Comment";
 
-function MainPage(){
+function MainPage() {
 
-    return(
+    return (
         <div>
-            <BlogList/>
+            <Comment />
+            <BookMarkList />
         </div>
     );
 }

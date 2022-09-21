@@ -1,36 +1,43 @@
 import React from "react";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Div=styled.div`
-    margin:0 180px;
-    h1{
-        text-align:center;
-        margin-top:40px;  
-    }
-`
+const Div = styled.div`
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    height:150px;
+    min-width:900px;
+`;
 
-const AddBlogButton=styled.button`
-    float:right;
+const Title = styled.span`
+    font-weight:900;
+    font-size:2rem;
+    margin-bottom:20px;
+`;
+
+const AddBlogButton = styled.button`
     background-color:blue;
     color:white;
     &+&{
-        margin-right:20px;
+        margin-left:20px;
     }
 `;
 
 export default function Header() {
-    const history=useNavigate();
 
-    function AddBlog(){
-        history("/createblog")
+    const history = useNavigate();
+    function main() {
+        history(`/createblog`);
     }
-
     return (
         <Div>
-            <h1><Link to="/">COMMENT BLOG</Link></h1>
-            <AddBlogButton onClick={AddBlog}>blog 만들기</AddBlogButton>
-            <AddBlogButton onClick={()=>{}}>로그인</AddBlogButton>
+            <Title><Link to="/">BOOK-MARK⭐</Link></Title>
+            <div style={{ marginLeft: "700px" }}>
+                <AddBlogButton onClick={() => { }}>로그인</AddBlogButton>
+                <AddBlogButton onClick={main}>카테고리 생성</AddBlogButton>
+            </div>
         </Div>
     );
 }

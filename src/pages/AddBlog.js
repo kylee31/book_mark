@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import BlogInfo from "../component/BlogInfo";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Profile from "../component/Profile";
+import star from "../db/star.png";
 
 const Button = styled.p`
 display:flex;
@@ -17,7 +17,7 @@ function AddBlog() {
 
     const [name, setName] = useState("💬");
     const [color, setColor] = useState("");
-    const [img, setImg] = useState("https://ifh.cc/g/Z2nHMb.jpg");
+    const [img, setImg] = useState(star);
 
     function myName(e) {
         //console.log(e.target.value);
@@ -33,12 +33,10 @@ function AddBlog() {
         //console.log(e.target.value);
         //setImg(e.target.value);
         let reader = new FileReader();
-
         if (e.target.files[0]) {
             reader.readAsDataURL(e.target.files[0])
         }
-
-        reader.onloadend = () => {
+        reader.onload = () => {
             const previewImgUrl = reader.result;
             setImg(previewImgUrl);
         }
@@ -59,11 +57,10 @@ function AddBlog() {
             })
                 .then(res => {
                     if (res.ok) {
-                        alert("생성 완료! 블로그를 확인해보세요");
-                        history(`/blog/${name}`, { state: { myname: name } });
+                        alert("생성 완료! 새로운 카테고리에 북마크 저장하세요");
+                        history(`/`);
                     }
                 });
-            //blog.push(info);
         }
         else {
             alert("ID와 Color 모두 작성해주세요!");
@@ -72,26 +69,24 @@ function AddBlog() {
 
     return (
         <>
-            <div style={{ borderRadius: "10px", backgroundColor: "lightgrey", padding: "20px", margin: "60px auto", width: "880px" }}>
+            <div style={{ borderRadius: "10px", backgroundColor: "lightgrey", padding: "20px", margin: "30px auto", width: "840px" }}>
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center", fontWeight: "900" }}>
                     <form encType='multipart/form-data'><label>IMG선택 <input type="file" accept="image/*" onChange={myImg} /></label></form>
-                    <label style={{ marginRight: "20px" }}>ID입력 <input style={{ height: "20px" }} type="text" maxLength="5" onChange={myName} /></label>
+                    <label style={{ marginRight: "20px" }}>카테고리 입력 <input style={{ height: "20px" }} type="text" maxLength="10" onChange={myName} /></label>
                     <label>COLOR선택 <input type="color" onChange={myColor} /></label>
                 </div>
             </div>
-            <BlogInfo myname={name} color={color} img={img} toggle={false} />
             <div className="blog" style={{ backgroundColor: `#${color}` }}>
                 <div>
                     <Profile myname={name} img={img} /><br />
-                    {name}님에게 남긴 댓글을 확인해보세요
                 </div>
-                <div style={{ margin: "40px", width:"600px",height:"150px"}}>
+                <div style={{ margin: "40px", width: "600px", height: "150px" }}>
                     <div style={{ backgroundColor: "#fff", fontWeight: "900", borderRadius: "5px", marginBottom: "5px" }}>
-                        <span style={{ padding: "0 5px" }}>예시입니다(생성될 블로그 미리보기).</span>
-                        <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>2022. 8. 21. 오후 12:03:10</span>
+                        <span style={{ padding: "0 5px" }}>예시(생성될 카테고리 미리보기)</span>
+                        <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>❌</span>
                     </div>
                 </div>
-                <button style={{ marginBottom: "20px", height: "20px" ,cursor:"default"}}>돌아가기</button>
+                <button style={{ marginBottom: "20px", height: "20px", cursor: "default" }}>돌아가기</button>
             </div>
             <Button><button onClick={addInfo}>저장하기</button></Button>
         </>
