@@ -1,8 +1,36 @@
 import React, { useState, useEffect } from "react";
 import Profile from "../component/Profile";
 import { useNavigate, useLocation } from "react-router";
+import styled from "styled-components";
 
-function MyBlog() {
+const MyCate = styled.div`
+    background-color:${props => props.$color}
+`;
+
+const MyBookMark = styled.div`
+    width:600px;
+    min-height:150px;
+    margin: 40px;
+`;
+
+const Div = styled.div`
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom:5px; 
+`;
+
+const Comment = styled.span`
+    margin-left: 5px;
+    border-left: 2px solid grey;
+    padding: 0 5px;
+    color: grey;
+`;
+
+const DelButton = styled.span`
+    cursor: pointer;
+`;
+
+export default function MyBlog() {
     const location = useLocation();
     const myname = location.state.myname;
 
@@ -61,46 +89,35 @@ function MyBlog() {
     }, [del])
 
     const history = useNavigate();
-
     function onLocation() {
         history("/");
     };
 
     return (
-        <div className="blog" onLoad={getData} style={{ backgroundColor: `#${color}` }}>
-            <div>
-                <Profile myname={myname} img={img} /><br />
-            </div>
-            <div style={{ margin: "40px" }}>
-                <div className="showcomment">
-                    {
-                        cmt.map((c, index) => {
-                            if (c.name === myname) {
-                                return <div key={index} style={{ backgroundColor: "#fff", fontWeight: "900", borderRadius: "5px", marginBottom: "5px" }}>
-                                    <span style={{ padding: "0 5px" }}>
-                                        <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
-                                    </span>
-                                    <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>{c.txt}</span>
-                                    <span style={{ cursor: "pointer" }} onClick={() => {
-                                        fetch(`http://localhost:3001/comments/${c.id}`, {
-                                            method: "DELETE",
-                                        })
-                                            .then(res => {
-                                                if (res.ok) {
-                                                    !del ? setDel(true) : setDel(false);
-                                                }
-                                            });
-                                    }}>❌</span>
-                                </div>
-                            }
-                        })
+        <MyCate className="blog" onLoad={getData} $color={`#${color}`}>
+            <Profile myname={myname} img={img} /><br />
+            <MyBookMark>
+                {cmt.map((c, index) => {
+                    if (c.name === myname) {
+                        return <Div key={index}>
+                            <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
+                            <Comment>{c.txt}</Comment>
+                            <DelButton onClick={() => {
+                                fetch(`http://localhost:3001/comments/${c.id}`, {
+                                    method: "DELETE",
+                                })
+                                    .then(res => {
+                                        if (res.ok) {
+                                            !del ? setDel(true) : setDel(false);
+                                        }
+                                    });
+                            }}>❌</DelButton>
+                        </Div>
                     }
-                </div>
-            </div>
+                })}
+            </MyBookMark>
             <button onClick={onLocation} style={{ marginBottom: "20px", height: "20px" }}>돌아가기</button>
             <button onClick={onDelete} style={{ marginBottom: "80px", height: "20px", position: "absolute" }}>삭제</button>
-        </div>
+        </MyCate>
     );
 }
-
-export default MyBlog;

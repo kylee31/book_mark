@@ -4,11 +4,37 @@ import { useNavigate } from "react-router-dom";
 import Profile from "../component/Profile";
 import star from "../db/star.png";
 
+const AddCate = styled.div`
+    border-radius: 10px;
+    background-color: lightgrey;
+    padding: 20px;
+    margin: 0px auto;
+    width: 840px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Example = styled.div`
+    background-color: ${props => props.$color};
+`;
+
+const Div = styled.div`
+    margin: 40px;
+    width: 600px;
+    height: 150px;
+`;
+
+const Bookmark = styled.div`
+    background-color: #fff;
+    border-radius:5px;
+`;
+
 const Button = styled.p`
-display:flex;
-justify-content: center;
-align-items: center;
-margin-bottom:20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:30px;
 `;
 
 function AddBlog() {
@@ -20,7 +46,6 @@ function AddBlog() {
     const [img, setImg] = useState(star);
 
     function myName(e) {
-        //console.log(e.target.value);
         setName(e.target.value);
         if (e.target.value === "") setName("💬");
     }
@@ -30,8 +55,6 @@ function AddBlog() {
     }
 
     function myImg(e) {
-        //console.log(e.target.value);
-        //setImg(e.target.value);
         let reader = new FileReader();
         if (e.target.files[0]) {
             reader.readAsDataURL(e.target.files[0])
@@ -68,28 +91,25 @@ function AddBlog() {
     }
 
     return (
-        <>
-            <div style={{ borderRadius: "10px", backgroundColor: "lightgrey", padding: "20px", margin: "30px auto", width: "840px" }}>
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", fontWeight: "900" }}>
-                    <form encType='multipart/form-data'><label>IMG선택 <input type="file" accept="image/*" onChange={myImg} /></label></form>
-                    <label style={{ marginRight: "20px" }}>카테고리 입력 <input style={{ height: "20px" }} type="text" maxLength="10" onChange={myName} /></label>
-                    <label>COLOR선택 <input type="color" onChange={myColor} /></label>
-                </div>
-            </div>
-            <div className="blog" style={{ backgroundColor: `#${color}` }}>
-                <div>
-                    <Profile myname={name} img={img} /><br />
-                </div>
-                <div style={{ margin: "40px", width: "600px", height: "150px" }}>
-                    <div style={{ backgroundColor: "#fff", fontWeight: "900", borderRadius: "5px", marginBottom: "5px" }}>
+        <div>
+            <AddCate>
+                <label>IMG선택 <input type="file" accept="image/*" onChange={myImg} /></label>
+                <label style={{ marginRight: "20px" }}>카테고리 입력 <input style={{ height: "20px" }} type="text" maxLength="10" onChange={myName} /></label>
+                <label>COLOR선택 <input type="color" onChange={myColor} /></label>
+            </AddCate>
+            <Example className="blog" $color={`#${color}`}>
+                <Profile myname={name} img={img} /><br />
+                <Div>
+                    <Bookmark>
                         <span style={{ padding: "0 5px" }}>예시(생성될 카테고리 미리보기)</span>
                         <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>❌</span>
-                    </div>
-                </div>
-                <button style={{ marginBottom: "20px", height: "20px", cursor: "default" }}>돌아가기</button>
-            </div>
-            <Button><button onClick={addInfo}>저장하기</button></Button>
-        </>
+                    </Bookmark>
+                </Div>
+            </Example>
+            <Button>
+                <button onClick={addInfo}>저장하기</button>
+            </Button>
+        </div>
     );
 }
 

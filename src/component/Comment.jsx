@@ -12,16 +12,29 @@ const Box = styled.div`
     background-color: rgb(224, 240, 255);
     border-radius: 20px;
     box-shadow: 5px 5px 5px rgba(133, 133, 133, 0.3);
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     padding-left:20px;
-    font-weight:900;
     pointer-events:${props => props.$data === "" ? "none" : "default"};
 `;
 
+const Div = styled.div`
+    width:200px;
+`;
+
+const Show = styled.div`
+    width: 650px;
+    height:180px;
+    padding-top:20px;
+    background-color: ${props => props.$color};
+`;
+
+const Select = styled.select`
+    text-align: center;
+`;
 
 const Comments = styled.textarea`
-    width:240px;
-    height:40px;
+    width:${props => props.$width};
+    height:${props => props.$height};
     margin-top:0px;
     border:0;
     resize:none;
@@ -34,7 +47,6 @@ const Comments = styled.textarea`
 
 export default function Comment() {
 
-    const [data, setData] = useState([]);
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
     const [link, setLink] = useState("");
@@ -42,10 +54,13 @@ export default function Comment() {
     const [img, setImg] = useState(star);
     const [color, setColor] = useState("");
 
+    const [data, setData] = useState([]);
+
     function information() {
         setText("");
         setTitle("");
         setLink("");
+
         fetch(`http://localhost:3001/comments/`, {
             method: "POST",
             headers: {
@@ -80,14 +95,14 @@ export default function Comment() {
     const onSetImg = () => {
         data.map((item) => {
             if (item.name === name) {
-                setImg(item.img);
+                return setImg(item.img);
             }
         });
     }
     const onSetColor = () => {
         data.map((item) => {
             if (item.name === name) {
-                setColor(item.color);
+                return setColor(item.color);
             }
         });
     }
@@ -105,7 +120,7 @@ export default function Comment() {
                     setColor(data[0].color);
                 }
             });
-    }, [name]);
+    }, []);
 
     useEffect(() => {
         setName(name);
@@ -115,25 +130,25 @@ export default function Comment() {
 
     return (
         <Box $data={name}>
-            <div style={{ width: "200px" }}>
+            <Div>
                 <img src={img} alt="" /><br />
                 {name === "" ? undefined :
-                    <select className="cate" onChange={onSetCate} style={{ textAlign: "center" }}>
+                    <Select onChange={onSetCate}>
                         {data.map((item, index) => {
                             return (<option key={item.id} name="cate" value={item.name}>{item.name}</option>)
                         })}
-                    </select>
-                }
-                <br /><span>북마크</span>
-            </div>
-            <div className="show" style={{ backgroundColor: `#${color}` }}>
+                    </Select>
+                }<br />
+                <span>북마크</span>
+            </Div>
+            <Show $color={`#${color}`}>
                 <div>
-                    <Comments placeholder="title" value={title} onChange={onSetTitle} />
-                    <Comments placeholder="link" value={link} onChange={onSetLink} />
+                    <Comments $width="240px" $height="40px" placeholder="title" value={title} onChange={onSetTitle} />
+                    <Comments $width="240px" $height="40px" placeholder="link" value={link} onChange={onSetLink} />
                 </div>
-                <Comments style={{ width: "500px", height: "80px" }} placeholder="content" value={text} onChange={onSetText} /><br />
+                <Comments $width="500px" $height="70px" placeholder="content" value={text} onChange={onSetText} /><br />
                 <button type="submit" onClick={title !== "" && link !== "" ? information : () => { alert("제목과 링크 모두 입력해주세요") }}>저장</button>
-            </div>
+            </Show>
         </Box>
     );
 }

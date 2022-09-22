@@ -1,7 +1,7 @@
 import BookMarkList from "../component/BookMarkList";
 import Comment from "../component/Comment";
 
-function MainPage() {
+export default function MainPage() {
 
     return (
         <div>
@@ -10,5 +10,3 @@ function MainPage() {
         </div>
     );
 }
-
-export default MainPage;

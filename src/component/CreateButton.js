@@ -9,7 +9,7 @@ box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 width: 100px;
 `;
 
-export default function CreaetButton({ myname, toggle }) {
+export default function CreaetButton({ toggle }) {
 
     const history = useNavigate();
     function main() {

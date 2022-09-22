@@ -11,7 +11,6 @@ const Span = styled.span`
     width:210px;
     height:40px;
     background-color:lightblue;
-    font-weight:900;
 `
 
 const Box = styled.div`

@@ -11,7 +11,6 @@ const Box = styled.div`
     width:170px;
     height:170px;
     cursor:pointer;
-    font-weight:900;
     background-color:${props => props.$color};
 `;
 

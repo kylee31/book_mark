@@ -1,42 +1,28 @@
 * {
     margin: 0;
     padding: 0;
+    font-weight:bold;
 }
 body{
     background-color: #f8fcff;
-}
-.show {
-    width: 650px;
-    height:180px;
-    padding-top:20px;
 }
 img {
     width: 50px;
     height: 50px;
     border-radius: 20px;
 }
-
-.light {
-    width:100px;
-    height:30px;
-    border-radius: 10px;
-    color: black;
-    background-color: white;
-    font-weight: bold;
-}
-
-.dark {
-    width:100px;
-    height:30px;
-    border-radius: 10px;
-    color: white;
-    background-color: black;
-    font-weight: bold;
-}
 a {
     text-decoration: none;
     color: #000;
   
+}
+button{
+    width:100px;
+    height:40px;
+    border-radius: 10px;
+    border:2px solid grey;
+    background-color:#e8e8e8;
+    cursor:pointer;
 }
 .blog{
     margin:auto;
@@ -52,37 +38,6 @@ a {
     border-radius: 20px;
     box-shadow: 8px 8px 5px rgba(133, 133, 133, 0.3);
 }
-button{
-    width:100px;
-    height:40px;
-    border-radius: 10px;
-    border:2px solid grey;
-    background-color:#e8e8e8;
-    font-weight: 800;
-    cursor:pointer;
-}
-.commentbox{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    margin-left:20px;
-}
-.showcomment{
-    width:600px;
-    min-height:150px;
-}
-
-.showcomment::-webkit-scrollbar{
-    width:3px;
-}
-.showcomment::-webkit-scrollbar-thumb {
-    background-color: #76c3ea; /*스크롤바의 색상*/
-    border-radius: 10px;
-}
-.showcomment::-webkit-scrollbar-track {
-    background-color:#e0f1ff; /*스크롤바 트랙 색상*/
-}
-
 .link:hover{
     color:rgb(21, 0, 255);
 }
