@@ -12,6 +12,7 @@ const Box = styled.div`
     height:170px;
     cursor:pointer;
     background-color:${props => props.$color};
+    box-shadow: 5px 5px 0px rgba(133, 133, 133, 0.3);
 `;
 
 export default function BookMarkItem({ img, name, color }) {

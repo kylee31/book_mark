@@ -5,14 +5,14 @@ import Profile from "../component/Profile";
 import star from "../db/star.png";
 
 const AddCate = styled.div`
-    border-radius: 10px;
     background-color: lightgrey;
     padding: 20px;
     margin: 0px auto;
-    width: 840px;
+    width: 860px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom:10px;
 `;
 
 const Example = styled.div`

@@ -38,6 +38,7 @@ export default function BookMarkList() {
             .then(data => {
                 setData(data);
             })
+            .catch(e => console.log(e))
     }, []);
 
     return (

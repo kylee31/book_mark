@@ -92,19 +92,19 @@ export default function Comment() {
     function onSetCate(e) {
         setName(e.target.value);
     }
-    const onSetImg = () => {
-        data.map((item) => {
-            if (item.name === name) {
-                return setImg(item.img);
+    function onSetImg() {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].name === name) {
+                setImg(data[i].img);
             }
-        });
+        }
     }
-    const onSetColor = () => {
-        data.map((item) => {
-            if (item.name === name) {
-                return setColor(item.color);
+    function onSetColor() {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].name === name) {
+                setColor(data[i].color);
             }
-        });
+        }
     }
 
     useEffect(() => {

@@ -72,16 +72,22 @@ export default function MyBlog() {
             fetch(`http://localhost:3001/users/${id}`, {
                 method: "DELETE"
             })
-                .then(res => console.log("ok"))
-
-            delId.map(e =>
-                fetch(`http://localhost:3001/comments/${e}`, {
-                    method: "DELETE"
-                })
-                    .then(res => console.log("ok"))
-            )
-            history("/")
+                .then((res => {
+                    if (res.ok) {
+                        history(`/`);
+                    }
+                }))
+                .catch(e => console.log(e))
         }
+    }
+
+    function onDelList() {
+        delId.map(item => (
+            fetch(`http://localhost:3001/comments/${item}`, {
+                method: "DELETE"
+            })
+                .catch(e => console.log(e))
+        ));
     }
 
     useEffect(() => {
@@ -117,7 +123,7 @@ export default function MyBlog() {
                 })}
             </MyBookMark>
             <button onClick={onLocation} style={{ marginBottom: "20px", height: "20px" }}>돌아가기</button>
-            <button onClick={onDelete} style={{ marginBottom: "80px", height: "20px", position: "absolute" }}>삭제</button>
+            <button onClick={() => { onDelete(); onDelList(); }} style={{ marginBottom: "80px", height: "20px", position: "absolute" }}>삭제</button>
         </MyCate>
     );
 }
