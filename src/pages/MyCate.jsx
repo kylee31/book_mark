@@ -122,18 +122,20 @@ export default function MyBlog() {
                 {cmt.map((c, index) => {
                     if (c.name === myname) {
                         return <Div key={index}>
-                            <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
-                            <Comment>{c.txt}</Comment>
-                            <DelButton onClick={() => {
-                                fetch(`https://book-marking.herokuapp.com/comments/${c.id}`, {
-                                    method: "DELETE",
-                                })
-                                    .then(res => {
-                                        if (res.ok) {
-                                            !del ? setDel(true) : setDel(false);
-                                        }
-                                    });
-                            }}>❌</DelButton>
+                            <div><a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a></div>
+                            <div>
+                                <Comment>{c.txt}</Comment>
+                                <DelButton onClick={() => {
+                                    fetch(`https://book-marking.herokuapp.com/comments/${c.id}`, {
+                                        method: "DELETE",
+                                    })
+                                        .then(res => {
+                                            if (res.ok) {
+                                                !del ? setDel(true) : setDel(false);
+                                            }
+                                        });
+                                }}>❌</DelButton>
+                            </div>
                         </Div>
                     }
                 })}

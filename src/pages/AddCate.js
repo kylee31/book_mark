@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Profile from "../component/Profile";
 
-const AddCate = styled.div`
+const AddCategory = styled.div`
     background-color: lightgrey;
     padding: 20px;
     margin: 0px auto;
@@ -48,7 +48,7 @@ const Blog = styled.div`
     background-color:${props => props.$color};
 `;
 
-function AddBlog() {
+function AddCate() {
 
     const history = useNavigate();
 
@@ -128,11 +128,11 @@ function AddBlog() {
 
     return (
         <div>
-            <AddCate>
+            <AddCategory>
                 <label>IMG선택 <input type="file" accept="image/*" onChange={myImg} /></label>
                 <label style={{ marginRight: "20px" }}>카테고리 입력 <input style={{ height: "20px" }} type="text" maxLength="10" onChange={myName} /></label>
                 <label>COLOR선택 <input type="color" onChange={myColor} /></label>
-            </AddCate>
+            </AddCategory>
             <Blog $color={`#${color}`}>
                 <Profile myname={name} img={img} /><br />
                 <Div>
@@ -149,4 +149,4 @@ function AddBlog() {
     );
 }
 
-export default AddBlog;
+export default AddCate;
