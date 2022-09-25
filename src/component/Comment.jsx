@@ -60,7 +60,7 @@ export default function Comment() {
         setTitle("");
         setLink("");
 
-        fetch(`https://git.heroku.com/book-marking.git/comments/`, {
+        fetch(`https://book-marking.herokuapp.com/comments/`, {
             method: "POST",
             headers: {
                 "Content-Type": 'application/json; charset=UTF-8',
@@ -107,7 +107,7 @@ export default function Comment() {
     }
 
     useLayoutEffect(() => {
-        fetch(`https://git.heroku.com/book-marking.git/users`)
+        fetch(`https://book-marking.herokuapp.com/users`)
             .then(res => {
                 return res.json()
             })

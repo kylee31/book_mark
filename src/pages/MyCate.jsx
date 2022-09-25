@@ -59,7 +59,7 @@ export default function MyCate() {
     const [delId, setDelId] = useState([]);
 
     useLayoutEffect(() => {
-        fetch("https://git.heroku.com/book-marking.git/users")
+        fetch("https://book-marking.herokuapp.com/users")
             .then(res => {
                 return res.json()
             })
@@ -70,7 +70,7 @@ export default function MyCate() {
     }, []);
 
     useLayoutEffect(() => {
-        fetch(`https://git.heroku.com/book-marking.git/comments`)
+        fetch(`https://book-marking.herokuapp.com/comments`)
             .then(res => {
                 return res.json()
             })
@@ -84,7 +84,7 @@ export default function MyCate() {
 
     function onDelete() {
         if (window.confirm("카테고리를 삭제하시겠습니까?")) {
-            fetch(`https://git.heroku.com/book-marking.git/users/${id}`, {
+            fetch(`https://book-marking.herokuapp.com/users/${id}`, {
                 method: "DELETE"
             })
                 .then((res => {

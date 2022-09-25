@@ -60,7 +60,7 @@ function AddBlog() {
     const [same, setSame] = useState(false);
 
     useEffect(() => {
-        fetch("https://git.heroku.com/book-marking.git/users")
+        fetch("https://book-marking.herokuapp.com/users")
             .then(res => {
                 return res.json();
             })
@@ -100,7 +100,7 @@ function AddBlog() {
 
     function addInfo() {
         if (name !== "💬" && color !== "" && same === false) {
-            fetch("https://git.heroku.com/book-marking.git/users", {
+            fetch("https://book-marking.herokuapp.com/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
