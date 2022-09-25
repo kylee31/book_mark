@@ -10,6 +10,8 @@ const MyBookMark = styled.div`
 `;
 
 const Div = styled.div`
+    display:flex;
+    flex-direction:row;
     background-color: #fff;
     border-radius: 5px;
     margin-bottom:5px; 
@@ -17,7 +19,7 @@ const Div = styled.div`
 
 const Comment = styled.span`
     margin-left: 5px;
-    border-top: 2px solid grey;
+    border-left: 2px solid grey;
     padding: 0 5px;
     color: grey;
 `;
