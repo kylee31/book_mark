@@ -30,7 +30,7 @@ export default function BookMarkList() {
 
     const [data, setData] = useState([]);
     useLayoutEffect(() => {
-        fetch(`https://book-marking.herokuapp.com/api/users`)
+        fetch(`https://book-marking.herokuapp.com/users`)
             .then(res => {
                 return res.json()
             })
