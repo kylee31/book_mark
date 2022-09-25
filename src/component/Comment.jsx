@@ -107,7 +107,7 @@ export default function Comment() {
     }
 
     useLayoutEffect(() => {
-        fetch(`https://book-marking.herokuapp.com/users`)
+        fetch(`https://book-marking.herokuapp.com/api/users`)
             .then(res => {
                 return res.json()
             })
