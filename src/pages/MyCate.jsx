@@ -59,7 +59,7 @@ export default function MyBlog() {
     const [delId, setDelId] = useState([]);
 
     useLayoutEffect(() => {
-        fetch("http://localhost:3001/users")
+        fetch("https://book-marking.herokuapp.com/api/users")
             .then(res => {
                 return res.json()
             })
@@ -70,7 +70,7 @@ export default function MyBlog() {
     }, []);
 
     useLayoutEffect(() => {
-        fetch(`http://localhost:3001/comments`)
+        fetch(`https://book-marking.herokuapp.com/api/comments`)
             .then(res => {
                 return res.json()
             })
@@ -84,7 +84,7 @@ export default function MyBlog() {
 
     function onDelete() {
         if (window.confirm("카테고리를 삭제하시겠습니까?")) {
-            fetch(`http://localhost:3001/users/${id}`, {
+            fetch(`https://book-marking.herokuapp.com/api/users/${id}`, {
                 method: "DELETE"
             })
                 .then((res => {
@@ -125,7 +125,7 @@ export default function MyBlog() {
                             <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
                             <Comment>{c.txt}</Comment>
                             <DelButton onClick={() => {
-                                fetch(`http://localhost:3001/comments/${c.id}`, {
+                                fetch(`https://book-marking.herokuapp.com/api/comments/${c.id}`, {
                                     method: "DELETE",
                                 })
                                     .then(res => {
