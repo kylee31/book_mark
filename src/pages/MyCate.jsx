@@ -12,18 +12,18 @@ const MyBookMark = styled.div`
 const Div = styled.div`
     background-color: #fff;
     border-radius: 5px;
-    margin-bottom:5px; 
+    margin-bottom:7px; 
 `;
 
 const Comment = styled.span`
     margin-left: 5px;
-    border-left: 2px solid grey;
     padding: 0 5px;
     color: grey;
 `;
 
 const DelButton = styled.span`
     cursor: pointer;
+    float:right;
 `;
 
 const Blog = styled.div`
@@ -96,6 +96,16 @@ export default function MyBlog() {
         }
     }
 
+    function onLinkDel(e) {
+        fetch(`https://book-marking.herokuapp.com/comments/${e}`, {
+            method: "DELETE",
+        }).then(res => {
+            if (res.ok) {
+                !del ? setDel(true) : setDel(false);
+            }
+        });
+    }
+
     /*
     function onDelList() {
         if (window.confirm("모든 북마크를 삭제하시겠습니까?")) {
@@ -123,17 +133,9 @@ export default function MyBlog() {
                     if (c.name === myname) {
                         return <Div key={index}>
                             <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
-                            <Comment>{c.txt}</Comment>
-                            <DelButton onClick={() => {
-                                fetch(`https://book-marking.herokuapp.com/comments/${c.id}`, {
-                                    method: "DELETE",
-                                })
-                                    .then(res => {
-                                        if (res.ok) {
-                                            !del ? setDel(true) : setDel(false);
-                                        }
-                                    });
-                            }}>❌</DelButton>
+                            <DelButton onClick={() => { onLinkDel(c.id) }}>❌</DelButton>
+                            <hr style={{ display: c.txt === "" ? "none" : "display", backgroundColor: "#fff", borderTop: "2px dotted #8c8b8b" }} />
+                            <Comment style={{ display: c.txt === "" ? "none" : "display" }}>{c.txt}</Comment>
                         </Div>
                     }
                 })}
