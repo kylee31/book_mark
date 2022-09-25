@@ -10,8 +10,6 @@ const MyBookMark = styled.div`
 `;
 
 const Div = styled.div`
-    display:flex;
-    flex-direction:row;
     background-color: #fff;
     border-radius: 5px;
     margin-bottom:5px; 
@@ -19,7 +17,6 @@ const Div = styled.div`
 
 const Comment = styled.span`
     margin-left: 5px;
-    border-left: 2px solid grey;
     padding: 0 5px;
     color: grey;
 `;
@@ -124,8 +121,8 @@ export default function MyBlog() {
                 {cmt.map((c, index) => {
                     if (c.name === myname) {
                         return <Div key={index}>
-                            <div><a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a></div>
-                            <div>
+                            <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
+                            <div style={{ borderLeft: "2px solid grey" }}>
                                 <Comment>{c.txt}</Comment>
                                 <DelButton onClick={() => {
                                     fetch(`https://book-marking.herokuapp.com/comments/${c.id}`, {
