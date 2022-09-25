@@ -2,17 +2,16 @@ const jsonServer = require('json-server');
 const path = require('path');
 
 const server = jsonServer.create();
-const router = jsonServer.router('/bookmark.json');
+const router = jsonServer.router(path.resolve(__dirname + '/bookmark.json'));
 const middlewares = jsonServer.defaults({
-    static: './build/',
+    static: path.resolve(__dirname + '/../build/')
 });
 
 const port = process.env.PORT || 3001;
 
 server.use(middlewares);
-server.use(jsonServer.rewriter({
-    "/api/*": "/$1",
-}));
+
+server.use(jsonServer.bodyParser);
 
 server.use(router);
 server.listen(port, () => {
