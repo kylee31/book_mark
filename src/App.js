@@ -13,10 +13,10 @@ function App() {
       <ScrollTop />
       <Header />
       <Routes>
-        <Route index path="https://book-marking.herokuapp.com/" element={<MainPage />} />
-        <Route path="https://book-marking.herokuapp.com/blog/:name" element={<MyCate />} />
-        <Route path="https://book-marking.herokuapp.com/createblog" element={<AddBlog />} />
-        <Route path="https://book-marking.herokuapp.com/*" element={<WrongPage />} />
+        <Route index path="/" element={<MainPage />} />
+        <Route path="/blog/:name" element={<MyCate />} />
+        <Route path="/createblog" element={<AddBlog />} />
+        <Route path="/*" element={<WrongPage />} />
       </Routes>
     </BrowserRouter>
   );
