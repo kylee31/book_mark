@@ -122,7 +122,7 @@ export default function MyBlog() {
                     if (c.name === myname) {
                         return <Div key={index}>
                             <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
-                            <div style={{ borderLeft: "2px solid grey" }}>
+                            <span style={{ borderLeft: "2px solid grey" }}>
                                 <Comment>{c.txt}</Comment>
                                 <DelButton onClick={() => {
                                     fetch(`https://book-marking.herokuapp.com/comments/${c.id}`, {
@@ -134,7 +134,7 @@ export default function MyBlog() {
                                             }
                                         });
                                 }}>❌</DelButton>
-                            </div>
+                            </span>
                         </Div>
                     }
                 })}
