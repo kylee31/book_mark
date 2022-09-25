@@ -60,7 +60,7 @@ export default function Comment() {
         setTitle("");
         setLink("");
 
-        fetch(`https://book-marking.herokuapp.com/comments/`, {
+        fetch(`https://book-marking.herokuapp.com/api/comments/`, {
             method: "POST",
             headers: {
                 "Content-Type": 'application/json; charset=UTF-8',
