@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import star from "../db/star.png";
 
 const Box = styled.div`
     margin:auto;
@@ -51,7 +50,7 @@ export default function Comment() {
     const [title, setTitle] = useState("");
     const [link, setLink] = useState("");
     const [name, setName] = useState("");
-    const [img, setImg] = useState(star);
+    const [img, setImg] = useState("https://ifh.cc/g/RxT0yX.png");
     const [color, setColor] = useState("");
 
     const [data, setData] = useState([]);
@@ -107,14 +106,15 @@ export default function Comment() {
         }
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         fetch(`http://localhost:3001/users`)
             .then(res => {
                 return res.json()
             })
             .then(data => {
                 if (data.length !== 0) {
-                    setData(data);
+                    const sortData = data.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+                    setData(sortData);
                     setName(data[0].name);
                     setImg(data[0].img);
                     setColor(data[0].color);

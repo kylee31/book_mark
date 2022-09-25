@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import Profile from "../component/Profile";
 import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
-
-const MyCate = styled.div`
-    background-color:${props => props.$color}
-`;
 
 const MyBookMark = styled.div`
     width:600px;
@@ -30,31 +26,50 @@ const DelButton = styled.span`
     cursor: pointer;
 `;
 
-export default function MyBlog() {
+const Blog = styled.div`
+    margin:auto;
+    margin-bottom: 50px;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width:900px;
+    min-height:450px;
+    border-radius: 20px;
+    box-shadow: 8px 8px 5px rgba(133, 133, 133, 0.3);
+    background-color:${props => props.$color}
+`;
+
+const Button = styled.div`
+    display:flex;
+    flex-direction:row;
+    margin-bottom:40px;
+`;
+
+export default function MyCate() {
     const location = useLocation();
     const myname = location.state.myname;
+    const myimg = location.state.myimg;
+    const mycolor = location.state.mycolor;
 
-    const [img, setImg] = useState("https://ifh.cc/g/Z2nHMb.jpg");
-    const [color, setColor] = useState("#E0F0FF");
     const [cmt, setComments] = useState([]);
     const [del, setDel] = useState(false);
     const [id, setId] = useState("");
     const [delId, setDelId] = useState([]);
 
-    function getData() {
+    useLayoutEffect(() => {
         fetch("http://localhost:3001/users")
             .then(res => {
                 return res.json()
             })
             .then(e => {
                 const blog = e.filter(data => data.name === myname);
-                setImg(blog[0].img);
-                setColor(blog[0].color);
                 setId(blog[0].id);
             })
-    }
+    }, []);
 
-    function getComment() {
+    useLayoutEffect(() => {
         fetch(`http://localhost:3001/comments`)
             .then(res => {
                 return res.json()
@@ -65,10 +80,10 @@ export default function MyBlog() {
                 setComments(myComments);
                 setDelId(delIds);
             })
-    }
+    }, [del])
 
     function onDelete() {
-        if (window.confirm("삭제하시겠습니까? 해당 카테고리의 모든 북마크가 삭제됩니다.")) {
+        if (window.confirm("카테고리를 삭제하시겠습니까?")) {
             fetch(`http://localhost:3001/users/${id}`, {
                 method: "DELETE"
             })
@@ -81,18 +96,19 @@ export default function MyBlog() {
         }
     }
 
+    /*
     function onDelList() {
-        delId.map(item => (
-            fetch(`http://localhost:3001/comments/${item}`, {
-                method: "DELETE"
-            })
-                .catch(e => console.log(e))
-        ));
+        if (window.confirm("모든 북마크를 삭제하시겠습니까?")) {
+            delId.map(item => (
+                fetch(`http://localhost:3001/comments/${item}`, {
+                    method: "DELETE"
+                })
+                    .catch(e => console.log(e))
+            ));
+            !del ? setDel(true) : setDel(false);
+        }
     }
-
-    useEffect(() => {
-        getComment();
-    }, [del])
+    */
 
     const history = useNavigate();
     function onLocation() {
@@ -100,8 +116,8 @@ export default function MyBlog() {
     };
 
     return (
-        <MyCate className="blog" onLoad={getData} $color={`#${color}`}>
-            <Profile myname={myname} img={img} /><br />
+        <Blog $color={`#${mycolor}`}>
+            <Profile myname={myname} img={myimg} /><br />
             <MyBookMark>
                 {cmt.map((c, index) => {
                     if (c.name === myname) {
@@ -122,8 +138,11 @@ export default function MyBlog() {
                     }
                 })}
             </MyBookMark>
-            <button onClick={onLocation} style={{ marginBottom: "20px", height: "20px" }}>돌아가기</button>
-            <button onClick={() => { onDelete(); onDelList(); }} style={{ marginBottom: "80px", height: "20px", position: "absolute" }}>삭제</button>
-        </MyCate>
+            <Button>
+                <button onClick={onLocation} style={{ height: "20px", marginRight: "20px" }}>돌아가기</button>
+                <button onClick={() => { onDelete(); }} style={{ height: "20px" }}>카테고리 삭제</button>
+                {/*<button onClick={() => { onDelList(); }} style={{ height: "20px" }}>모든 링크 삭제</button>*/}
+            </Button>
+        </Blog>
     );
 }

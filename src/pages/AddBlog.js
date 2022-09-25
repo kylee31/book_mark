@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Profile from "../component/Profile";
-import star from "../db/star.png";
 
 const AddCate = styled.div`
     background-color: lightgrey;
@@ -13,10 +12,6 @@ const AddCate = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom:10px;
-`;
-
-const Example = styled.div`
-    background-color: ${props => props.$color};
 `;
 
 const Div = styled.div`
@@ -37,13 +32,51 @@ const Button = styled.p`
     margin-bottom:30px;
 `;
 
+const Blog = styled.div`
+    margin:auto;
+    margin-bottom: 50px;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width:900px;
+    min-height:450px;
+    border-radius: 20px;
+    box-shadow: 8px 8px 5px rgba(133, 133, 133, 0.3);
+    background-color: #e0f1ff;
+    background-color:${props => props.$color};
+`;
+
 function AddBlog() {
 
     const history = useNavigate();
 
     const [name, setName] = useState("💬");
     const [color, setColor] = useState("");
-    const [img, setImg] = useState(star);
+    const [img, setImg] = useState("https://ifh.cc/g/RxT0yX.png");
+    //동일이름 존재 유무검사
+    const [nameList, setNameList] = useState([]);
+    const [same, setSame] = useState(false);
+
+    useEffect(() => {
+        fetch("http://localhost:3001/users")
+            .then(res => {
+                return res.json();
+            })
+            .then(e => {
+                setNameList(e.map((e) => {
+                    return e.name;
+                }))
+            })
+    }, []);
+
+    //링크를 동일한 이름으로 찾기 때문에 동일한 카테고리 생성불가
+    useEffect(() => {
+        for (let i = 0; i < nameList.length; i++) {
+            (nameList[i] === name) ? setSame(true) : setSame(false);
+        }
+    }, [same, myName]);
 
     function myName(e) {
         setName(e.target.value);
@@ -66,7 +99,7 @@ function AddBlog() {
     }
 
     function addInfo() {
-        if (name !== "💬" && color !== "") {
+        if (name !== "💬" && color !== "" && same === false) {
             fetch("http://localhost:3001/users", {
                 method: "POST",
                 headers: {
@@ -85,7 +118,10 @@ function AddBlog() {
                     }
                 });
         }
-        else {
+        else if (same === true) {
+            alert("동일한 이름이 존재합니다! 다른 이름으로 작성해주세요");
+        }
+        else if ((name === "💬" && same === false) || (color === "" && same === false)) {
             alert("ID와 Color 모두 작성해주세요!");
         }
     }
@@ -97,15 +133,15 @@ function AddBlog() {
                 <label style={{ marginRight: "20px" }}>카테고리 입력 <input style={{ height: "20px" }} type="text" maxLength="10" onChange={myName} /></label>
                 <label>COLOR선택 <input type="color" onChange={myColor} /></label>
             </AddCate>
-            <Example className="blog" $color={`#${color}`}>
+            <Blog $color={`#${color}`}>
                 <Profile myname={name} img={img} /><br />
                 <Div>
                     <Bookmark>
                         <span style={{ padding: "0 5px" }}>예시(생성될 카테고리 미리보기)</span>
-                        <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>❌</span>
+                        <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>북마크 설명란 ❌</span>
                     </Bookmark>
                 </Div>
-            </Example>
+            </Blog>
             <Button>
                 <button onClick={addInfo}>저장하기</button>
             </Button>

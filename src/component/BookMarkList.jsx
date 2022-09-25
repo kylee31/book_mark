@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import styled from "styled-components";
 import BookMarkItem from "./BookMarkItem";
 
@@ -11,7 +11,7 @@ const Span = styled.span`
     width:210px;
     height:40px;
     background-color:lightblue;
-`
+`;
 
 const Box = styled.div`
     display:flex;
@@ -29,16 +29,15 @@ const Box = styled.div`
 export default function BookMarkList() {
 
     const [data, setData] = useState([]);
-
-    useEffect(() => {
+    useLayoutEffect(() => {
         fetch(`http://localhost:3001/users`)
             .then(res => {
                 return res.json()
             })
             .then(data => {
-                setData(data);
+                const sortData = data.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+                setData(sortData);
             })
-            .catch(e => console.log(e))
     }, []);
 
     return (

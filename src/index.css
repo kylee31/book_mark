@@ -14,7 +14,6 @@ img {
 a {
     text-decoration: none;
     color: #000;
-  
 }
 button{
     width:100px;
@@ -23,20 +22,6 @@ button{
     border:2px solid grey;
     background-color:#e8e8e8;
     cursor:pointer;
-}
-.blog{
-    margin:auto;
-    margin-bottom: 50px;
-    display:flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    background-color: #e0f1ff;
-    width:900px;
-    min-height:450px;
-    border-radius: 20px;
-    box-shadow: 8px 8px 5px rgba(133, 133, 133, 0.3);
 }
 .link:hover{
     color:rgb(21, 0, 255);

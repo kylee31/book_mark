@@ -12,8 +12,8 @@ export default function Profile({ myname, img }) {
 
     return (
         <Div>
-            <img className="profileImg" style={{ margin: "auto" }} src={img} alt="" />
-            <p style={{ paddingTop: "20px", fontWeight: "900" }}>{myname}<br />북마크</p>
+            <img src={img} alt="" />
+            <p>{myname}<br />북마크</p>
         </Div>
     )
 }

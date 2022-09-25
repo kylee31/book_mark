@@ -19,7 +19,7 @@ export default function BookMarkItem({ img, name, color }) {
 
     const history = useNavigate();
     function onBookMark() {
-        history(`/blog/${name}`, { state: { myname: name } });
+        history(`/blog/${name}`, { state: { myname: name, myimg: img, mycolor: color } });
     }
 
     return (
