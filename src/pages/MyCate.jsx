@@ -47,7 +47,7 @@ const Button = styled.div`
     margin-bottom:40px;
 `;
 
-export default function MyCate() {
+export default function MyBlog() {
     const location = useLocation();
     const myname = location.state.myname;
     const myimg = location.state.myimg;
@@ -59,7 +59,7 @@ export default function MyCate() {
     const [delId, setDelId] = useState([]);
 
     useLayoutEffect(() => {
-        fetch("https://book-marking.herokuapp.com/api/users")
+        fetch("http://localhost:3001/users")
             .then(res => {
                 return res.json()
             })
@@ -70,7 +70,7 @@ export default function MyCate() {
     }, []);
 
     useLayoutEffect(() => {
-        fetch(`https://book-marking.herokuapp.com/api/comments`)
+        fetch(`http://localhost:3001/comments`)
             .then(res => {
                 return res.json()
             })
@@ -84,7 +84,7 @@ export default function MyCate() {
 
     function onDelete() {
         if (window.confirm("카테고리를 삭제하시겠습니까?")) {
-            fetch(`https://book-marking.herokuapp.com/api/users/${id}`, {
+            fetch(`http://localhost:3001/users/${id}`, {
                 method: "DELETE"
             })
                 .then((res => {
@@ -125,7 +125,7 @@ export default function MyCate() {
                             <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
                             <Comment>{c.txt}</Comment>
                             <DelButton onClick={() => {
-                                fetch(`https://book-marking.herokuapp.com/api/comments/${c.id}`, {
+                                fetch(`http://localhost:3001/comments/${c.id}`, {
                                     method: "DELETE",
                                 })
                                     .then(res => {
