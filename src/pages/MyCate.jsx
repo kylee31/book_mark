@@ -17,7 +17,7 @@ const Div = styled.div`
 
 const Comment = styled.span`
     margin-left: 5px;
-    border-left: 2px solid grey;
+    border-top: 2px solid grey;
     padding: 0 5px;
     color: grey;
 `;
