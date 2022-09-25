@@ -17,6 +17,7 @@ const Div = styled.div`
 
 const Comment = styled.span`
     margin-left: 5px;
+    border-left: 2px solid grey;
     padding: 0 5px;
     color: grey;
 `;
@@ -122,19 +123,17 @@ export default function MyBlog() {
                     if (c.name === myname) {
                         return <Div key={index}>
                             <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
-                            <span style={{ borderLeft: "2px solid grey" }}>
-                                <Comment>{c.txt}</Comment>
-                                <DelButton onClick={() => {
-                                    fetch(`https://book-marking.herokuapp.com/comments/${c.id}`, {
-                                        method: "DELETE",
-                                    })
-                                        .then(res => {
-                                            if (res.ok) {
-                                                !del ? setDel(true) : setDel(false);
-                                            }
-                                        });
-                                }}>❌</DelButton>
-                            </span>
+                            <Comment>{c.txt}</Comment>
+                            <DelButton onClick={() => {
+                                fetch(`https://book-marking.herokuapp.com/comments/${c.id}`, {
+                                    method: "DELETE",
+                                })
+                                    .then(res => {
+                                        if (res.ok) {
+                                            !del ? setDel(true) : setDel(false);
+                                        }
+                                    });
+                            }}>❌</DelButton>
                         </Div>
                     }
                 })}
