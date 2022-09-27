@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import MyCate from './pages/MyCate';
 import Header from './component/Header';
 import AddCate from './pages/AddCate';
-import ScrollTop from './util/ScrollTop';
 import MainPage from "./pages/MainPage";
 import WrongPage from "./pages/WrongPage";
+import ScrollTop from './util/ScrollTop';
 
 function App() {
 

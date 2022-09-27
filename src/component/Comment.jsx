@@ -52,14 +52,12 @@ export default function Comment() {
     const [name, setName] = useState("");
     const [img, setImg] = useState("https://ifh.cc/g/RxT0yX.png");
     const [color, setColor] = useState("");
-
     const [data, setData] = useState([]);
 
     function information() {
         setText("");
         setTitle("");
         setLink("");
-
         fetch(`https://book-marking.herokuapp.com/comments/`, {
             method: "POST",
             headers: {

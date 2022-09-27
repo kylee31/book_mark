@@ -120,6 +120,21 @@ export default function MyBlog() {
     }
     */
 
+    function bookMark() {
+        return (<>
+            {cmt.map((c, index) => {
+                if (c.name === myname) {
+                    return <Div key={index}>
+                        <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
+                        <DelButton onClick={() => { onLinkDel(c.id) }}>❌</DelButton>
+                        <hr style={{ display: c.txt === "" ? "none" : "display", backgroundColor: "#fff", borderTop: "2px dotted #8c8b8b" }} />
+                        <Comment style={{ display: c.txt === "" ? "none" : "display" }}>{c.txt}</Comment>
+                    </Div>
+                }
+            })}
+        </>);
+    }
+
     const history = useNavigate();
     function onLocation() {
         history("/");
@@ -129,16 +144,7 @@ export default function MyBlog() {
         <Blog $color={`#${mycolor}`}>
             <Profile myname={myname} img={myimg} /><br />
             <MyBookMark>
-                {cmt.map((c, index) => {
-                    if (c.name === myname) {
-                        return <Div key={index}>
-                            <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
-                            <DelButton onClick={() => { onLinkDel(c.id) }}>❌</DelButton>
-                            <hr style={{ display: c.txt === "" ? "none" : "display", backgroundColor: "#fff", borderTop: "2px dotted #8c8b8b" }} />
-                            <Comment style={{ display: c.txt === "" ? "none" : "display" }}>{c.txt}</Comment>
-                        </Div>
-                    }
-                })}
+                {bookMark()}
             </MyBookMark>
             <Button>
                 <button onClick={onLocation} style={{ height: "20px", marginRight: "20px" }}>돌아가기</button>

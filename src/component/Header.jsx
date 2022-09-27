@@ -32,7 +32,7 @@ export default function Header() {
     }
     return (
         <Div>
-            <Title><Link to="/">BOOK-MARK⭐</Link></Title>
+            <Title><Link to="/">BOOK-MARK</Link></Title>
             <div style={{ marginLeft: "700px" }}>
                 <AddBlogButton onClick={main}>카테고리 생성</AddBlogButton>
             </div>
