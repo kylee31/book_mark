@@ -6,7 +6,7 @@ import styled from "styled-components";
 const MyBookMark = styled.div`
     width:600px;
     min-height:150px;
-    margin: 40px;
+    margin: 20px;
 `;
 
 const Div = styled.div`

@@ -24,7 +24,7 @@ const AddBlogButton = styled.button`
     }
 `;
 
-export default function Header() {
+export default function Header({ login }) {
 
     const history = useNavigate();
     function main() {
@@ -33,9 +33,11 @@ export default function Header() {
     return (
         <Div>
             <Title><Link to="/">BOOK-MARK</Link></Title>
-            <div style={{ marginLeft: "700px" }}>
-                <AddBlogButton onClick={main}>카테고리 생성</AddBlogButton>
-            </div>
+            {login ?
+                <div style={{ marginLeft: "700px" }}>
+                    <AddBlogButton onClick={main}>카테고리 생성</AddBlogButton>
+                </div> : null
+            }
         </Div>
     );
 }

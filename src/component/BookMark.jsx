@@ -44,7 +44,7 @@ const Comments = styled.textarea`
     }
 `;
 
-export default function Comment() {
+export default function BookMark() {
 
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");

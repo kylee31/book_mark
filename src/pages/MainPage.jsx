@@ -1,11 +1,11 @@
 import BookMarkList from "../component/BookMarkList";
-import Comment from "../component/Comment";
+import BookMark from "../component/BookMark";
 
 export default function MainPage() {
 
     return (
         <div>
-            <Comment />
+            <BookMark />
             <BookMarkList />
         </div>
     );
