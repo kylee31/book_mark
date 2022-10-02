@@ -31,7 +31,7 @@ const Select = styled.select`
     text-align: center;
 `;
 
-const Comments = styled.textarea`
+const Bookmarks = styled.textarea`
     width:${props => props.$width};
     height:${props => props.$height};
     margin-top:0px;
@@ -141,10 +141,10 @@ export default function BookMark() {
             </Div>
             <Show $color={`#${color}`}>
                 <div>
-                    <Comments $width="240px" $height="40px" placeholder="title" value={title} onChange={onSetTitle} />
-                    <Comments $width="240px" $height="40px" placeholder="link" value={link} onChange={onSetLink} />
+                    <Bookmarks $width="240px" $height="40px" placeholder="title" value={title} onChange={onSetTitle} />
+                    <Bookmarks $width="240px" $height="40px" placeholder="link" value={link} onChange={onSetLink} />
                 </div>
-                <Comments $width="500px" $height="70px" placeholder="content" value={text} onChange={onSetText} /><br />
+                <Bookmarks $width="500px" $height="70px" placeholder="content" value={text} onChange={onSetText} /><br />
                 <button type="submit" onClick={title !== "" && link !== "" ? information : () => { alert("제목과 링크 모두 입력해주세요") }}>저장</button>
             </Show>
         </Box>

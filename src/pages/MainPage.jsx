@@ -1,4 +1,4 @@
-import BookMarkList from "../component/BookMarkList";
+import CategoryList from "../component/CategoryList";
 import BookMark from "../component/BookMark";
 
 export default function MainPage() {
@@ -6,7 +6,7 @@ export default function MainPage() {
     return (
         <div>
             <BookMark />
-            <BookMarkList />
+            <CategoryList />
         </div>
     );
 }

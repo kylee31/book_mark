@@ -2,28 +2,12 @@ import React, { useState, useLayoutEffect } from "react";
 import Profile from "../component/Profile";
 import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
+import BookMarkList from "../component/BookMarkList";
 
 const MyBookMark = styled.div`
     width:600px;
     min-height:150px;
     margin: 20px;
-`;
-
-const Div = styled.div`
-    background-color: #fff;
-    border-radius: 5px;
-    margin-bottom:7px; 
-`;
-
-const Comment = styled.span`
-    margin-left: 5px;
-    padding: 0 5px;
-    color: grey;
-`;
-
-const DelButton = styled.span`
-    cursor: pointer;
-    float:right;
 `;
 
 const Blog = styled.div`
@@ -56,7 +40,7 @@ export default function MyBlog() {
     const [cmt, setComments] = useState([]);
     const [del, setDel] = useState(false);
     const [id, setId] = useState("");
-    const [delId, setDelId] = useState([]);
+    //const [delId, setDelId] = useState([]);
 
     useLayoutEffect(() => {
         fetch("https://book-marking.herokuapp.com/users")
@@ -76,9 +60,9 @@ export default function MyBlog() {
             })
             .then(e => {
                 const myComments = e.filter(data => data.name === myname);
-                const delIds = myComments.map(data => { return data.id });
+                //const delIds = myComments.map(data => { return data.id });
                 setComments(myComments);
-                setDelId(delIds);
+                //setDelId(delIds);
             })
     }, [del])
 
@@ -94,16 +78,6 @@ export default function MyBlog() {
                 }))
                 .catch(e => console.log(e))
         }
-    }
-
-    function onLinkDel(e) {
-        fetch(`https://book-marking.herokuapp.com/comments/${e}`, {
-            method: "DELETE",
-        }).then(res => {
-            if (res.ok) {
-                !del ? setDel(true) : setDel(false);
-            }
-        });
     }
 
     /*
@@ -122,16 +96,7 @@ export default function MyBlog() {
 
     function bookMark() {
         return (<>
-            {cmt.map((c, index) => {
-                if (c.name === myname) {
-                    return <Div key={index}>
-                        <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
-                        <DelButton onClick={() => { onLinkDel(c.id) }}>❌</DelButton>
-                        <hr style={{ display: c.txt === "" ? "none" : "display", backgroundColor: "#fff", borderTop: "2px dotted #8c8b8b" }} />
-                        <Comment style={{ display: c.txt === "" ? "none" : "display" }}>{c.txt}</Comment>
-                    </Div>
-                }
-            })}
+            <BookMarkList cmt={cmt} myname={myname} del={del} setDel={setDel} />
         </>);
     }
 

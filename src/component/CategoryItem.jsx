@@ -15,7 +15,7 @@ const Box = styled.div`
     box-shadow: 5px 5px 0px rgba(133, 133, 133, 0.3);
 `;
 
-export default function BookMarkItem({ img, name, color }) {
+export default function CategoryItem({ img, name, color }) {
 
     const history = useNavigate();
     function onBookMark() {

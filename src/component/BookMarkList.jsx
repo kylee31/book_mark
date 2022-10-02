@@ -1,55 +1,46 @@
-import { useState } from "react";
-import { useLayoutEffect } from "react";
 import styled from "styled-components";
-import BookMarkItem from "./BookMarkItem";
 
-const Span = styled.span`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin:0 auto;
-    width:210px;
-    height:40px;
-    background-color:lightblue;
+const Div = styled.div`
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom:7px; 
 `;
 
-const Box = styled.div`
-    display:flex;
-    flex-wrap:wrap;
-    margin:0 auto;
-    margin-bottom:40px;
-    padding:10px;
-    padding-left:30px;
-    align-items:center;
-    width:870px;
-    min-height:250px;
-    background-color:lightblue;
+const Comment = styled.span`
+    margin-left: 5px;
+    padding: 0 5px;
+    color: grey;
 `;
 
-export default function BookMarkList() {
+const DelButton = styled.span`
+    cursor: pointer;
+    float:right;
+`;
 
-    const [data, setData] = useState([]);
-    useLayoutEffect(() => {
-        fetch(`https://book-marking.herokuapp.com/users`)
-            .then(res => {
-                return res.json()
-            })
-            .then(data => {
-                const sortData = data.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
-                setData(sortData);
-            })
-    }, []);
+export default function BookMarkList({ cmt, myname, del, setDel }) {
+
+    //const [del, setDel] = useState(false);
+
+    function onLinkDel(e) {
+        fetch(`https://book-marking.herokuapp.com/comments/${e}`, {
+            method: "DELETE",
+        }).then(res => {
+            if (res.ok) {
+                !del ? setDel(true) : setDel(false);
+            }
+        });
+    }
 
     return (
         <>
-            <div style={{ marginRight: "700px" }}>
-                <Span>CATEGORY</Span>
-            </div>
-            <Box>
-                {data.map((item, index) => {
-                    return <BookMarkItem key={index} img={item.img} name={item.name} color={item.color} />
-                })}
-            </Box>
+            {cmt.filter(c => c.name === myname).map((c, index) => {
+                return <Div key={index}>
+                    <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
+                    <DelButton onClick={() => { onLinkDel(c.id) }}>❌</DelButton>
+                    <hr style={{ display: c.txt === "" ? "none" : "display", backgroundColor: "#fff", borderTop: "2px dotted #8c8b8b" }} />
+                    <Comment style={{ display: c.txt === "" ? "none" : "display" }}>{c.txt}</Comment>
+                </Div>
+            })}
         </>
     );
 }
