@@ -70,11 +70,6 @@ export default function BookMark() {
                 txt: text,
             }),
         })
-            .then(res => {
-                if (res.ok) {
-                    console.log("setting ok");
-                }
-            });
     };
 
     function onSetText(e) {

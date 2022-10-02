@@ -40,7 +40,6 @@ export default function MyBlog() {
     const [cmt, setComments] = useState([]);
     const [del, setDel] = useState(false);
     const [id, setId] = useState("");
-    //const [delId, setDelId] = useState([]);
 
     useLayoutEffect(() => {
         fetch("https://book-marking.herokuapp.com/users")
@@ -60,9 +59,7 @@ export default function MyBlog() {
             })
             .then(e => {
                 const myComments = e.filter(data => data.name === myname);
-                //const delIds = myComments.map(data => { return data.id });
                 setComments(myComments);
-                //setDelId(delIds);
             })
     }, [del])
 
@@ -79,20 +76,6 @@ export default function MyBlog() {
                 .catch(e => console.log(e))
         }
     }
-
-    /*
-    function onDelList() {
-        if (window.confirm("모든 북마크를 삭제하시겠습니까?")) {
-            delId.map(item => (
-                fetch(`http://localhost:3001/comments/${item}`, {
-                    method: "DELETE"
-                })
-                    .catch(e => console.log(e))
-            ));
-            !del ? setDel(true) : setDel(false);
-        }
-    }
-    */
 
     function bookMark() {
         return (<>
@@ -114,7 +97,6 @@ export default function MyBlog() {
             <Button>
                 <button onClick={onLocation} style={{ height: "20px", marginRight: "20px" }}>돌아가기</button>
                 <button onClick={() => { onDelete(); }} style={{ height: "20px" }}>카테고리 삭제</button>
-                {/*<button onClick={() => { onDelList(); }} style={{ height: "20px" }}>모든 링크 삭제</button>*/}
             </Button>
         </Blog>
     );

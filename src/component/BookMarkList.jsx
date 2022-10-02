@@ -19,8 +19,6 @@ const DelButton = styled.span`
 
 export default function BookMarkList({ cmt, myname, del, setDel }) {
 
-    //const [del, setDel] = useState(false);
-
     function onLinkDel(e) {
         fetch(`https://book-marking.herokuapp.com/comments/${e}`, {
             method: "DELETE",
