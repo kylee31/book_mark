@@ -6,7 +6,7 @@ import MainPage from "./pages/MainPage";
 import WrongPage from "./pages/WrongPage";
 import ScrollTop from './util/ScrollTop';
 
-function App() {
+export default function App() {
 
   return (
     <BrowserRouter>
@@ -21,5 +21,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;

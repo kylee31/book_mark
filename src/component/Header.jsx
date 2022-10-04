@@ -2,6 +2,23 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+export default function Header() {
+
+    const history = useNavigate();
+    function main() {
+        history(`/createblog`);
+    }
+    return (
+        <Div>
+            <Title><Link to="/">BOOK-MARK</Link></Title>
+            <div style={{ marginLeft: "700px" }}>
+                <AddBlogButton onClick={main}>카테고리 생성</AddBlogButton>
+            </div>
+        </Div>
+    );
+}
+
+//styled-components
 const Div = styled.div`
     display:flex;
     justify-content:center;
@@ -23,19 +40,3 @@ const AddBlogButton = styled.button`
         margin-left:20px;
     }
 `;
-
-export default function Header() {
-
-    const history = useNavigate();
-    function main() {
-        history(`/createblog`);
-    }
-    return (
-        <Div>
-            <Title><Link to="/">BOOK-MARK</Link></Title>
-            <div style={{ marginLeft: "700px" }}>
-                <AddBlogButton onClick={main}>카테고리 생성</AddBlogButton>
-            </div>
-        </Div>
-    );
-}

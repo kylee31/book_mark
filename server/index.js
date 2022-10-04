@@ -1,3 +1,4 @@
+//node.js로 sever 생성
 const jsonServer = require('json-server');
 const path = require('path');
 

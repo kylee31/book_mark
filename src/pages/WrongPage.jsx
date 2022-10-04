@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-const Div = styled.div`
-    display:flex;
-    height:400px;
-    justify-content:center;
-    align-items:center;
-`;
-
 export default function WrongPage() {
     return (
         <Div>
@@ -14,3 +7,11 @@ export default function WrongPage() {
         </Div>
     );
 }
+
+//styled-components
+const Div = styled.div`
+    display:flex;
+    height:400px;
+    justify-content:center;
+    align-items:center;
+`;

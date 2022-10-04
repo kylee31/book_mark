@@ -3,33 +3,7 @@ import Profile from "../component/Profile";
 import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
 import BookMarkList from "../component/BookMarkList";
-
-const MyBookMark = styled.div`
-    width:600px;
-    min-height:150px;
-    margin: 20px;
-`;
-
-const Blog = styled.div`
-    margin:auto;
-    margin-bottom: 50px;
-    display:flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    width:900px;
-    min-height:450px;
-    border-radius: 20px;
-    box-shadow: 8px 8px 5px rgba(133, 133, 133, 0.3);
-    background-color:${props => props.$color}
-`;
-
-const Button = styled.div`
-    display:flex;
-    flex-direction:row;
-    margin-bottom:40px;
-`;
+import axios from 'axios';
 
 export default function MyBlog() {
     const location = useLocation();
@@ -42,9 +16,9 @@ export default function MyBlog() {
     const [id, setId] = useState("");
 
     useLayoutEffect(() => {
-        fetch("https://book-marking.herokuapp.com/users")
+        axios.get(`https://book-marking.herokuapp.com/users`)
             .then(res => {
-                return res.json()
+                return res.data
             })
             .then(e => {
                 const blog = e.filter(data => data.name === myname);
@@ -53,9 +27,9 @@ export default function MyBlog() {
     }, []);
 
     useLayoutEffect(() => {
-        fetch(`https://book-marking.herokuapp.com/comments`)
+        axios.get(`https://book-marking.herokuapp.com/comments`)
             .then(res => {
-                return res.json()
+                return res.data
             })
             .then(e => {
                 const myComments = e.filter(data => data.name === myname);
@@ -65,13 +39,9 @@ export default function MyBlog() {
 
     function onDelete() {
         if (window.confirm("카테고리를 삭제하시겠습니까?")) {
-            fetch(`https://book-marking.herokuapp.com/users/${id}`, {
-                method: "DELETE"
-            })
+            axios.delete(`https://book-marking.herokuapp.com/users/${id}`)
                 .then((res => {
-                    if (res.ok) {
-                        history(`/`);
-                    }
+                    history(`/`);
                 }))
                 .catch(e => console.log(e))
         }
@@ -101,3 +71,31 @@ export default function MyBlog() {
         </Blog>
     );
 }
+
+//styled-components
+const MyBookMark = styled.div`
+    width:600px;
+    min-height:150px;
+    margin: 20px;
+`;
+
+const Blog = styled.div`
+    margin:auto;
+    margin-bottom: 50px;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width:900px;
+    min-height:450px;
+    border-radius: 20px;
+    box-shadow: 8px 8px 5px rgba(133, 133, 133, 0.3);
+    background-color:${props => props.$color}
+`;
+
+const Button = styled.div`
+    display:flex;
+    flex-direction:row;
+    margin-bottom:40px;
+`;
