@@ -1,11 +1,11 @@
 //node.js로 sever 생성
 const jsonServer = require('json-server');
-const path = require('path');
+//const path = require('path');
 
 const server = jsonServer.create();
-const router = jsonServer.router(path.resolve(__dirname + '/data.json'));
+const router = jsonServer.router('/data.json');
 const middlewares = jsonServer.defaults({
-    static: path.resolve(__dirname + '/../build/')
+    static: './build/',
 });
 
 const port = process.env.PORT || 3001;
