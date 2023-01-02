@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "name": "dfa",
+      "color": "c7adad",
+      "img": "https://ifh.cc/g/RxT0yX.png",
+      "id": 1
+    },
+    {
+      "name": "dafdf",
+      "color": "dec0c0",
+      "img": "https://ifh.cc/g/RxT0yX.png",
+      "id": 2
+    }
+  ],
+  "comments": []
+}

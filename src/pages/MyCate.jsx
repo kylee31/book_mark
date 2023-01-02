@@ -16,7 +16,7 @@ export default function MyBlog() {
     const [id, setId] = useState("");
 
     useLayoutEffect(() => {
-        axios.get(`https://book-marking.herokuapp.com/users`)
+        axios.get(`http://localhost:3001/users`)
             .then(res => {
                 return res.data
             })
@@ -27,7 +27,7 @@ export default function MyBlog() {
     }, []);
 
     useLayoutEffect(() => {
-        axios.get(`https://book-marking.herokuapp.com/comments`)
+        axios.get(`http://localhost:3001/comments`)
             .then(res => {
                 return res.data
             })
@@ -39,7 +39,7 @@ export default function MyBlog() {
 
     function onDelete() {
         if (window.confirm("카테고리를 삭제하시겠습니까?")) {
-            axios.delete(`https://book-marking.herokuapp.com/users/${id}`)
+            axios.delete(`http://localhost:3001/users/${id}`)
                 .then((res => {
                     history(`/`);
                 }))

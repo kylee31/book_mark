@@ -17,7 +17,7 @@ export default function BookMark() {
         setText("");
         setTitle("");
         setLink("");
-        axios.post(`https://book-marking.herokuapp.com/comments/`, {
+        axios.post(`http://localhost:3001/comments/`, {
             name: name,
             title: title,
             link: link,
@@ -53,7 +53,7 @@ export default function BookMark() {
     }
 
     useLayoutEffect(() => {
-        axios.get(`https://book-marking.herokuapp.com/users`)
+        axios.get(`http://localhost:3001/comments/`)
             .then(res => {
                 return res.data
             })

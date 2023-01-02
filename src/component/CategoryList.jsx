@@ -8,7 +8,7 @@ export default function CategoryList() {
 
     const [data, setData] = useState([]);
     useLayoutEffect(() => {
-        axios.get(`https://book-marking.herokuapp.com/users`)
+        axios.get(`http://localhost:3001/users`)
             .then(res => {
                 return res.data
             })
