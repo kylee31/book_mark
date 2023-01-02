@@ -53,7 +53,7 @@ export default function BookMark() {
     }
 
     useLayoutEffect(() => {
-        axios.get(`http://localhost:3001/comments/`)
+        axios.get(`http://localhost:3001/users/`)
             .then(res => {
                 return res.data
             })
