@@ -16,7 +16,7 @@ export default function MyBlog() {
     const [id, setId] = useState("");
 
     useLayoutEffect(() => {
-        axios.get(`http://localhost:3001/users`)
+        axios.get(`http://localhost:3001/cate`)
             .then(res => {
                 return res.data
             })
@@ -27,7 +27,7 @@ export default function MyBlog() {
     }, []);
 
     useLayoutEffect(() => {
-        axios.get(`http://localhost:3001/comments`)
+        axios.get(`http://localhost:3001/link`)
             .then(res => {
                 return res.data
             })
@@ -39,9 +39,9 @@ export default function MyBlog() {
 
     function onDelete() {
         if (window.confirm("카테고리를 삭제하시겠습니까?")) {
-            axios.delete(`http://localhost:3001/users/${id}`)
+            axios.delete(`http://localhost:3001/cate/${id}`)
                 .then((res => {
-                    history(`/`);
+                    history(`/main`);
                 }))
                 .catch(e => console.log(e))
         }
@@ -55,7 +55,7 @@ export default function MyBlog() {
 
     const history = useNavigate();
     function onLocation() {
-        history("/");
+        history("/main");
     };
 
     return (

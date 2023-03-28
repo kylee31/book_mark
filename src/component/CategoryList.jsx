@@ -1,14 +1,20 @@
-import axios from "axios";
+//import axios from "axios";
 import { useState } from "react";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
+
+import { getDocs, collection, query, where } from 'firebase/firestore'
+import { db } from '../fbase';
 
 export default function CategoryList() {
 
     const [data, setData] = useState([]);
-    useLayoutEffect(() => {
-        axios.get(`http://localhost:3001/users`)
+    const cate = collection(db, 'cate');
+    const arr = [];
+
+    useEffect(() => {
+        /*axios.get(`http://localhost:3001/cate`)
             .then(res => {
                 return res.data
             })
@@ -16,6 +22,17 @@ export default function CategoryList() {
                 const sortData = data.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
                 setData(sortData);
             })
+        */
+        async function getInfo() {
+            const myData = query(cate, where("uid", "==", "1"));
+            const querySnapshot = await getDocs(myData);
+            await querySnapshot.forEach((doc) => {
+                arr.push(doc.data())
+                console.log(arr)
+            });
+            setData(arr.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
+        }
+        getInfo();
     }, []);
 
     return (

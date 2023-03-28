@@ -17,7 +17,7 @@ export default function BookMark() {
         setText("");
         setTitle("");
         setLink("");
-        axios.post(`http://localhost:3001/comments/`, {
+        axios.post(`http://localhost:3001/link/`, {
             name: name,
             title: title,
             link: link,
@@ -53,7 +53,7 @@ export default function BookMark() {
     }
 
     useLayoutEffect(() => {
-        axios.get(`http://localhost:3001/users/`)
+        axios.get(`http://localhost:3001/cate/`)
             .then(res => {
                 return res.data
             })

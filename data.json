@@ -1,17 +1,32 @@
 {
-  "users": [
+  "cate": [
     {
-      "name": "dfa",
-      "color": "c7adad",
+      "name": "이력서",
+      "color": "97d2dd",
       "img": "https://ifh.cc/g/RxT0yX.png",
       "id": 1
     },
     {
-      "name": "dafdf",
-      "color": "dec0c0",
+      "name": "프론트엔드 강의",
+      "color": "cfeec8",
       "img": "https://ifh.cc/g/RxT0yX.png",
       "id": 2
     }
   ],
-  "comments": []
+  "link": [
+    {
+      "name": "이력서",
+      "title": "신입 프론트엔드 개발자 취업과정부터 필요한 능력까지",
+      "link": "https://sunnykim91.tistory.com/135",
+      "txt": "Part1 취업과정 (feat.주니어 개발자)",
+      "id": 1
+    },
+    {
+      "name": "프론트엔드 강의",
+      "title": "[원티드] 프리온보딩 프론트엔드",
+      "link": "https://www.wanted.co.kr/events/pre_challenge_fe_7",
+      "txt": "3월 - 4월 커리큘럼",
+      "id": 2
+    }
+  ]
 }

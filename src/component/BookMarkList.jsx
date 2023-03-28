@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function BookMarkList({ cmt, myname, del, setDel }) {
 
     function onLinkDel(e) {
-        axios.delete(`http://localhost:3001/comments/${e}`)
+        axios.delete(`http://localhost:3001/link/${e}`)
             .then(res => {
                 !del ? setDel(true) : setDel(false);
             });

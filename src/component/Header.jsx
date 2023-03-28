@@ -1,19 +1,46 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { authService } from "../fbase";
+
+const AddBlogButton = styled.button`
+    background-color:blue;
+    color:white;
+    &+&{
+        margin-left:20px;
+    }
+`;
 
 export default function Header() {
-
-    const history = useNavigate();
-    function main() {
-        history(`/createblog`);
+    const navigate = useNavigate();
+    function createBlog() {
+        navigate(`/createblog`);
     }
+
+    function logout() {
+        if (window.confirm("로그아웃 하시겠습니까?")) {
+            authService.signOut()
+            navigate(`/`)
+        }
+        else {
+        }
+    }
+
+    function main() {
+        //console.log(authService.currentUser);
+        authService.currentUser !== null ? navigate(`/main`) : <></>
+    }
+
     return (
         <Div>
-            <Title><Link to="/">BOOK-MARK</Link></Title>
-            <div style={{ marginLeft: "700px" }}>
-                <AddBlogButton onClick={main}>카테고리 생성</AddBlogButton>
-            </div>
+            <Title><span onClick={main}>BOOK-MARK</span></Title>
+            {
+                authService.currentUser ?
+                    <div>
+                        <AddBlogButton onClick={createBlog}>카테고리 생성</AddBlogButton>
+                        <AddBlogButton onClick={logout}>로그아웃</AddBlogButton>
+                    </div> : null
+            }
         </Div>
     );
 }
@@ -31,12 +58,6 @@ const Div = styled.div`
 const Title = styled.span`
     font-size:2rem;
     margin-bottom:20px;
+    cursor:pointer;
 `;
 
-const AddBlogButton = styled.button`
-    background-color:blue;
-    color:white;
-    &+&{
-        margin-left:20px;
-    }
-`;

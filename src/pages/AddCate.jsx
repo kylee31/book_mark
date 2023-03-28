@@ -15,7 +15,7 @@ export default function AddCate() {
     const [same, setSame] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/users`)
+        axios.get(`http://localhost:3001/cate`)
             .then(res => {
                 return res.data
             })
@@ -55,7 +55,7 @@ export default function AddCate() {
 
     function addInfo() {
         if (name !== "💬" && color !== "" && same === false) {
-            axios.post(`http://localhost:3001/users`, {
+            axios.post(`http://localhost:3001/cate`, {
                 name,
                 color,
                 img
