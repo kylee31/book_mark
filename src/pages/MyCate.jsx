@@ -2,54 +2,91 @@ import React, { useState, useLayoutEffect } from "react";
 import Profile from "../component/Profile";
 import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
-import BookMarkList from "../component/BookMarkList";
+import LinkList from "../component/LinkList";
 import axios from 'axios';
+import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { authService, db } from "../fbase";
 
-export default function MyBlog() {
+export default function MyCate() {
     const location = useLocation();
     const myname = location.state.myname;
     const myimg = location.state.myimg;
     const mycolor = location.state.mycolor;
 
-    const [cmt, setComments] = useState([]);
+    const [links, setLinks] = useState([]);
     const [del, setDel] = useState(false);
-    const [id, setId] = useState("");
+    const [id, setId] = useState();
+
+    const [userUid, setUserUid] = useState("");
+    const flink = collection(db, 'link');
+    const cate = collection(db, 'cate');
+    const arr = [];
 
     useLayoutEffect(() => {
-        axios.get(`http://localhost:3001/cate`)
-            .then(res => {
-                return res.data
+        //현재 카테고리 문서명 가져오기 (카테고리 삭제 위해서)
+        async function getCateId() {
+            await authService.onAuthStateChanged(user => {
+                if (user) {
+                    setUserUid(authService.currentUser.uid);
+                }
+                else { }
             })
-            .then(e => {
-                const blog = e.filter(data => data.name === myname);
-                setId(blog[0].id);
-            })
-    }, []);
+            const myData = query(cate, where("uid", "==", userUid));
+            const querySnapshot = await getDocs(myData);
+            await querySnapshot.forEach((doc) => {
+                if (doc.data().name === myname) {
+                    setId(doc.id);
+                }
+            });
+        }
+        getCateId();
+    })
 
     useLayoutEffect(() => {
-        axios.get(`http://localhost:3001/link`)
+        //링크 데이터 읽어오기 (uid로 불러온 뒤, 카테고리 name이 동일한)
+        async function getLink() {
+            await authService.onAuthStateChanged(user => {
+                if (user) {
+                    setUserUid(authService.currentUser.uid);
+                }
+                else { }
+            })
+            const myData = query(flink, where("uid", "==", userUid));
+            const querySnapshot = await getDocs(myData);
+            await querySnapshot.forEach((doc) => {
+                if (doc.data().name === myname) {
+                    arr.push(doc.data())
+                }
+            });
+            setLinks(arr);
+        }
+        getLink();
+        /*axios.get(`http://localhost:3001/link`)
             .then(res => {
                 return res.data
             })
             .then(e => {
                 const myComments = e.filter(data => data.name === myname);
                 setComments(myComments);
-            })
-    }, [del])
+            })*/
+    }, [userUid, del])
 
-    function onDelete() {
+    async function onDelete() {
+        //현재 카테고리 데이터 삭제하기
         if (window.confirm("카테고리를 삭제하시겠습니까?")) {
-            axios.delete(`http://localhost:3001/cate/${id}`)
+            /*axios.delete(`http://localhost:3001/cate/${myId}`)
                 .then((res => {
                     history(`/main`);
                 }))
-                .catch(e => console.log(e))
+                .catch(e => console.log(e))*/
+            await deleteDoc(doc(cate, id));
+            await history(`/main`);
         }
     }
 
     function bookMark() {
         return (<>
-            <BookMarkList cmt={cmt} myname={myname} del={del} setDel={setDel} />
+            <LinkList links={links} myname={myname} del={del} setDel={setDel} />
         </>);
     }
 

@@ -1,18 +1,20 @@
-import axios from "axios";
+import { collection, deleteDoc, doc } from "firebase/firestore";
 import styled from "styled-components";
+import { db } from "../fbase";
 
-export default function BookMarkList({ cmt, myname, del, setDel }) {
+export default function LinkList({ links, del, setDel }) {
 
-    function onLinkDel(e) {
-        axios.delete(`http://localhost:3001/link/${e}`)
-            .then(res => {
-                !del ? setDel(true) : setDel(false);
-            });
+    const flink = collection(db, 'link');
+
+    async function onLinkDel(e) {
+        //console.log(links[0].id);
+        await deleteDoc(doc(flink, e))
+        await !del ? setDel(true) : setDel(false);
     }
 
     return (
         <>
-            {cmt.filter(c => c.name === myname).map((c, index) => {
+            {links.map((c, index) => {
                 return <Div key={index}>
                     <a className="link" href={c.link} target='_blank' rel="noreferrer">{c.title}</a>
                     <DelButton onClick={() => { onLinkDel(c.id) }}>❌</DelButton>

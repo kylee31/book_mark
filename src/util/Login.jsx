@@ -9,7 +9,16 @@ function Login() {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-        return userData ? navigate(`/main`) : navigate(`/`)
+        //return userData ? navigate(`/main`) : navigate(`/`)
+        if (userData) {
+            //로그인 여부 저장
+            localStorage.setItem('user', true)
+            navigate(`/main`)
+        }
+        else {
+            localStorage.setItem('user', false)
+            navigate(`/`)
+        }
     }, [userData])
 
     function Login() {

@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
+import { getDocs, collection, query, where, setDoc, doc } from 'firebase/firestore'
+import { authService, db } from '../fbase';
 
-export default function BookMark() {
+export default function CreateLink() {
 
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
@@ -13,16 +15,32 @@ export default function BookMark() {
     const [color, setColor] = useState("");
     const [data, setData] = useState([]);
 
-    function information() {
+    const [userUid, setUserUid] = useState("");
+    const cate = collection(db, 'cate');
+    const flink = collection(db, 'link');
+    const arr = [];
+    const [newId, setId] = useState("1");
+
+    async function information() {
         setText("");
         setTitle("");
         setLink("");
+        //link data 저장
+        await setDoc(doc(flink, String(newId)), {
+            name: name,
+            title: title,
+            link: link,
+            txt: text,
+            uid: userUid,
+            id: newId
+        });
+        /*
         axios.post(`http://localhost:3001/link/`, {
             name: name,
             title: title,
             link: link,
             txt: text,
-        })
+        })*/
     };
 
     function onSetText(e) {
@@ -53,22 +71,42 @@ export default function BookMark() {
     }
 
     useLayoutEffect(() => {
-        axios.get(`http://localhost:3001/cate/`)
-            .then(res => {
-                return res.data
-            })
-            .then(
-                data => {
-                    if (data.length !== 0) {
-                        const sortData = data.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
-                        setData(sortData);
-                        setName(data[0].name);
-                        setImg(data[0].img);
-                        setColor(data[0].color);
-                    }
+        //cate 데이터 읽기
+        async function getInfo() {
+            //로그인한 user의 uid 찾아서 cate 데이터 읽어오기
+            await authService.onAuthStateChanged(user => {
+                if (user) {
+                    setUserUid(authService.currentUser.uid);
                 }
-            )
-    }, []);
+                else { }
+            })
+            const myData = query(cate, where("uid", "==", userUid));
+            const querySnapshot = await getDocs(myData);
+            await querySnapshot.forEach((doc) => {
+                arr.push(doc.data())
+            });
+
+            if (arr.length > 0) {
+                const sortData = arr.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+                setData(sortData);
+                setName(arr[0].name);
+                setImg(arr[0].img);
+                setColor(arr[0].color);
+            }
+        }
+        getInfo();
+    }, [userUid]);
+
+    useLayoutEffect(() => {
+        async function getLink() {
+            const myLink = query(flink, where("uid", "==", userUid));
+            const links = await getDocs(myLink);
+            await links.forEach((doc) => {
+                setId(Number(doc.id) + 1);
+            });
+        }
+        getLink();
+    }, [information])
 
     useEffect(() => {
         setName(name);

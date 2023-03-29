@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { authService } from "../fbase";
@@ -13,8 +13,15 @@ const AddBlogButton = styled.button`
 
 export default function Header() {
     const navigate = useNavigate();
-    function createBlog() {
-        navigate(`/createblog`);
+    const [userInfo, setUserInfo] = useState(false);
+    const isLogin = localStorage.getItem('user');
+
+    useEffect(() => {
+        isLogin === "true" ? setUserInfo(true) : setUserInfo(false)
+    }, [isLogin])
+
+    function createCate() {
+        navigate(`/createcate`);
     }
 
     function logout() {
@@ -27,17 +34,16 @@ export default function Header() {
     }
 
     function main() {
-        //console.log(authService.currentUser);
-        authService.currentUser !== null ? navigate(`/main`) : <></>
+        userInfo ? navigate(`/main`) : <></>
     }
 
     return (
         <Div>
             <Title><span onClick={main}>BOOK-MARK</span></Title>
             {
-                authService.currentUser ?
+                userInfo ?
                     <div>
-                        <AddBlogButton onClick={createBlog}>카테고리 생성</AddBlogButton>
+                        <AddBlogButton onClick={createCate}>카테고리 생성</AddBlogButton>
                         <AddBlogButton onClick={logout}>로그아웃</AddBlogButton>
                     </div> : null
             }

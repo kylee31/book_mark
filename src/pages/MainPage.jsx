@@ -1,5 +1,5 @@
 import CategoryList from "../component/CategoryList";
-import BookMark from "../component/BookMark";
+import CreateLink from "../component/CreateLink";
 
 export default function MainPage() {
 
@@ -7,7 +7,7 @@ export default function MainPage() {
         <div>
             <div style={{ marginLeft: "850px" }}>
             </div>
-            <BookMark />
+            <CreateLink />
             <CategoryList />
         </div>
     );

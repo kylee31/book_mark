@@ -5,7 +5,7 @@ export default function CategoryItem({ img, name, color }) {
 
     const history = useNavigate();
     function onBookMark() {
-        history(`/blog/${name}`, { state: { myname: name, myimg: img, mycolor: color } });
+        history(`/cate/${name}`, { state: { myname: name, myimg: img, mycolor: color } });
     }
 
     return (

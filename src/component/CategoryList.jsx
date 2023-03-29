@@ -3,13 +3,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
-
 import { getDocs, collection, query, where } from 'firebase/firestore'
-import { db } from '../fbase';
+import { authService, db } from '../fbase';
 
 export default function CategoryList() {
 
     const [data, setData] = useState([]);
+    const [userUid, setUserUid] = useState("");
     const cate = collection(db, 'cate');
     const arr = [];
 
@@ -24,16 +24,23 @@ export default function CategoryList() {
             })
         */
         async function getInfo() {
-            const myData = query(cate, where("uid", "==", "1"));
+            //로그인한 user의 uid 찾아서 cate 데이터 읽어오기
+            await authService.onAuthStateChanged(user => {
+                if (user) {
+                    setUserUid(authService.currentUser.uid);
+                }
+                else { }
+            })
+            const myData = query(cate, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
             await querySnapshot.forEach((doc) => {
                 arr.push(doc.data())
-                console.log(arr)
+                //console.log(arr)
             });
             setData(arr.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
         }
         getInfo();
-    }, []);
+    }, [userUid]);
 
     return (
         <>
