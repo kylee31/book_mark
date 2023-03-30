@@ -121,7 +121,7 @@ export default function CreateLink() {
                 {name === "" ? undefined :
                     <Select onChange={onSetCate}>
                         {data.map((item, index) => {
-                            return (<option key={item.id} name="cate" value={item.name}>{item.name}</option>)
+                            return (<option key={item.name} name="cate" value={item.name}>{item.name}</option>)
                         })}
                     </Select>
                 }<br />

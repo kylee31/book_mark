@@ -1,52 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { authService } from "../fbase";
-
-const AddBlogButton = styled.button`
-    background-color:blue;
-    color:white;
-    &+&{
-        margin-left:20px;
-    }
-`;
+import { isLogin } from "../util/isLogin";
 
 export default function Header() {
     const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useState(false);
-    const isLogin = localStorage.getItem('user');
-
-    useEffect(() => {
-        isLogin === "true" ? setUserInfo(true) : setUserInfo(false)
-    }, [isLogin])
-
-    function createCate() {
-        navigate(`/createcate`);
-    }
-
-    function logout() {
-        if (window.confirm("로그아웃 하시겠습니까?")) {
-            authService.signOut()
-            navigate(`/`)
-        }
-        else {
-        }
-    }
+    const loc = useLocation();
 
     function main() {
-        userInfo ? navigate(`/main`) : <></>
+        if (isLogin() && loc.pathname !== '/') {
+            navigate(`/main`);
+            console.log()
+        }
+        else { }
     }
 
     return (
         <Div>
             <Title><span onClick={main}>BOOK-MARK</span></Title>
-            {
-                userInfo ?
-                    <div>
-                        <AddBlogButton onClick={createCate}>카테고리 생성</AddBlogButton>
-                        <AddBlogButton onClick={logout}>로그아웃</AddBlogButton>
-                    </div> : null
-            }
         </Div>
     );
 }
@@ -57,13 +28,12 @@ const Div = styled.div`
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    height:150px;
+    height:100px;
     min-width:900px;
 `;
 
 const Title = styled.span`
     font-size:2rem;
-    margin-bottom:20px;
     cursor:pointer;
 `;
 

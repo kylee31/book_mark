@@ -11,24 +11,28 @@ function Login() {
     useEffect(() => {
         //return userData ? navigate(`/main`) : navigate(`/`)
         if (userData) {
-            //로그인 여부 저장
-            localStorage.setItem('user', true)
+            //로그인 여부 저장 token
+            sessionStorage.setItem('token', userData)
             navigate(`/main`)
         }
         else {
-            localStorage.setItem('user', false)
             navigate(`/`)
         }
     }, [userData])
 
-    function Login() {
+    function loginHandler() {
         const provider = new GoogleAuthProvider(); // provider를 구글로 설정
+        //로그인 후 계정이 바로 연동되는 상황 방지
+        provider.setCustomParameters({
+            prompt: 'select_account'
+        });
         setPersistence(authService, browserSessionPersistence)
             .then(() => {
                 return signInWithPopup(authService, provider) // popup을 이용한 signup
                     .then((data) => {
-                        setUserData(data.user); // user data 설정
-                        //console.log(data) // console로 들어온 데이터 표시
+                        const credential = GoogleAuthProvider.credentialFromResult(data);
+                        const token = credential.accessToken;
+                        setUserData(token); // user data 설정
                     })
                     .catch((err) => {
                         console.log(err);
@@ -43,7 +47,7 @@ function Login() {
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             Welcome!<br />
-            <button onClick={Login}>Login</button>
+            <button onClick={loginHandler}>Login</button>
         </div>
     );
 }

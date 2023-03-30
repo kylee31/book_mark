@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Profile from "../component/Profile";
-import axios from "axios";
 import { getDocs, collection, query, where, setDoc, doc } from 'firebase/firestore'
 import { authService, db } from '../fbase';
 
@@ -37,7 +36,7 @@ export default function AddCate() {
             const querySnapshot = await getDocs(myData);
             await querySnapshot.forEach((doc) => {
                 arr.push(doc.data().name);
-                setId(Number(doc.id) + 1);
+                setId(Number(doc.id));
             });
             setNameList(arr)
         }
@@ -85,7 +84,7 @@ export default function AddCate() {
         //카테고리 데이터 생성하기
         if (name !== "💬" && color !== "" && same === false) {
             //문서이름을 id로 지정
-            await setDoc(doc(cate, String(newId)), {
+            await setDoc(doc(cate, String(newId + 1)), {
                 name: name,
                 color: color,
                 img: img,
