@@ -38,8 +38,6 @@
 - 생성된 카테고리 페이지 (저장된 링크 및 메모 확인 가능) <br>
   <image src="https://user-images.githubusercontent.com/106156087/232790610-77a5c189-a9d9-4443-a78e-44f38af1aade.png" width="600">
 
-  <br><br>
-
 ## 호스팅 링크
 
 [Book Mark](https://book-mark-db594.web.app/)
