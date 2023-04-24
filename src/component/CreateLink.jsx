@@ -1,11 +1,10 @@
-import axios from "axios";
 import { useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { getDocs, collection, query, where, setDoc, doc } from 'firebase/firestore'
 import { authService, db } from '../fbase';
 
-export default function CreateLink() {
+function CreateLink() {
 
     const [text, setText] = useState("");
     const [title, setTitle] = useState("");
@@ -138,6 +137,8 @@ export default function CreateLink() {
         </Box>
     );
 }
+
+export default CreateLink;
 
 //styled-components
 const Box = styled.div`

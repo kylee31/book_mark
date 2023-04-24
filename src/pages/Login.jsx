@@ -4,15 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const LoginBtn = styled.button`
-    margin-top:50px;
-    width:300px;
-    height:50px;
-    border:0px;
-    border-radius:0px;
-    box-shadow: 5px 5px 5px rgba(133, 133, 133, 0.3);
-`
-
 function Login() {
 
     const navigate = useNavigate();
@@ -54,15 +45,35 @@ function Login() {
     }
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Div>
             Welcome!
             <img id="logo" src="img/bookmark.png" alt="" />
             <LoginBtn onClick={loginHandler}>
-                <img id="google" src="img/google.png" alt="" style={{ verticalAlign: "middle", marginRight: "10px" }} />
+                <Img id="google" src="img/google.png" alt="" />
                 Google Login
             </LoginBtn>
-        </div>
+        </Div>
     );
 }
 
 export default Login;
+
+const Div = styled.div`
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+`
+
+const Img = styled.img`
+    vertical-align: middle;
+    margin-right: 10px;
+`
+
+const LoginBtn = styled.button`
+    margin-top:50px;
+    width:300px;
+    height:50px;
+    border:0px;
+    border-radius:0px;
+    box-shadow: 5px 5px 5px rgba(133, 133, 133, 0.3);
+`

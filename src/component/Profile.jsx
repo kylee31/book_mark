@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Profile({ myname, img }) {
+function Profile({ myname, img }) {
 
     return (
         <Div>
@@ -10,6 +10,8 @@ export default function Profile({ myname, img }) {
         </Div>
     );
 }
+
+export default Profile;
 
 //styled-components
 const Div = styled.div`

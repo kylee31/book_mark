@@ -21,15 +21,21 @@ function Button() {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+        <Btn>
             <AddBlogButton onClick={createCate}>카테고리 생성</AddBlogButton>
             <AddBlogButton onClick={logout}>로그아웃</AddBlogButton>
-        </div>
+        </Btn>
 
     )
 }
 
 export default Button;
+
+const Btn = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+`
 
 const AddBlogButton = styled.button`
     background-color:blue;

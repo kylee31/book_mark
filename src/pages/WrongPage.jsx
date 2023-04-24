@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
-export default function WrongPage() {
+function WrongPage() {
     return (
         <Div>
             잘못된 접근입니다😓
         </Div>
     );
 }
+
+export default WrongPage;
 
 //styled-components
 const Div = styled.div`

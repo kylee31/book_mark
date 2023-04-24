@@ -3,11 +3,10 @@ import Profile from "../component/Profile";
 import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
 import LinkList from "../component/LinkList";
-import axios from 'axios';
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { authService, db } from "../fbase";
 
-export default function MyCate() {
+function MyCate() {
     const location = useLocation();
     const myname = location.state.myname;
     const myimg = location.state.myimg;
@@ -84,12 +83,6 @@ export default function MyCate() {
         }
     }
 
-    function bookMark() {
-        return (<>
-            <LinkList links={links} myname={myname} del={del} setDel={setDel} />
-        </>);
-    }
-
     const history = useNavigate();
     function onLocation() {
         history("/main");
@@ -99,15 +92,17 @@ export default function MyCate() {
         <Blog $color={`#${mycolor}`}>
             <Profile myname={myname} img={myimg} /><br />
             <MyBookMark>
-                {bookMark()}
+                <LinkList links={links} myname={myname} del={del} setDel={setDel} />
             </MyBookMark>
-            <Button>
-                <button onClick={onLocation} style={{ height: "20px", marginRight: "20px" }}>돌아가기</button>
-                <button onClick={() => { onDelete(); }} style={{ height: "20px" }}>카테고리 삭제</button>
-            </Button>
+            <Div>
+                <Btn onClick={onLocation}>돌아가기</Btn>
+                <DelBtn onClick={() => { onDelete(); }}>카테고리 삭제</DelBtn>
+            </Div>
         </Blog>
     );
 }
+
+export default MyCate;
 
 //styled-components
 const MyBookMark = styled.div`
@@ -131,8 +126,16 @@ const Blog = styled.div`
     background-color:${props => props.$color}
 `;
 
-const Button = styled.div`
+const Div = styled.div`
     display:flex;
     flex-direction:row;
     margin-bottom:40px;
 `;
+
+const Btn = styled.button`
+    height:20px;
+`
+
+const DelBtn = styled(Btn)`
+    margin-left:20px;
+`

@@ -2,7 +2,7 @@ import Button from "../component/Button";
 import CategoryList from "../component/CategoryList";
 import CreateLink from "../component/CreateLink";
 
-export default function MainPage() {
+function MainPage() {
 
     return (
         <div>
@@ -12,3 +12,5 @@ export default function MainPage() {
         </div>
     );
 }
+
+export default MainPage;

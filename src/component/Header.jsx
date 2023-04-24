@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { isLogin } from "../util/isLogin";
 
-export default function Header() {
+function Header() {
     const navigate = useNavigate();
     const loc = useLocation();
 
@@ -22,6 +22,8 @@ export default function Header() {
     );
 }
 
+export default Header;
+
 //styled-components
 const Div = styled.div`
     display:flex;
@@ -29,7 +31,6 @@ const Div = styled.div`
     align-items:center;
     flex-direction:column;
     height:100px;
-    min-width:900px;
 `;
 
 const Title = styled.span`

@@ -5,8 +5,7 @@ import Profile from "../component/Profile";
 import { getDocs, collection, query, where, setDoc, doc } from 'firebase/firestore'
 import { authService, db } from '../fbase';
 
-
-export default function AddCate() {
+function AddCate() {
 
     const history = useNavigate();
 
@@ -103,22 +102,23 @@ export default function AddCate() {
                 });*/
         }
         else if (same === true) alert("동일한 이름이 존재합니다! 다른 이름으로 작성해주세요");
-        else if ((name === "💬" && same === false) || (color === "" && same === false)) alert("ID와 Color 모두 작성해주세요!");
+        else alert("ID와 Color 모두 작성해주세요!");
     }
 
     return (
         <div>
             <AddCategory>
                 <label>IMG선택 <input type="file" accept="image/*" onChange={myImg} /></label>
-                <label style={{ marginRight: "20px" }}>카테고리 입력 <input style={{ height: "20px" }} type="text" maxLength="10" onChange={myName} /></label>
+                <Label>카테고리 입력 <input height="20px" type="text" maxLength="10" onChange={myName} /></Label>
                 <label>COLOR선택 <input type="color" onChange={myColor} /></label>
             </AddCategory>
             <Blog $color={`#${color}`}>
                 <Profile myname={name} img={img} /><br />
                 <Div>
                     <Bookmark>
-                        <span style={{ padding: "0 5px" }}>예시(생성될 카테고리 미리보기)</span>
-                        <span style={{ borderLeft: "2px solid grey", padding: "0 5px", color: "grey" }}>북마크 설명란 ❌</span>
+                        {/*링크 예제 이미지 수정 필요*/}
+                        <Span>예시(생성될 카테고리 미리보기)</Span>
+                        <DelSpan>북마크 설명란 ❌</DelSpan>
                     </Bookmark>
                 </Div>
             </Blog>
@@ -128,6 +128,8 @@ export default function AddCate() {
         </div>
     );
 }
+
+export default AddCate;
 
 //styled-components
 const AddCategory = styled.div`
@@ -141,6 +143,10 @@ const AddCategory = styled.div`
     margin-bottom:10px;
 `;
 
+const Label = styled.label`
+    margin-right: 20px;
+`
+
 const Div = styled.div`
     margin: 40px;
     width: 600px;
@@ -151,6 +157,15 @@ const Bookmark = styled.div`
     background-color: #fff;
     border-radius:5px;
 `;
+
+const Span = styled.span`
+    padding:0 5px;
+`
+
+const DelSpan = styled(Span)`
+    border-left: 2px solid grey;
+    color: grey;
+`
 
 const Button = styled.p`
     display:flex;

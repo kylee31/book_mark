@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function CategoryItem({ img, name, color }) {
+function CategoryItem({ img, name, color }) {
 
     const history = useNavigate();
     function onBookMark() {
@@ -15,6 +15,8 @@ export default function CategoryItem({ img, name, color }) {
         </ Box >
     );
 };
+
+export default CategoryItem;
 
 //styled-components
 const Box = styled.div`

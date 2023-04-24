@@ -6,7 +6,7 @@ import CategoryItem from "./CategoryItem";
 import { getDocs, collection, query, where } from 'firebase/firestore'
 import { authService, db } from '../fbase';
 
-export default function CategoryList() {
+function CategoryList() {
 
     const [data, setData] = useState([]);
     const [userUid, setUserUid] = useState("");
@@ -44,9 +44,9 @@ export default function CategoryList() {
 
     return (
         <>
-            <div style={{ marginRight: "700px" }}>
+            <Logo>
                 <Span>CATEGORY</Span>
-            </div>
+            </Logo>
             <Box>
                 {data.map((item, index) => {
                     return <CategoryItem key={index} img={item.img} name={item.name} color={item.color} />
@@ -56,7 +56,13 @@ export default function CategoryList() {
     );
 }
 
+export default CategoryList;
+
 //styled-compoentns
+const Logo = styled.div`
+    margin-right:700px;
+`
+
 const Span = styled.span`
     display:flex;
     justify-content:center;
