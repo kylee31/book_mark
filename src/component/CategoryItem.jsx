@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 function CategoryItem({ img, name, color }) {
 
-    const history = useNavigate();
+    const navigate = useNavigate();
     function onBookMark() {
-        history(`/cate/${name}`, { state: { myname: name, myimg: img, mycolor: color } });
+        navigate(`/cate/${name}`, { state: { myname: name, myimg: img, mycolor: color } });
     }
 
     return (

@@ -7,7 +7,7 @@ import { authService, db } from '../fbase';
 
 function AddCate() {
 
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const [name, setName] = useState("💬");
     const [color, setColor] = useState("");
@@ -90,7 +90,7 @@ function AddCate() {
                 uid: userUid
             });
             await alert("생성 완료! 새로운 카테고리에 북마크 저장하세요");
-            await history(`/main`);
+            await navigate(`/main`);
             /*axios.post(`http://localhost:3001/cate`, {
                 name,
                 color,

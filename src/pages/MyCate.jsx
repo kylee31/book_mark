@@ -12,6 +12,8 @@ function MyCate() {
     const myimg = location.state.myimg;
     const mycolor = location.state.mycolor;
 
+    const navigate = useNavigate();
+
     const [links, setLinks] = useState([]);
     const [del, setDel] = useState(false);
     const [id, setId] = useState();
@@ -78,14 +80,18 @@ function MyCate() {
                     history(`/main`);
                 }))
                 .catch(e => console.log(e))*/
+            const subData = query(flink, where("name", "==", myname));
+            const querySnapshot = await getDocs(subData);
+            await querySnapshot.docs.map((d) => {
+                deleteDoc(doc(flink, String(d.data().id)));
+            });
             await deleteDoc(doc(cate, id));
-            await history(`/main`);
+            await navigate(`/main`);
         }
     }
 
-    const history = useNavigate();
     function onLocation() {
-        history("/main");
+        navigate("/main");
     };
 
     return (
