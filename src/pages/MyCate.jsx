@@ -80,10 +80,13 @@ function MyCate() {
                     history(`/main`);
                 }))
                 .catch(e => console.log(e))*/
-            const subData = query(flink, where("name", "==", myname));
-            const querySnapshot = await getDocs(subData);
+            //로그인한 사용자 관련 링크 데이터 찾고, 삭제하는 카테고리명과 같은 name가진 링크 찾아서 delete
+            const myData = query(flink, where("uid", "==", userUid));
+            const querySnapshot = await getDocs(myData);
             await querySnapshot.docs.map((d) => {
-                deleteDoc(doc(flink, String(d.data().id)));
+                if (d.data().name === myname) {
+                    deleteDoc(doc(flink, String(d.data().id)));
+                }
             });
             await deleteDoc(doc(cate, id));
             await navigate(`/main`);
