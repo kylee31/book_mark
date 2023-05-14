@@ -14,15 +14,6 @@ function CategoryList() {
     const arr = [];
 
     useEffect(() => {
-        /*axios.get(`http://localhost:3001/cate`)
-            .then(res => {
-                return res.data
-            })
-            .then(data => {
-                const sortData = data.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
-                setData(sortData);
-            })
-        */
         async function getInfo() {
             //로그인한 user의 uid 찾아서 cate 데이터 읽어오기
             await authService.onAuthStateChanged(user => {

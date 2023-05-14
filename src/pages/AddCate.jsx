@@ -14,12 +14,28 @@ function AddCate() {
     const [img, setImg] = useState("https://ifh.cc/g/RxT0yX.png");
     const [nameList, setNameList] = useState([]);
     const [same, setSame] = useState(false);
+    const [newId, setId] = useState(0);
 
     const [userUid, setUserUid] = useState("");
     const cate = collection(db, 'cate');
     const arr = [];
-    const [newId, setId] = useState(0);
 
+    async function addInfo() {
+        //카테고리 데이터 생성하기
+        if (name !== "💬" && color !== "" && same === false) {
+            //문서이름을 id로 지정
+            await setDoc(doc(cate, String(newId)), {
+                name: name,
+                color: color,
+                img: img,
+                uid: userUid
+            });
+            await alert("생성 완료! 새로운 카테고리에 북마크 저장하세요");
+            await navigate(`/main`);
+        }
+        else if (same === true) alert("동일한 이름이 존재합니다! 다른 이름으로 작성해주세요");
+        else alert("ID와 Color 모두 작성해주세요!");
+    }
 
     useEffect(() => {
         //카테고리 데이터 가져오기
@@ -29,27 +45,21 @@ function AddCate() {
                 if (user) {
                     setUserUid(authService.currentUser.uid);
                 }
-                else { }
             })
             const myData = query(cate, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
             await querySnapshot.forEach((doc) => {
                 arr.push(doc.data().name);
-                setId(Number(doc.id));
             });
+
+            //cate 마지막 문서 id newId에 저장
+            const lastId = await getDocs(cate);
+            await lastId.forEach((doc) => {
+                setId(Number(doc.id) + 1)
+            })
             setNameList(arr)
         }
         getInfo();
-        /*
-        axios.get(`http://localhost:3001/cate`)
-            .then(res => {
-                return res.data
-            })
-            .then(e => {
-                setNameList(e.map((e) => {
-                    return e.name;
-                }))
-            })*/
     }, [userUid]);
 
     //링크를 동일한 이름으로 찾기 때문에 동일한 카테고리 생성불가
@@ -77,32 +87,6 @@ function AddCate() {
             const previewImgUrl = reader.result;
             setImg(previewImgUrl);
         }
-    }
-
-    async function addInfo() {
-        //카테고리 데이터 생성하기
-        if (name !== "💬" && color !== "" && same === false) {
-            //문서이름을 id로 지정
-            await setDoc(doc(cate, String(newId + 1)), {
-                name: name,
-                color: color,
-                img: img,
-                uid: userUid
-            });
-            await alert("생성 완료! 새로운 카테고리에 북마크 저장하세요");
-            await navigate(`/main`);
-            /*axios.post(`http://localhost:3001/cate`, {
-                name,
-                color,
-                img
-            })
-                .then(res => {
-                    alert("생성 완료! 새로운 카테고리에 북마크 저장하세요");
-                    history(`/main`);
-                });*/
-        }
-        else if (same === true) alert("동일한 이름이 존재합니다! 다른 이름으로 작성해주세요");
-        else alert("ID와 Color 모두 작성해주세요!");
     }
 
     return (

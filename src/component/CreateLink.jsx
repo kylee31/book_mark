@@ -18,7 +18,7 @@ function CreateLink() {
     const cate = collection(db, 'cate');
     const flink = collection(db, 'link');
     const arr = [];
-    const [newId, setId] = useState("1");
+    const [newId, setId] = useState(0);
 
     async function information() {
         setText("");
@@ -33,13 +33,6 @@ function CreateLink() {
             uid: userUid,
             id: newId
         });
-        /*
-        axios.post(`http://localhost:3001/link/`, {
-            name: name,
-            title: title,
-            link: link,
-            txt: text,
-        })*/
     };
 
     function onSetText(e) {
@@ -98,8 +91,7 @@ function CreateLink() {
 
     useLayoutEffect(() => {
         async function getLink() {
-            const myLink = query(flink, where("uid", "==", userUid));
-            const links = await getDocs(myLink);
+            const links = await getDocs(flink);
             await links.forEach((doc) => {
                 setId(Number(doc.id) + 1);
             });

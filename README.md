@@ -39,7 +39,7 @@
 
 ## 호스팅 링크
 
-[Book Mark](https://book-mark-db594.web.app/)
+[📚Book Mark](https://book-mark-db594.web.app/)
 <br><br>
 
 ## 실행 영상 (youtube)
