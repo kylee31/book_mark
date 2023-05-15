@@ -6,6 +6,7 @@ function Button() {
 
     const navigate = useNavigate();
 
+
     function createCate() {
         navigate(`/createcate`);
     }
@@ -21,11 +22,12 @@ function Button() {
     }
 
     return (
-        <Btn>
-            <AddBlogButton onClick={createCate}>카테고리 생성</AddBlogButton>
-            <AddBlogButton onClick={logout}>로그아웃</AddBlogButton>
-        </Btn>
-
+        <>
+            <Btn>
+                <AddBlogButton onClick={createCate}>카테고리 생성</AddBlogButton>
+                <AddBlogButton onClick={logout}>로그아웃</AddBlogButton>
+            </Btn>
+        </>
     )
 }
 
@@ -34,6 +36,7 @@ export default Button;
 const Btn = styled.div`
     display: flex;
     justify-content: center;
+    align-items:center;
     margin-bottom: 20px;
 `
 

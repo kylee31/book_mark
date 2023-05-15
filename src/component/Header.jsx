@@ -2,10 +2,13 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { isLogin } from "../util/isLogin";
+import { getAuth } from "firebase/auth";
 
 function Header() {
     const navigate = useNavigate();
     const loc = useLocation();
+
+    const auth = getAuth().currentUser;
 
     function main() {
         if (isLogin() && loc.pathname !== '/') {
@@ -17,7 +20,7 @@ function Header() {
 
     return (
         <Div>
-            <Title><span onClick={main}>BOOK-MARK</span></Title>
+            <Title><span onClick={main}>{auth !== null ? (auth.displayName) + "'S " : ""}BOOK-MARK</span></Title>
         </Div>
     );
 }
