@@ -1,26 +1,29 @@
-import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { isLogin } from "../util/isLogin";
-import { getAuth } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { authService } from './../fbase.js'
 
 function Header() {
     const navigate = useNavigate();
     const loc = useLocation();
 
-    const auth = getAuth().currentUser;
+    const auth = authService;
+
+    //useAuthState로 auth 로딩여부 알기
+    //authName(value)는 getAuth().currentUser, loading은 로딩여부(boolean)
+    const [authName, loading] = useAuthState(auth);
 
     function main() {
         if (isLogin() && loc.pathname !== '/') {
             navigate(`/main`);
             console.log()
         }
-        else { }
     }
 
     return (
         <Div>
-            <Title><span onClick={main}>{auth !== null ? (auth.displayName) + "'S " : ""}BOOK-MARK</span></Title>
+            <Title><span onClick={main}>{(!loading && loc.pathname !== '/') ? (authName.displayName) + "'S " : ""}BOOK-MARK</span></Title>
         </Div>
     );
 }

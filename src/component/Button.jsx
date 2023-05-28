@@ -6,7 +6,6 @@ function Button() {
 
     const navigate = useNavigate();
 
-
     function createCate() {
         navigate(`/createcate`);
     }
@@ -14,7 +13,7 @@ function Button() {
     function logout() {
         if (window.confirm("로그아웃 하시겠습니까?")) {
             authService.signOut()
-            sessionStorage.removeItem('token')
+            localStorage.removeItem('token')
             navigate(`/`)
         }
         else {
@@ -41,7 +40,7 @@ const Btn = styled.div`
 `
 
 const AddBlogButton = styled.button`
-    background-color:blue;
+    background-color:#1166FF;
     color:white;
     &+&{
         margin-left:20px;

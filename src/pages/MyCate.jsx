@@ -72,7 +72,7 @@ function MyCate() {
 
     async function onDelete() {
         //현재 카테고리 데이터 삭제하기
-        if (window.confirm("카테고리를 삭제하시겠습니까?")) {
+        if (window.confirm("카테고리를 삭제하시겠습니까? (삭제 시 포함되어 있는 링크 모두 삭제됩니다.)")) {
             /*axios.delete(`http://localhost:3001/cate/${myId}`)
                 .then((res => {
                     history(`/main`);
@@ -138,7 +138,7 @@ const Div = styled.div`
 `;
 
 const Btn = styled.button`
-    height:20px;
+    height:30px;
 `
 
 const DelBtn = styled(Btn)`

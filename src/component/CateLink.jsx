@@ -18,7 +18,7 @@ export default CateLink;
 const Div = styled.div`
     background-color: #fff;
     border-radius: 5px;
-    margin-bottom:7px; 
+    margin-bottom:7px;
 `;
 
 const Comment = styled.span`

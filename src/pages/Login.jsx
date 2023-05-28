@@ -1,5 +1,5 @@
 import { authService } from '../fbase';
-import { GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ function Login() {
     useEffect(() => {
         if (userData) {
             //로그인 여부 저장 token
-            sessionStorage.setItem('token', userData)
+            localStorage.setItem('token', userData)
             navigate(`/main`)
         }
         else {
@@ -26,7 +26,7 @@ function Login() {
         provider.setCustomParameters({
             prompt: 'select_account'
         });
-        setPersistence(authService, browserSessionPersistence)
+        setPersistence(authService, browserLocalPersistence)
             .then(() => {
                 return signInWithPopup(authService, provider) // popup을 이용한 signup
                     .then((data) => {

@@ -1,7 +1,28 @@
+/*눈누 - 나는야핵인싸체 최서연*/
+@font-face {
+    font-family: 'establishnaneunyahaeginsaOTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishnaneunyahaeginsaOTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+/*눈누 - Neo둥근고딕Pro*/
+@font-face {
+    font-family: 'NeoDunggeunmoPro-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    unicode-range:U+AC00-D7A3;
+}
+
 * {
     margin: 0;
     padding: 0;
     font-weight:bold;
+    font-family: 'establishnaneunyahaeginsaOTF', 'NeoDunggeunmoPro-Regular';
 }
 body{
     background-color: #f8fcff;

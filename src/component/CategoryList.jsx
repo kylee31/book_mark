@@ -14,6 +14,7 @@ function CategoryList() {
     const arr = [];
 
     useEffect(() => {
+
         async function getInfo() {
             //로그인한 user의 uid 찾아서 cate 데이터 읽어오기
             await authService.onAuthStateChanged(user => {

@@ -111,7 +111,7 @@ function CreateLink() {
                 <img src={img} alt="" /><br />
                 {name === "" ? undefined :
                     <Select onChange={onSetCate}>
-                        {data.map((item, index) => {
+                        {data.map((item) => {
                             return (<option key={item.name} name="cate" value={item.name}>{item.name}</option>)
                         })}
                     </Select>

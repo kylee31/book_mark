@@ -1,1 +1,1 @@
-export const isLogin = () => !!sessionStorage.getItem('token');
+export const isLogin = () => !!localStorage.getItem('token');
