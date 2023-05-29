@@ -8,6 +8,7 @@
 - React로 구현한 프로젝트이며 기본적인 기능 개발 이후 서비스 향상을 위한 리팩토링 실시.
   <br>(React, JavaScript, HTML, CSS(styled-components))
 - cloud firestore로 데이터 관리.
+- firebase OAuth로 소셜 로그인 구현
 - firebase로 배포.
 
 ## 디렉토리 구조 (src/)
@@ -24,31 +25,35 @@
 ## 프로젝트 실행 (상세설명)
 
 - Login 화면 실행 (google 로그인) <br>
-  <image src="https://user-images.githubusercontent.com/106156087/232788703-dbbcdc3c-1453-405f-8ee7-4f0f70c263d1.png" width="600">
+  <image src="https://github.com/kylee31/book_mark/assets/106156087/9c856ccf-e5c0-402d-b178-a51b2c80a643.png" width="600">
 
 - Main page (카테고리 생성 button, 로그아웃 button) <br>
+
   - 카테고리에 들어갈 필요없이 선택 후 바로 링크 및 메모 저장 가능<br>
-    <image src="https://user-images.githubusercontent.com/106156087/232789090-1c19ee12-e5ce-499e-8eda-fb68ede17d4d.png" width="600">
+    <image src="https://github.com/kylee31/book_mark/assets/106156087/e44e3aa6-ee79-4841-a08d-50ca6ed524d6.png" width="600">
+
     <br> ✅ 카테고리 생성 후 링크 저장 예시 <br>
-    <image src="https://user-images.githubusercontent.com/106156087/232790858-81cd5018-e9e3-43ef-bfc1-e655c56086cd.png" width="600">
+    <image src="https://github.com/kylee31/book_mark/assets/106156087/d1333a09-cdef-4fcf-9f7b-f1ec006dc54a.png" width="600">
+
 - 카테고리 생성 page (카테고리명, 이미지, 색상 저장) <br>
-  <image src="https://user-images.githubusercontent.com/106156087/232790347-65e20003-d415-427a-8615-60a6003f14ae.png" width="600">
+  <image src="https://github.com/kylee31/book_mark/assets/106156087/325acae0-9883-4ee9-b187-44de1e020a64.png" width="600">
 
 - 생성된 카테고리 페이지 (저장된 링크 및 메모 확인 가능) <br>
-  <image src="https://user-images.githubusercontent.com/106156087/232790610-77a5c189-a9d9-4443-a78e-44f38af1aade.png" width="600">
+  <image src="https://github.com/kylee31/book_mark/assets/106156087/1e4a8dbf-83c8-449e-a497-12bd536ce73e.png" width="600">
 
-## 호스팅 링크
+## 웹 사이트 링크
 
-[📚Book Mark](https://book-mark-db594.web.app/)
-<br><br>
+📚Book Mark
+
+<h3>https://book-mark-db594.web.app/<h3>
+<br>
 
 ## 실행 영상 (youtube)
 
-[![book mark](https://img.youtube.com/vi/b5aIRQ5xqlc/0.jpg)](https://youtu.be/b5aIRQ5xqlc)
+[![book mark](https://img.youtube.com/vi/o1Wu9vysC_0/0.jpg)](https://youtu.be/o1Wu9vysC_0)
 <br><br>
 
 ## 프로젝트 개발환경
 
 VScode (version 1.77.2)<br>
 React (version 18.2.0)<br>
-styled-components (version 5.3.5)
