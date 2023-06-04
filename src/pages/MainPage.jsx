@@ -5,6 +5,7 @@ import CategoryList from "../component/CategoryList";
 import CreateLink from "../component/CreateLink";
 
 function MainPage() {
+
     function preventGoBack() {
         //브라우저 세션 기록 스택에 상태 추가 (복사본 저장)
         history.pushState(null, "", location.href);

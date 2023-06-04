@@ -10,7 +10,7 @@ function CreateLink() {
     const [title, setTitle] = useState("");
     const [link, setLink] = useState("");
     const [name, setName] = useState("");
-    const [img, setImg] = useState("https://ifh.cc/g/RxT0yX.png");
+    const [img, setImg] = useState("https://ifh.cc/g/PDPkX5.png");
     const [color, setColor] = useState("");
     const [data, setData] = useState([]);
 

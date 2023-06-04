@@ -5,6 +5,7 @@ import styled from "styled-components";
 import LinkList from "../component/LinkList";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { authService, db } from "../fbase";
+import Loading from "../util/Loading";
 
 function MyCate() {
     const location = useLocation();
@@ -13,6 +14,8 @@ function MyCate() {
     const mycolor = location.state.mycolor;
 
     const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState(true);
 
     const [links, setLinks] = useState([]);
     const [del, setDel] = useState(false);
@@ -58,27 +61,15 @@ function MyCate() {
                 arr.push(doc.data())
             });
             setLinks(arr);
+            setIsLoading(false);
         }
         getLink();
-        /*axios.get(`http://localhost:3001/link`)
-            .then(res => {
-                return res.data
-            })
-            .then(e => {
-                const myComments = e.filter(data => data.name === myname);
-                setComments(myComments);
-            })*/
+
     }, [userUid, del])
 
     async function onDelete() {
         //현재 카테고리 데이터 삭제하기
         if (window.confirm("카테고리를 삭제하시겠습니까? (삭제 시 포함되어 있는 링크 모두 삭제됩니다.)")) {
-            /*axios.delete(`http://localhost:3001/cate/${myId}`)
-                .then((res => {
-                    history(`/main`);
-                }))
-                .catch(e => console.log(e))*/
-            //로그인한 사용자 관련 링크 데이터 찾고, 삭제하는 카테고리명과 같은 name가진 링크 찾아서 delete
             const myData = query(flink, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
             await querySnapshot.docs.filter(d => d.data().name === myname).forEach((d) => {
@@ -97,7 +88,7 @@ function MyCate() {
         <Blog $color={`#${mycolor}`}>
             <Profile myname={myname} img={myimg} /><br />
             <MyBookMark>
-                <LinkList links={links} myname={myname} del={del} setDel={setDel} />
+                {isLoading ? <Loading isLoading={isLoading} /> : <LinkList links={links} myname={myname} del={del} setDel={setDel} />}
             </MyBookMark>
             <Div>
                 <Btn onClick={onLocation}>돌아가기</Btn>

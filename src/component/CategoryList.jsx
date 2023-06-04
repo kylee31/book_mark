@@ -5,9 +5,11 @@ import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
 import { getDocs, collection, query, where } from 'firebase/firestore'
 import { authService, db } from '../fbase';
+import Loading from "../util/Loading";
 
 function CategoryList() {
 
+    const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState([]);
     const [userUid, setUserUid] = useState("");
     const cate = collection(db, 'cate');
@@ -27,9 +29,9 @@ function CategoryList() {
             const querySnapshot = await getDocs(myData);
             await querySnapshot.forEach((doc) => {
                 arr.push(doc.data())
-                //console.log(arr)
             });
             setData(arr.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
+            setIsLoading(false);
         }
         getInfo();
     }, [userUid]);
@@ -40,7 +42,7 @@ function CategoryList() {
                 <Span>CATEGORY</Span>
             </Logo>
             <Box>
-                {data.map((item, index) => {
+                {isLoading ? <Loading isLoading={isLoading} /> : data.map((item, index) => {
                     return <CategoryItem key={index} img={item.img} name={item.name} color={item.color} />
                 })}
             </Box>
