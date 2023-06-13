@@ -105,21 +105,26 @@ const MyBookMark = styled.div`
     width:600px;
     min-height:150px;
     margin: 20px;
+    @media screen and (max-width:600px){
+        width:400px;
+    }
 `;
 
 const Blog = styled.div`
-    margin:auto;
     margin-bottom: 50px;
     display:flex;
     flex-direction: column;
-    text-align: center;
     justify-content: center;
     align-items: center;
+    text-align: center;
     width:900px;
     min-height:450px;
     border-radius: 20px;
     box-shadow: 8px 8px 5px rgba(133, 133, 133, 0.3);
-    background-color:${props => props.$color}
+    background-color:${props => props.$color};
+    @media screen and (max-width:600px){
+        width:500px;
+    }
 `;
 
 const Div = styled.div`

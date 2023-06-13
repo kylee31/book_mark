@@ -4,7 +4,8 @@ import { BeatLoader } from "react-spinners";
 function Loading({ isLoading }) {
 
     return (
-        isLoading && <Div>
+        isLoading &&
+        <Div>
             <BeatLoader color="gray" loading={isLoading} size={15} />
         </Div>
     );

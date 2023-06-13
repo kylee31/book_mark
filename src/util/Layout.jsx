@@ -15,5 +15,9 @@ function Layout({ children }) {
 export default Layout;
 
 const Div = styled.div`
-    min-width:1200px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    min-width:600px;
 `

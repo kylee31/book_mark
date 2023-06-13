@@ -93,7 +93,7 @@ function AddCate() {
         <div>
             <AddCategory>
                 <label>IMG선택 <input type="file" accept="image/*" onChange={myImg} /></label>
-                <Label>카테고리 입력 <input height="20px" type="text" maxLength="10" onChange={myName} /></Label>
+                <label>카테고리 입력 <input height="20px" type="text" maxLength="10" onChange={myName} /></label>
                 <label>COLOR선택 <input type="color" onChange={myColor} /></label>
             </AddCategory>
             <Blog $color={`#${color}`}>
@@ -125,16 +125,20 @@ const AddCategory = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom:10px;
+    @media screen and (max-width:600px){
+        width:500px;
+        flex-direction:column;
+        padding:10px 0;
+    }
 `;
-
-const Label = styled.label`
-    margin-right: 20px;
-`
 
 const Div = styled.div`
     margin: 40px;
     width: 600px;
     height: 150px;
+    @media screen and (max-width:600px){
+        width:400px;
+    }
 `;
 
 const Bookmark = styled.div`
@@ -172,4 +176,7 @@ const Blog = styled.div`
     box-shadow: 8px 8px 5px rgba(133, 133, 133, 0.3);
     background-color: #e0f1ff;
     background-color:${props => props.$color};
+    @media screen and (max-width:600px){
+        width:500px;
+    }
 `;

@@ -38,9 +38,7 @@ function CategoryList() {
 
     return (
         <>
-            <Logo>
-                <Span>CATEGORY</Span>
-            </Logo>
+            <Span>CATEGORY</Span>
             <Box>
                 {isLoading ? <Loading isLoading={isLoading} /> : data.map((item, index) => {
                     return <CategoryItem key={index} img={item.img} name={item.name} color={item.color} />
@@ -53,29 +51,25 @@ function CategoryList() {
 export default CategoryList;
 
 //styled-compoentns
-const Logo = styled.div`
-    margin-right:700px;
-`
-
-const Span = styled.span`
+const Span = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
-    margin:0 auto;
     width:210px;
     height:40px;
     background-color:lightblue;
 `;
 
 const Box = styled.div`
-    display:flex;
-    flex-wrap:wrap;
-    margin:0 auto;
-    margin-bottom:40px;
-    padding:10px;
-    padding-left:30px;
-    align-items:center;
     width:870px;
     min-height:250px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    padding:0 15px;
+    margin-bottom:40px;
     background-color:lightblue;
+    @media screen and (max-width:600px){
+        width:470px;
+        grid-template-columns:repeat(2,1fr);
+    }
 `;

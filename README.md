@@ -8,7 +8,7 @@
 - React로 구현한 프로젝트이며 기본적인 기능 개발 이후 서비스 향상을 위한 리팩토링 실시.
   <br>(React, JavaScript, HTML, CSS(styled-components))
 - cloud firestore로 데이터 관리.
-- firebase OAuth로 소셜 로그인 구현
+- firebase OAuth로 소셜 로그인 구현.
 - firebase로 배포.
 
 ## 디렉토리 구조 (src/)
@@ -20,7 +20,7 @@
    <br> Login.jsx, MainPage.jsx, MyCate.jsx, AddCate.jsx, WrongPage.jsx
 
 3. util
-   <br> isLogin.js, Layout.jsx, PrivateRoute.jsx
+   <br> isLogin.js, Layout.jsx, PrivateRoute.jsx, Loading.jsx
 
 ## 프로젝트 실행 (상세설명)
 

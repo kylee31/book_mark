@@ -19,6 +19,9 @@ const Div = styled.div`
     background-color: #fff;
     border-radius: 5px;
     margin-bottom:7px;
+    @media screen and (max-width:600px){
+        width:400px;
+    }
 `;
 
 const Comment = styled.span`

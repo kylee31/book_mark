@@ -134,21 +134,24 @@ export default CreateLink;
 
 //styled-components
 const Box = styled.div`
-    margin:auto;
     display: flex;
     align-items:center;
     text-align: center;
-    width: 900px;
     background-color: rgb(224, 240, 255);
     border-radius: 20px;
     box-shadow: 5px 5px 5px rgba(133, 133, 133, 0.3);
     margin-bottom: 40px;
-    padding-left:20px;
     pointer-events:${props => props.$data === "" ? "none" : "default"};
+    @media screen and (max-width:600px){
+        width:500px;
+    }
 `;
 
 const Div = styled.div`
     width:200px;
+    @media screen and (max-width:600px){
+        width:150px;
+    }
 `;
 
 const Show = styled.div`
@@ -156,6 +159,9 @@ const Show = styled.div`
     height:180px;
     padding-top:20px;
     background-color: ${props => props.$color};
+    @media screen and (max-width:600px){
+        width:300px;
+    }
 `;
 
 const Select = styled.select`
@@ -172,5 +178,12 @@ const Bookmarks = styled.textarea`
     font-family:Arial;
     &+&{
         margin-left:20px;
+    }
+    @media screen and (max-width:600px){
+        width:240px;
+        height:40px;
+        &+&{
+            margin-left:0px;
+        }
     }
 `;
