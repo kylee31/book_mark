@@ -1,5 +1,5 @@
 import { authService } from '../fbase';
-import { GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, EmailAuthProvider, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -8,6 +8,8 @@ function Login() {
 
     const navigate = useNavigate();
     const [userData, setUserData] = useState(null);
+    const [demo, setDemo] = useState("");
+    const [demopw, setDemoPw] = useState("");
 
     useEffect(() => {
         if (userData) {
@@ -44,14 +46,44 @@ function Login() {
 
     }
 
+    //testing 계정
+    function handleChange(e) {
+        setDemo(e.target.value)
+    }
+    function handleChangePw(e) {
+        setDemoPw(e.target.value)
+    }
+
+    function handlerDemoAccount() {
+        const auth = getAuth();
+        demo !== "" && demopw !== "" ? signInWithEmailAndPassword(auth, demo, demopw)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                setUserData(user.accessToken);
+            })
+            .catch((err) => {
+                window.confirm("인증 실패")
+                console.log(err)
+            }) : window.confirm("모두 입력해주세요 (email: testing@email.com / password: testing)")
+    }
+
     return (
         <Div>
             Welcome!
-            <img id="logo" src="img/bookmark.png" alt="" />
+            <Pic id="logo" src="img/bookmark.png" alt="" />
             <LoginBtn onClick={loginHandler}>
                 <Img id="google" src="img/google.png" alt="" />
                 Google Login
             </LoginBtn>
+            <Demo>
+                <Input value={demo} onChange={handleChange} placeholder='email'></Input>
+                <Input value={demopw} onChange={handleChangePw} placeholder='password'></Input>
+                <LoginBtn onClick={handlerDemoAccount}>
+                    Test
+                    <div style={{ fontFamily: "Arial" }}>email: testing@email.com / pw: testing</div>
+                </LoginBtn>
+            </Demo>
         </Div>
     );
 }
@@ -64,16 +96,33 @@ const Div = styled.div`
     align-items: center;
 `
 
+const Pic = styled.img`
+    margin-bottom:5rem;
+`
+
 const Img = styled.img`
     vertical-align: middle;
     margin-right: 10px;
 `
 
+const Input = styled.input`
+    width:300px;
+    height:20px;
+    border:1px solid gray;    
+    font-family:'Arial';
+
+`
+
 const LoginBtn = styled.button`
-    margin-top:50px;
     width:300px;
     height:50px;
     border:0px;
     border-radius:0px;
     box-shadow: 5px 5px 5px rgba(133, 133, 133, 0.3);
+`
+
+const Demo = styled.div`
+    width:300px;
+    height:100px;
+    margin-top:2rem;
 `
