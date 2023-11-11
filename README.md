@@ -1,8 +1,8 @@
 # 📚 Book_Mark
-카테고리를 생성하여 링크 저장 및 메모가 가능한 웹 서비스 (2022.07-2022.08, 2023.03-2023.04)
+카테고리를 생성하여 링크 저장 및 메모가 가능한 웹 사이트 (2022.07-2022.08, 2023.03-2023.04)
 <br/><br/>
 ## 구현 및 배포기술
-- TypeScript 적용한 React 프로젝트 (firebase 배포)
+- TypeScript 적용한 React 프로젝트 (firebase 배포).
 - cloud firestore로 데이터 관리.
 - firebase OAuth로 소셜 로그인 구현.
 <br/><br/>
