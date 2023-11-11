@@ -10,7 +10,8 @@
 [src/component, src/pages, src/util]
 <br/><br/>
 ## 실행 (상세 설명)
-❗ 소셜 로그인 후에만 사용 가능하므로, 테스트 계정을 통해 체험 가능. **(email: testing@email.com / password: testing)**
+❗ 소셜 로그인 후에만 사용 가능하므로, 테스트 계정을 통해 체험 가능. <br/>
+**(email: testing@email.com / password: testing)** <br/>
 - **Login Page** <br/>
   - 소셜 로그인(google), 테스팅 계정 로그인 <br/>
     <image src="https://github.com/kylee31/book_mark/assets/106156087/0374fb8a-2d61-472e-9856-002d5312ac11.png" width="600"/>
