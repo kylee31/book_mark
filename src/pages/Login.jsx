@@ -1,5 +1,5 @@
 import { authService } from '../fbase';
-import { GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -58,8 +58,7 @@ function Login() {
     }
 
     function handlerDemoAccount() {
-        const auth = getAuth();
-        account.demo !== "" && account.demopw !== "" ? signInWithEmailAndPassword(auth, account.demo, account.demopw)
+        account.demo !== "" && account.demopw !== "" ? signInWithEmailAndPassword(authService, account.demo, account.demopw)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
@@ -69,6 +68,12 @@ function Login() {
                 window.confirm("인증 실패")
                 console.log(err)
             }) : window.confirm("모두 입력해주세요 (email: testing@email.com / password: testing)")
+    }
+
+    function handleClick(e) {
+        if (e.keyCode === 13) {
+            handlerDemoAccount();
+        }
     }
 
     return (
@@ -81,7 +86,7 @@ function Login() {
             </LoginBtn>
             <Demo>
                 <Input name="demo" value={account.demo} onChange={handleChange} placeholder='email'></Input>
-                <Input name="demopw" value={account.demopw} onChange={handleChange} placeholder='password'></Input>
+                <Input name="demopw" value={account.demopw} onChange={handleChange} placeholder='password' onKeyDown={handleClick}></Input>
                 <LoginBtn onClick={handlerDemoAccount}>
                     Test
                     <div style={{ fontFamily: "Arial" }}>email: testing@email.com / pw: testing</div>
