@@ -1,4 +1,4 @@
-import { authService } from '../../fbase';
+import { authService } from '../fbase';
 import { GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
