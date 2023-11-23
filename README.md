@@ -3,7 +3,8 @@
 <br/><br/>
 ## 구현 및 배포기술
 - TypeScript 적용한 React 프로젝트 (firebase 배포).
-- cloud firestore로 데이터 관리.
+- 초기 구현 시 json-server를 사용하여 REST API 사용.
+- 이후 배포를 위해 cloud firestore로 리팩토링하여 데이터 관리.
 - firebase OAuth로 소셜 로그인 구현.
 <br/><br/>
 ## 디렉토리 구조
