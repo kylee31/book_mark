@@ -4,8 +4,9 @@ import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
 import LinkList from "../component/LinkList";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
-import { authService, db } from "../fbase";
+import { db } from "../fbase";
 import Loading from "../util/Loading";
+import { useSelector } from "react-redux";
 
 function MyCate() {
     const location = useLocation();
@@ -21,7 +22,7 @@ function MyCate() {
     const [del, setDel] = useState(false);
     const [id, setId] = useState();
 
-    const [userUid, setUserUid] = useState("");
+    const { userUid } = useSelector(state => state.uid);
     const flink = collection(db, 'link');
     const cate = collection(db, 'cate');
     const arr = [];
@@ -29,12 +30,6 @@ function MyCate() {
     useLayoutEffect(() => {
         //현재 카테고리 문서명 가져오기 (카테고리 삭제 위해서)
         async function getCateId() {
-            await authService.onAuthStateChanged(user => {
-                if (user) {
-                    setUserUid(authService.currentUser.uid);
-                }
-                else { }
-            })
             const myData = query(cate, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
             await querySnapshot.forEach((doc) => {
@@ -49,12 +44,6 @@ function MyCate() {
     useLayoutEffect(() => {
         //링크 데이터 읽어오기 (uid로 불러온 뒤, 카테고리 name이 동일한)
         async function getLink() {
-            await authService.onAuthStateChanged(user => {
-                if (user) {
-                    setUserUid(authService.currentUser.uid);
-                }
-                else { }
-            })
             const myData = query(flink, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
             await querySnapshot.docs.filter(doc => doc.data().name === myname).forEach((doc) => {

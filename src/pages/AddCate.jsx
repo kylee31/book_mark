@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Profile from "../component/Profile";
 import { getDocs, collection, query, where, setDoc, doc } from 'firebase/firestore'
-import { authService, db } from '../fbase';
+import { db } from '../fbase';
+import { useSelector } from "react-redux";
 
 function AddCate() {
 
@@ -16,7 +17,7 @@ function AddCate() {
     const [same, setSame] = useState(false);
     const [newId, setId] = useState(0);
 
-    const [userUid, setUserUid] = useState("");
+    const { userUid } = useSelector(state => state.uid);
     const cate = collection(db, 'cate');
     const arr = [];
 
@@ -40,12 +41,6 @@ function AddCate() {
     useEffect(() => {
         //카테고리 데이터 가져오기
         async function getInfo() {
-            //로그인한 user의 uid 찾아서 cate 데이터 읽어오기
-            await authService.onAuthStateChanged(user => {
-                if (user) {
-                    setUserUid(authService.currentUser.uid);
-                }
-            })
             const myData = query(cate, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
             await querySnapshot.forEach((doc) => {
