@@ -1,9 +1,10 @@
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { getDocs, collection, query, where, setDoc, doc } from 'firebase/firestore'
+import { getDocs, collection, setDoc, doc } from 'firebase/firestore'
 import { db } from '../fbase';
 import { useSelector } from "react-redux";
+import useGetCateData from "../hook/useGetCateData";
 
 function CreateLink() {
 
@@ -13,12 +14,11 @@ function CreateLink() {
     const [name, setName] = useState("");
     const [img, setImg] = useState("https://ifh.cc/g/PDPkX5.png");
     const [color, setColor] = useState("");
-    const [data, setData] = useState([]);
 
     const { userUid } = useSelector(state => state.uid)
-    const cate = collection(db, 'cate');
+    const { data } = useGetCateData(userUid);
+
     const flink = collection(db, 'link');
-    const arr = [];
     const [newId, setId] = useState(0);
 
     async function information() {
@@ -63,25 +63,14 @@ function CreateLink() {
         }
     }
 
+    //cate 데이터 읽기
     useLayoutEffect(() => {
-        //cate 데이터 읽기
-        async function getInfo() {
-            const myData = query(cate, where("uid", "==", userUid));
-            const querySnapshot = await getDocs(myData);
-            await querySnapshot.forEach((doc) => {
-                arr.push(doc.data())
-            });
-
-            if (arr.length > 0) {
-                const sortData = arr.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
-                setData(sortData);
-                setName(arr[0].name);
-                setImg(arr[0].img);
-                setColor(arr[0].color);
-            }
+        if (data.length > 0) {
+            setName(data[0].name);
+            setImg(data[0].img);
+            setColor(data[0].color);
         }
-        getInfo();
-    }, [userUid]);
+    }, [data]);
 
     useLayoutEffect(() => {
         async function getLink() {
@@ -93,7 +82,7 @@ function CreateLink() {
         getLink();
     }, [information])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setName(name);
         onSetImg();
         onSetColor();

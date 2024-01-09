@@ -1,34 +1,20 @@
-//import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
-import { getDocs, collection, query, where } from 'firebase/firestore'
-import { db } from '../fbase';
 import Loading from "../util/Loading";
 import { useSelector } from "react-redux";
+import useGetCateData from "../hook/useGetCateData";
 
 function CategoryList() {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [data, setData] = useState([]);
-    const cate = collection(db, 'cate');
-    const arr = [];
-
-    const { userUid } = useSelector(state => state.uid)
+    const { userUid } = useSelector(state => state.uid);
+    const { data } = useGetCateData(userUid);
 
     useEffect(() => {
-        async function getInfo() {
-            const myData = query(cate, where("uid", "==", userUid));
-            const querySnapshot = await getDocs(myData);
-            await querySnapshot.forEach((doc) => {
-                arr.push(doc.data())
-            });
-            setData(arr.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1));
-            setIsLoading(false);
-        }
-        getInfo();
-    }, [userUid]);
+        if (data) setIsLoading(false)
+    }, [data]);
 
     return (
         <>
