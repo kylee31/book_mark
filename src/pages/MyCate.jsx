@@ -7,6 +7,7 @@ import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/fire
 import { db } from "../fbase";
 import Loading from "../util/Loading";
 import { useSelector } from "react-redux";
+import useGetCateData from "../hook/useGetCateData";
 
 function MyCate() {
     const location = useLocation();
@@ -23,6 +24,7 @@ function MyCate() {
     const [id, setId] = useState();
 
     const { userUid } = useSelector(state => state.uid);
+    const { updateLocalData } = useGetCateData(userUid);
     const flink = collection(db, 'link');
     const cate = collection(db, 'cate');
     const arr = [];
@@ -65,6 +67,7 @@ function MyCate() {
                 deleteDoc(doc(flink, String(d.data().id)));
             });
             await deleteDoc(doc(cate, id));
+            await updateLocalData();
             await navigate(`/main`);
         }
     }

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Profile from "../component/Profile";
-import { getDocs, collection, query, where, setDoc, doc } from 'firebase/firestore'
+import { getDocs, collection, setDoc, doc } from 'firebase/firestore'
 import { db } from '../fbase';
 import { useSelector } from "react-redux";
+import useGetCateData from "../hook/useGetCateData";
 
 function AddCate() {
 
@@ -18,19 +19,20 @@ function AddCate() {
     const [newId, setId] = useState(0);
 
     const { userUid } = useSelector(state => state.uid);
+    const { data, updateLocalData } = useGetCateData(userUid);
     const cate = collection(db, 'cate');
-    const arr = [];
 
+    //카테고리 데이터 생성하기
     async function addInfo() {
-        //카테고리 데이터 생성하기
+        const newData = {
+            name: name,
+            color: color,
+            img: img,
+            uid: userUid
+        }
         if (name !== "💬" && color !== "" && same === false) {
-            //문서이름을 id로 지정
-            await setDoc(doc(cate, String(newId)), {
-                name: name,
-                color: color,
-                img: img,
-                uid: userUid
-            });
+            await setDoc(doc(cate, String(newId)), newData); //문서이름을 id로 지정
+            await updateLocalData() //추가한 데이터 다시 세팅
             await alert("생성 완료! 새로운 카테고리에 북마크 저장하세요");
             await navigate(`/main`);
         }
@@ -38,24 +40,24 @@ function AddCate() {
         else alert("ID와 Color 모두 작성해주세요!");
     }
 
+    //cate 마지막 문서 id newId에 저장
     useEffect(() => {
-        //카테고리 데이터 가져오기
-        async function getInfo() {
-            const myData = query(cate, where("uid", "==", userUid));
-            const querySnapshot = await getDocs(myData);
-            await querySnapshot.forEach((doc) => {
-                arr.push(doc.data().name);
-            });
-
-            //cate 마지막 문서 id newId에 저장
+        async function setNewId() {
             const lastId = await getDocs(cate);
             await lastId.forEach((doc) => {
                 setId(Number(doc.id) + 1)
             })
+        }
+        setNewId();
+        async function setName() {
+            let arr = [];
+            data.forEach((d) => {
+                arr.push(d.name)
+            })
             setNameList(arr)
         }
-        getInfo();
-    }, [userUid]);
+        setName()
+    }, [data]);
 
     //링크를 동일한 이름으로 찾기 때문에 동일한 카테고리 생성불가
     useEffect(() => {

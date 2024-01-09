@@ -7,7 +7,7 @@ import uidReducer from './uidDuck';
 
 // 루트 리듀서 정의
 const rootReducer = combineReducers({
-    data: dataReducer, // 새로 추가된 모듈
+    // data: dataReducer, // 새로 추가된 모듈
     uid: uidReducer
     // 다른 리듀서가 있다면 추가 가능
 });
