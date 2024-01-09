@@ -2,7 +2,8 @@ import { useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { getDocs, collection, query, where, setDoc, doc } from 'firebase/firestore'
-import { authService, db } from '../fbase';
+import { db } from '../fbase';
+import { useSelector } from "react-redux";
 
 function CreateLink() {
 
@@ -14,7 +15,7 @@ function CreateLink() {
     const [color, setColor] = useState("");
     const [data, setData] = useState([]);
 
-    const [userUid, setUserUid] = useState("");
+    const { userUid } = useSelector(state => state.uid)
     const cate = collection(db, 'cate');
     const flink = collection(db, 'link');
     const arr = [];
@@ -65,13 +66,6 @@ function CreateLink() {
     useLayoutEffect(() => {
         //cate 데이터 읽기
         async function getInfo() {
-            //로그인한 user의 uid 찾아서 cate 데이터 읽어오기
-            await authService.onAuthStateChanged(user => {
-                if (user) {
-                    setUserUid(authService.currentUser.uid);
-                }
-                else { }
-            })
             const myData = query(cate, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
             await querySnapshot.forEach((doc) => {

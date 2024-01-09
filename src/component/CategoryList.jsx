@@ -4,27 +4,21 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
 import { getDocs, collection, query, where } from 'firebase/firestore'
-import { authService, db } from '../fbase';
+import { db } from '../fbase';
 import Loading from "../util/Loading";
+import { useSelector } from "react-redux";
 
 function CategoryList() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState([]);
-    const [userUid, setUserUid] = useState("");
     const cate = collection(db, 'cate');
     const arr = [];
 
-    useEffect(() => {
+    const { userUid } = useSelector(state => state.uid)
 
+    useEffect(() => {
         async function getInfo() {
-            //로그인한 user의 uid 찾아서 cate 데이터 읽어오기
-            await authService.onAuthStateChanged(user => {
-                if (user) {
-                    setUserUid(authService.currentUser.uid);
-                }
-                else { }
-            })
             const myData = query(cate, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
             await querySnapshot.forEach((doc) => {

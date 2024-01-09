@@ -15,7 +15,7 @@ function Login() {
 
     useEffect(() => {
         if (userData) {
-            //로그인 여부 저장 token
+            //로그인 여부 저장 token (accessToken)
             localStorage.setItem('token', userData)
             navigate(`/main`)
         }
@@ -24,8 +24,11 @@ function Login() {
         }
     }, [userData])
 
+
+    //1. google 로그인
     function loginHandler() {
-        const provider = new GoogleAuthProvider(); // provider를 구글로 설정
+        // provider를 구글로 설정
+        const provider = new GoogleAuthProvider();
         //로그인 후 계정이 바로 연동되는 상황 방지
         provider.setCustomParameters({
             prompt: 'select_account'
@@ -48,7 +51,7 @@ function Login() {
 
     }
 
-    //testing 계정
+    //2. testing 계정
     function handleChange(e) {
         const { value, name } = e.target;
         setAccount({
@@ -56,20 +59,20 @@ function Login() {
             [name]: value
         })
     }
-
     function handlerDemoAccount() {
-        account.demo !== "" && account.demopw !== "" ? signInWithEmailAndPassword(authService, account.demo, account.demopw)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                setUserData(user.accessToken);
-            })
-            .catch((err) => {
-                window.confirm("인증 실패")
-                console.log(err)
-            }) : window.confirm("모두 입력해주세요 (email: testing@email.com / password: testing)")
+        (account.demo !== "" && account.demopw !== "") ?
+            signInWithEmailAndPassword(authService, account.demo, account.demopw)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    const token = user.accessToken;
+                    setUserData(token);
+                })
+                .catch((err) => {
+                    window.confirm("인증 실패")
+                    console.log(err)
+                }) : window.confirm("모두 입력해주세요 (email: testing@email.com / password: testing)")
     }
-
     function handleClick(e) {
         if (e.keyCode === 13) {
             handlerDemoAccount();
