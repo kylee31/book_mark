@@ -19,7 +19,7 @@ function AddCate() {
     const [newId, setId] = useState(0);
 
     const { userUid } = useSelector(state => state.uid);
-    const { data, updateLocalData } = useGetCateData(userUid);
+    const { data, setCateLocalData } = useGetCateData(userUid);
     const cate = collection(db, 'cate');
 
     //카테고리 데이터 생성하기
@@ -32,7 +32,7 @@ function AddCate() {
         }
         if (name !== "💬" && color !== "" && same === false) {
             await setDoc(doc(cate, String(newId)), newData); //문서이름을 id로 지정
-            await updateLocalData() //추가한 데이터 다시 세팅
+            await setCateLocalData() //추가한 데이터 다시 세팅
             await alert("생성 완료! 새로운 카테고리에 북마크 저장하세요");
             await navigate(`/main`);
         }
@@ -49,6 +49,7 @@ function AddCate() {
             })
         }
         setNewId();
+
         async function setName() {
             let arr = [];
             data.forEach((d) => {

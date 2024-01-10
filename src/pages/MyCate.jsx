@@ -8,6 +8,7 @@ import { db } from "../fbase";
 import Loading from "../util/Loading";
 import { useSelector } from "react-redux";
 import useGetCateData from "../hook/useGetCateData";
+import useGetLinkData from "../hook/useGetLinkData";
 
 function MyCate() {
     const location = useLocation();
@@ -19,18 +20,18 @@ function MyCate() {
 
     const [isLoading, setIsLoading] = useState(true);
 
-    const [links, setLinks] = useState([]);
     const [del, setDel] = useState(false);
     const [id, setId] = useState();
 
     const { userUid } = useSelector(state => state.uid);
-    const { updateLocalData } = useGetCateData(userUid);
+    const { setCateLocalData } = useGetCateData(userUid);
     const flink = collection(db, 'link');
     const cate = collection(db, 'cate');
-    const arr = [];
 
+    const { data, setLinkLocalData } = useGetLinkData({ userUid, myname });
+
+    //현재 카테고리 문서명 가져오기 (카테고리 삭제 위해서)
     useLayoutEffect(() => {
-        //현재 카테고리 문서명 가져오기 (카테고리 삭제 위해서)
         async function getCateId() {
             const myData = query(cate, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
@@ -41,25 +42,21 @@ function MyCate() {
             });
         }
         getCateId();
-    })
+    }, [])
 
     useLayoutEffect(() => {
-        //링크 데이터 읽어오기 (uid로 불러온 뒤, 카테고리 name이 동일한)
+        if (data) setIsLoading(false)
+    }, [data])
+
+    useLayoutEffect(() => {
         async function getLink() {
-            const myData = query(flink, where("uid", "==", userUid));
-            const querySnapshot = await getDocs(myData);
-            await querySnapshot.docs.filter(doc => doc.data().name === myname).forEach((doc) => {
-                arr.push(doc.data())
-            });
-            setLinks(arr);
-            setIsLoading(false);
+            await setLinkLocalData();
         }
-        getLink();
+        getLink()
+    }, [del])
 
-    }, [userUid, del])
-
+    //현재 카테고리 데이터 삭제하기
     async function onDelete() {
-        //현재 카테고리 데이터 삭제하기
         if (window.confirm("카테고리를 삭제하시겠습니까? (삭제 시 포함되어 있는 링크 모두 삭제됩니다.)")) {
             const myData = query(flink, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
@@ -67,7 +64,8 @@ function MyCate() {
                 deleteDoc(doc(flink, String(d.data().id)));
             });
             await deleteDoc(doc(cate, id));
-            await updateLocalData();
+            await setLinkLocalData();
+            await setCateLocalData();
             await navigate(`/main`);
         }
     }
@@ -80,7 +78,7 @@ function MyCate() {
         <Blog $color={`#${mycolor}`}>
             <Profile myname={myname} img={myimg} /><br />
             <MyBookMark>
-                {isLoading ? <Loading isLoading={isLoading} /> : <LinkList links={links} myname={myname} del={del} setDel={setDel} />}
+                {isLoading ? <Loading isLoading={isLoading} /> : <LinkList links={data} myname={myname} del={del} setDel={setDel} />}
             </MyBookMark>
             <Div>
                 <Btn onClick={onLocation}>돌아가기</Btn>

@@ -1,4 +1,4 @@
-import { collection, getDocs, query, setDoc, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../fbase";
 import { useLayoutEffect, useState } from "react";
 
@@ -9,6 +9,7 @@ function useGetCateData(userUid) {
     const cate = collection(db, 'cate');
     const [data, setData] = useState([]);
 
+    //카테고리 데이터 가져오기
     async function getInfo() {
         const myData = query(cate, where("uid", "==", userUid));
         const querySnapshot = await getDocs(myData);
@@ -19,6 +20,7 @@ function useGetCateData(userUid) {
         return newData
     }
 
+    //캐시 데이터 여부에 따라 데이터 불러오기
     useLayoutEffect(() => {
         async function getData() {
             const cachedData = localStorage.getItem('cachedData')
@@ -33,13 +35,13 @@ function useGetCateData(userUid) {
     }, [userUid])
 
     // 카테고리 데이터 변경(추가, 삭제)시 로컬 스토리지 데이터 새로 갱신
-    async function updateLocalData(newData) {
+    async function setCateLocalData() {
         const data = await getInfo();
         localStorage.setItem('cachedData', JSON.stringify(data));
         setData(data);
     }
 
-    return { data, updateLocalData };
+    return { data, setCateLocalData };
 }
 
 export default useGetCateData;
