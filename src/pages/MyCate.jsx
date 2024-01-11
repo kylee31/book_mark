@@ -49,6 +49,8 @@ function MyCate() {
     }, [data])
 
     useLayoutEffect(() => {
+        //상세 카테고리에 들어오면 다시 셋팅하므로 createLink에서 재저장할 필요없음
+        //삭제 여부에 따라 재저장
         async function getLink() {
             await setLinkLocalData();
         }
