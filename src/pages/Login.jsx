@@ -82,9 +82,9 @@ function Login() {
     return (
         <Div>
             Welcome!
-            <Pic id="logo" src="img/bookmark.png" alt="" />
+            <Pic id="logo" src="img/bookmark.png" alt="" loading="lazy" />
             <LoginBtn onClick={loginHandler}>
-                <Img id="google" src="img/google.png" alt="" />
+                <Img id="google" src="img/google.png" alt="" loading="lazy" />
                 Google Login
             </LoginBtn>
             <Demo>
