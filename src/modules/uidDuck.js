@@ -18,7 +18,6 @@ const initialState = {
 export default function uidReducer(state = initialState, action) {
     switch (action.type) {
         case GET_UID: return {
-            ...state,
             userUid: action.userUid
         }
         default: return state
@@ -29,9 +28,12 @@ export default function uidReducer(state = initialState, action) {
 export const getUserUid = () => async (dispatch) => {
     try {
         //로그인한 user의 uid 찾기
-        await authService.onAuthStateChanged(user => {
+        authService.onAuthStateChanged(async (user) => {
             if (user) {
-                dispatch(getUid(authService.currentUser.uid));
+                await dispatch(getUid(authService.currentUser.uid));
+            }
+            else {
+                // console.log('User not logged in');
             }
         })
     } catch (error) {

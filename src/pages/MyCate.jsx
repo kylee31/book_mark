@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import Profile from "../component/Profile";
 import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
@@ -7,31 +7,25 @@ import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/fire
 import { db } from "../fbase";
 import Loading from "../util/Loading";
 import { useSelector } from "react-redux";
-import useGetCateData from "../hook/useGetCateData";
 import useGetLinkData from "../hook/useGetLinkData";
 
 function MyCate() {
     const location = useLocation();
-    const myname = location.state.myname;
-    const myimg = location.state.myimg;
-    const mycolor = location.state.mycolor;
-
     const navigate = useNavigate();
 
+    const [myname, myimg, mycolor] = [location.state.myname, location.state.myimg, location.state.mycolor];
     const [isLoading, setIsLoading] = useState(true);
-
     const [del, setDel] = useState(false);
     const [id, setId] = useState();
 
-    const { userUid } = useSelector(state => state.uid);
-    const { setCateLocalData } = useGetCateData(userUid);
     const flink = collection(db, 'link');
     const cate = collection(db, 'cate');
 
+    const { userUid } = useSelector(state => state.uid);
     const { data, setLinkLocalData } = useGetLinkData({ userUid, myname });
 
-    //현재 카테고리 문서명 가져오기 (카테고리 삭제 위해서)
-    useLayoutEffect(() => {
+    //현재 카테고리 Id 가져오기 (카테고리 삭제 위해서)
+    useEffect(() => {
         async function getCateId() {
             const myData = query(cate, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
@@ -67,8 +61,7 @@ function MyCate() {
             });
             await deleteDoc(doc(cate, id));
             await setLinkLocalData();
-            await setCateLocalData();
-            await navigate(`/main`);
+            navigate("/main");
         }
     }
 
