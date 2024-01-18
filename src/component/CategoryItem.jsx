@@ -4,8 +4,9 @@ import styled from "styled-components";
 function CategoryItem({ img, name, color }) {
 
     const navigate = useNavigate();
-    function onBookMark() {
-        navigate(`/cate/${name}`, { state: { myname: name, myimg: img, mycolor: color } });
+
+    async function onBookMark() {
+        await navigate(`/cate/${name}`, { state: { myname: name, myimg: img, mycolor: color } });
     }
 
     return (

@@ -6,8 +6,8 @@ import LinkList from "../component/LinkList";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../fbase";
 import Loading from "../util/Loading";
-import { useSelector } from "react-redux";
-import useGetLinkData from "../hook/useGetLinkData";
+import { useDispatch, useSelector } from "react-redux";
+import { getFirebaseLinkData } from "../modules/linkDuck";
 
 function MyCate() {
     const location = useLocation();
@@ -22,7 +22,18 @@ function MyCate() {
     const cate = collection(db, 'cate');
 
     const { userUid } = useSelector(state => state.uid);
-    const { data, setLinkLocalData } = useGetLinkData({ userUid, myname });
+    // const { data, setLinkLocalData } = useGetLinkData({ userUid, myname });
+
+    const { linkData } = useSelector(state => state.link);
+    const dispatch = useDispatch();
+    const setLinkDatas = () => dispatch(getFirebaseLinkData({ linkData, myname }));
+
+    useEffect(() => {
+        if (linkData) setLinkDatas();
+    }, [])
+
+    console.log(linkData)
+
 
     //현재 카테고리 Id 가져오기 (카테고리 삭제 위해서)
     useEffect(() => {
@@ -39,14 +50,12 @@ function MyCate() {
     }, [])
 
     useLayoutEffect(() => {
-        if (data) setIsLoading(false)
-    }, [data])
+        if (linkData) setIsLoading(false)
+    }, [linkData])
 
     useLayoutEffect(() => {
-        //상세 카테고리에 들어오면 다시 셋팅하므로 createLink에서 재저장할 필요없음
-        //삭제 여부에 따라 재저장
         async function getLink() {
-            await setLinkLocalData();
+            // await setLinkLocalData();
         }
         getLink()
     }, [del])
@@ -60,7 +69,7 @@ function MyCate() {
                 deleteDoc(doc(flink, String(d.data().id)));
             });
             await deleteDoc(doc(cate, id));
-            await setLinkLocalData();
+            // await setLinkLocalData();
             navigate("/main");
         }
     }
@@ -73,7 +82,7 @@ function MyCate() {
         <Blog $color={`#${mycolor}`}>
             <Profile myname={myname} img={myimg} /><br />
             <MyBookMark>
-                {isLoading ? <Loading isLoading={isLoading} /> : <LinkList links={data} myname={myname} del={del} setDel={setDel} />}
+                {isLoading ? <Loading isLoading={isLoading} /> : <LinkList links={linkData} myname={myname} del={del} setDel={setDel} />}
             </MyBookMark>
             <Div>
                 <Btn onClick={onLocation}>돌아가기</Btn>

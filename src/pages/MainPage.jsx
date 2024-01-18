@@ -29,7 +29,6 @@ function MainPage() {
         window.addEventListener("popstate", preventGoBack); //window 객체에 popstate 이벤트 리스너 추가, 동일한 history.pushState로 복사본 저장
     }, []);
 
-
     return (
         <div>
             <Button />
