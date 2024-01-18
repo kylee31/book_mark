@@ -1,11 +1,16 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getFirebaseLinkData } from "../modules/linkDuck";
 
 function CategoryItem({ img, name, color }) {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const setGetFirebaseLinkData = () => dispatch(getFirebaseLinkData({ myname: name }));
 
     async function onBookMark() {
+        await setGetFirebaseLinkData();
         await navigate(`/cate/${name}`, { state: { myname: name, myimg: img, mycolor: color } });
     }
 

@@ -29,22 +29,20 @@ const linkReducer = (state = initialState, action) => {
 //redux-thunk
 export const getFirebaseLinkData = ({ myname }) => async (dispatch) => {
     try {
-
         const flink = collection(db, 'link');
-        authService.onAuthStateChanged(async (user) => {
-            if (user) {
-                const userUid = user.uid;
-                const myData = query(flink, where("uid", "==", userUid));
-                const querySnapshot = await getDocs(myData);
-                let newData = [];
-                await querySnapshot.docs.filter(doc => doc.data().name === myname).forEach((doc) => {
-                    newData.push(doc.data())
-                });
-                dispatch(getLinkData(newData))
-            } else {
-                // console.log('User not logged in');
-            }
-        });
+        const user = authService.currentUser;
+        if (user) {
+            const userUid = user.uid;
+            const myData = query(flink, where("uid", "==", userUid));
+            const querySnapshot = await getDocs(myData);
+            let newData = [];
+            await querySnapshot.docs.filter(doc => doc.data().name === myname).forEach((doc) => {
+                newData.push(doc.data())
+            });
+            dispatch(getLinkData(newData))
+        } else {
+            // console.log('User not logged in');
+        }
     }
     catch (error) {
         console.log(error)

@@ -24,7 +24,7 @@ function MainPage() {
 
     useEffect(() => {
         if (userUid === "") setUserUid(); //userUid 한번 불러오기
-        if (cateData) setGetFirebaseCateData(); //초기에 한번 불러오고 cateData가 존재한다면 state변경x
+        if (cateData) setGetFirebaseCateData(); //불러오기
         preventGoBack();
         window.addEventListener("popstate", preventGoBack); //window 객체에 popstate 이벤트 리스너 추가, 동일한 history.pushState로 복사본 저장
     }, []);
