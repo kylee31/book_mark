@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Profile from "../component/Profile";
 import { getDocs, collection, setDoc, doc } from 'firebase/firestore'
 import { db } from '../fbase';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeFirebaseCateData } from "../modules/cateDuck";
 
 function AddCate() {
 
@@ -19,6 +20,8 @@ function AddCate() {
 
     const { userUid } = useSelector(state => state.uid);
     const { cateData } = useSelector(state => state.cate);
+    const dispatch = useDispatch();
+    const setChangeFirebaseCateData = () => dispatch(changeFirebaseCateData());
 
     const cate = collection(db, 'cate');
 
@@ -32,6 +35,7 @@ function AddCate() {
         }
         if (name !== "💬" && color !== "" && same === false) {
             await setDoc(doc(cate, String(newId)), newData); //문서이름을 id로 지정
+            await setChangeFirebaseCateData();
             await alert("생성 완료! 새로운 카테고리에 북마크 저장하세요");
             await navigate(`/main`);
         }

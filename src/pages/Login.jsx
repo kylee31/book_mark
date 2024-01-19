@@ -14,14 +14,17 @@ function Login() {
     });
 
     useEffect(() => {
-        if (userData) {
-            //로그인 여부 저장 token (accessToken)
-            localStorage.setItem('token', userData)
-            navigate(`/main`)
+        async function setUserData() {
+            if (userData) {
+                //로그인 여부 저장 token (accessToken)
+                await localStorage.setItem('token', userData)
+                await navigate(`/main`)
+            }
+            else {
+                navigate(`/`)
+            }
         }
-        else {
-            navigate(`/`)
-        }
+        setUserData();
     }, [userData])
 
 

@@ -7,7 +7,7 @@ import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/fire
 import { db } from "../fbase";
 import { useDispatch, useSelector } from "react-redux";
 import { getFirebaseLinkData } from "../modules/linkDuck";
-import { getFirebaseCateData } from "../modules/cateDuck";
+import { changeFirebaseCateData } from "../modules/cateDuck";
 
 function MyCate() {
     const location = useLocation();
@@ -24,7 +24,7 @@ function MyCate() {
     const { linkData } = useSelector(state => state.link);
     const dispatch = useDispatch();
     const setGetFirebaseLinkData = () => dispatch(getFirebaseLinkData({ myname }));
-    const setGetFirebaseCateData = () => dispatch(getFirebaseCateData());
+    const setChangeFirebaseCateData = () => dispatch(changeFirebaseCateData());
 
     useEffect(() => {
         setGetFirebaseLinkData();
@@ -53,6 +53,7 @@ function MyCate() {
                 deleteDoc(doc(flink, String(d.data().id)));
             });
             await deleteDoc(doc(cate, id));
+            await setChangeFirebaseCateData();
             await navigate("/main");
         }
     }
