@@ -85,9 +85,9 @@ function Login() {
     return (
         <Div>
             Welcome!
-            <Pic id="logo" src="img/bookmark.png" alt="" loading="eager" />
+            <Pic src="img/bookmark.png" alt="" fetchpriority="high" />
             <LoginBtn onClick={loginHandler}>
-                <Img id="google" src="img/google.png" alt="" loading="lazy" />
+                <Img src="img/google.png" alt="" fetchpriority="low" />
                 Google Login
             </LoginBtn>
             <Demo>
@@ -112,11 +112,15 @@ const Div = styled.div`
 
 const Pic = styled.img`
     margin-bottom:5rem;
+    width:100px;
+    height:100px;
 `
 
 const Img = styled.img`
     vertical-align: middle;
     margin-right: 10px;
+    width:30px;
+    height:30px;
 `
 
 const Input = styled.input`
