@@ -4,23 +4,22 @@ import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
 import Loading from "../util/Loading";
 import { useSelector } from "react-redux";
-import useGetCateData from "../hook/useGetCateData";
 
 function CategoryList() {
 
     const [isLoading, setIsLoading] = useState(true);
-    const { userUid } = useSelector(state => state.uid);
-    const { data } = useGetCateData(userUid);
+    const { cateData } = useSelector(state => state.cate)
 
     useEffect(() => {
-        if (data) setIsLoading(false)
-    }, [data]);
+        if (cateData) setIsLoading(false)
+        // console.log(cateData)
+    }, [cateData]);
 
     return (
         <>
             <Span>CATEGORY</Span>
             <Box>
-                {isLoading ? <Loading isLoading={isLoading} /> : data.map((item, index) => {
+                {isLoading ? <Loading isLoading={isLoading} /> : cateData.map((item, index) => {
                     return <CategoryItem key={index} img={item.img} name={item.name} color={item.color} />
                 })}
             </Box>

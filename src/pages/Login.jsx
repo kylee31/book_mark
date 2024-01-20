@@ -14,14 +14,17 @@ function Login() {
     });
 
     useEffect(() => {
-        if (userData) {
-            //로그인 여부 저장 token (accessToken)
-            localStorage.setItem('token', userData)
-            navigate(`/main`)
+        async function setUserData() {
+            if (userData) {
+                //로그인 여부 저장 token (accessToken)
+                await localStorage.setItem('token', userData)
+                await navigate(`/main`)
+            }
+            else {
+                navigate(`/`)
+            }
         }
-        else {
-            navigate(`/`)
-        }
+        setUserData();
     }, [userData])
 
 
@@ -82,7 +85,7 @@ function Login() {
     return (
         <Div>
             Welcome!
-            <Pic id="logo" src="img/bookmark.png" alt="" loading="lazy" />
+            <Pic id="logo" src="img/bookmark.png" alt="" loading="eager" />
             <LoginBtn onClick={loginHandler}>
                 <Img id="google" src="img/google.png" alt="" loading="lazy" />
                 Google Login

@@ -2,12 +2,14 @@
 // 루트 리듀서 파일
 
 import { combineReducers } from 'redux';
-import dataReducer from './dataDuck'; // 새로 추가된 모듈
 import uidReducer from './uidDuck';
+import cateReducer from './cateDuck';
+import linkReducer from './linkDuck';
 
 // 루트 리듀서 정의
 const rootReducer = combineReducers({
-    // data: dataReducer, // 새로 추가된 모듈
+    link: linkReducer,
+    cate: cateReducer,
     uid: uidReducer
     // 다른 리듀서가 있다면 추가 가능
 });

@@ -1,10 +1,9 @@
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { getDocs, collection, setDoc, doc } from 'firebase/firestore'
 import { db } from '../fbase';
 import { useSelector } from "react-redux";
-import useGetCateData from "../hook/useGetCateData";
 
 function CreateLink() {
 
@@ -16,7 +15,7 @@ function CreateLink() {
     const [color, setColor] = useState("");
 
     const { userUid } = useSelector(state => state.uid)
-    const { data } = useGetCateData(userUid);
+    const { cateData } = useSelector(state => state.cate);
 
     const flink = collection(db, 'link');
     const [newId, setId] = useState(0);
@@ -49,30 +48,30 @@ function CreateLink() {
         setName(e.target.value);
     }
     function onSetImg() {
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].name === name) {
-                setImg(data[i].img);
+        for (let i = 0; i < cateData.length; i++) {
+            if (cateData[i].name === name) {
+                setImg(cateData[i].img);
             }
         }
     }
     function onSetColor() {
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].name === name) {
-                setColor(data[i].color);
+        for (let i = 0; i < cateData.length; i++) {
+            if (cateData[i].name === name) {
+                setColor(cateData[i].color);
             }
         }
     }
 
     //cate 데이터 읽기
-    useLayoutEffect(() => {
-        if (data.length > 0) {
-            setName(data[0].name);
-            setImg(data[0].img);
-            setColor(data[0].color);
+    useEffect(() => {
+        if (cateData.length > 0) {
+            setName(cateData[0].name);
+            setImg(cateData[0].img);
+            setColor(cateData[0].color);
         }
-    }, [data]);
+    }, [cateData]);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         async function getLink() {
             const links = await getDocs(flink);
             await links.forEach((doc) => {
@@ -82,7 +81,7 @@ function CreateLink() {
         getLink();
     }, [information])
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         setName(name);
         onSetImg();
         onSetColor();
@@ -92,9 +91,9 @@ function CreateLink() {
         <Box $data={name}>
             <Div>
                 <img src={img} alt="" /><br />
-                {name === "" ? undefined :
+                {cateData.length === 0 ? undefined :
                     <Select onChange={onSetCate}>
-                        {data.map((item) => {
+                        {cateData.map((item) => {
                             return (<option key={item.name} name="cate" value={item.name}>{item.name}</option>)
                         })}
                     </Select>

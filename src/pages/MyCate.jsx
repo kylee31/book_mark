@@ -1,37 +1,37 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Profile from "../component/Profile";
 import { useNavigate, useLocation } from "react-router";
 import styled from "styled-components";
 import LinkList from "../component/LinkList";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../fbase";
-import Loading from "../util/Loading";
-import { useSelector } from "react-redux";
-import useGetCateData from "../hook/useGetCateData";
-import useGetLinkData from "../hook/useGetLinkData";
+import { useDispatch, useSelector } from "react-redux";
+import { getFirebaseLinkData } from "../modules/linkDuck";
+import { changeFirebaseCateData } from "../modules/cateDuck";
 
 function MyCate() {
     const location = useLocation();
-    const myname = location.state.myname;
-    const myimg = location.state.myimg;
-    const mycolor = location.state.mycolor;
-
     const navigate = useNavigate();
 
-    const [isLoading, setIsLoading] = useState(true);
-
+    const [myname, myimg, mycolor] = [location.state.myname, location.state.myimg, location.state.mycolor];
     const [del, setDel] = useState(false);
     const [id, setId] = useState();
 
-    const { userUid } = useSelector(state => state.uid);
-    const { setCateLocalData } = useGetCateData(userUid);
     const flink = collection(db, 'link');
     const cate = collection(db, 'cate');
 
-    const { data, setLinkLocalData } = useGetLinkData({ userUid, myname });
+    const { userUid } = useSelector(state => state.uid);
+    const { linkData } = useSelector(state => state.link);
+    const dispatch = useDispatch();
+    const setGetFirebaseLinkData = () => dispatch(getFirebaseLinkData({ myname }));
+    const setChangeFirebaseCateData = () => dispatch(changeFirebaseCateData());
 
-    //현재 카테고리 문서명 가져오기 (카테고리 삭제 위해서)
-    useLayoutEffect(() => {
+    useEffect(() => {
+        setGetFirebaseLinkData();
+    }, [del])
+
+    //현재 카테고리 Id 가져오기 (카테고리 삭제 위해서)
+    useEffect(() => {
         async function getCateId() {
             const myData = query(cate, where("uid", "==", userUid));
             const querySnapshot = await getDocs(myData);
@@ -44,19 +44,6 @@ function MyCate() {
         getCateId();
     }, [])
 
-    useLayoutEffect(() => {
-        if (data) setIsLoading(false)
-    }, [data])
-
-    useLayoutEffect(() => {
-        //상세 카테고리에 들어오면 다시 셋팅하므로 createLink에서 재저장할 필요없음
-        //삭제 여부에 따라 재저장
-        async function getLink() {
-            await setLinkLocalData();
-        }
-        getLink()
-    }, [del])
-
     //현재 카테고리 데이터 삭제하기
     async function onDelete() {
         if (window.confirm("카테고리를 삭제하시겠습니까? (삭제 시 포함되어 있는 링크 모두 삭제됩니다.)")) {
@@ -66,9 +53,8 @@ function MyCate() {
                 deleteDoc(doc(flink, String(d.data().id)));
             });
             await deleteDoc(doc(cate, id));
-            await setLinkLocalData();
-            await setCateLocalData();
-            await navigate(`/main`);
+            await setChangeFirebaseCateData();
+            await navigate("/main");
         }
     }
 
@@ -80,11 +66,11 @@ function MyCate() {
         <Blog $color={`#${mycolor}`}>
             <Profile myname={myname} img={myimg} /><br />
             <MyBookMark>
-                {isLoading ? <Loading isLoading={isLoading} /> : <LinkList links={data} myname={myname} del={del} setDel={setDel} />}
+                <LinkList links={linkData} myname={myname} del={del} setDel={setDel} />
             </MyBookMark>
             <Div>
                 <Btn onClick={onLocation}>돌아가기</Btn>
-                <DelBtn onClick={() => { onDelete(); }}>카테고리 삭제</DelBtn>
+                <DelBtn onClick={onDelete}>카테고리 삭제</DelBtn>
             </Div>
         </Blog>
     );

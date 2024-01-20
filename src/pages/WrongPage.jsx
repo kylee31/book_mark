@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 function WrongPage() {
+
     return (
         <Div>
             잘못된 접근입니다😓
