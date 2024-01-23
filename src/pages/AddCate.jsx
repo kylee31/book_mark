@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Profile from "../component/Profile";
 import { getDocs, collection, setDoc, doc } from 'firebase/firestore'
 import { db } from '../fbase';
-import { useSelector } from "react-redux";
 import useGetCateData from "../hook/useGetCateData";
 
 function AddCate() {
@@ -18,7 +17,9 @@ function AddCate() {
     const [same, setSame] = useState(false);
     const [newId, setId] = useState(0);
 
-    const { userUid } = useSelector(state => state.uid);
+    //userUid localStroage
+    const userUid = localStorage.getItem('userUid');
+
     const { data, setCateLocalData } = useGetCateData(userUid);
     const cate = collection(db, 'cate');
 

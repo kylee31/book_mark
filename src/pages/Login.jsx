@@ -39,6 +39,7 @@ function Login() {
                     .then((data) => {
                         const credential = GoogleAuthProvider.credentialFromResult(data);
                         const token = credential.accessToken;
+                        localStorage.setItem('userUid', data.user.uid)
                         setUserData(token); // user data 설정
                     })
                     .catch((err) => {
@@ -66,6 +67,7 @@ function Login() {
                     // Signed in 
                     const user = userCredential.user;
                     const token = user.accessToken;
+                    localStorage.setItem('userUid', user.uid)
                     setUserData(token);
                 })
                 .catch((err) => {

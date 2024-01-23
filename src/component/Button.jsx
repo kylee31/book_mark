@@ -16,6 +16,7 @@ function Button() {
             localStorage.removeItem('token');
             localStorage.removeItem('cachedData');
             localStorage.removeItem('cachedItem');
+            localStorage.removeItem('userUid');
             navigate(`/`);
         }
         else {

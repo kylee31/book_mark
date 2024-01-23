@@ -3,13 +3,13 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
 import Loading from "../util/Loading";
-import { useSelector } from "react-redux";
 import useGetCateData from "../hook/useGetCateData";
 
 function CategoryList() {
 
     const [isLoading, setIsLoading] = useState(true);
-    const { userUid } = useSelector(state => state.uid);
+    //userUid localStroage
+    const userUid = localStorage.getItem('userUid');
     const { data } = useGetCateData(userUid);
 
     useEffect(() => {

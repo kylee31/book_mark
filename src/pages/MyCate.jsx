@@ -6,7 +6,6 @@ import LinkList from "../component/LinkList";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../fbase";
 import Loading from "../util/Loading";
-import { useSelector } from "react-redux";
 import useGetCateData from "../hook/useGetCateData";
 import useGetLinkData from "../hook/useGetLinkData";
 
@@ -23,7 +22,8 @@ function MyCate() {
     const [del, setDel] = useState(false);
     const [id, setId] = useState();
 
-    const { userUid } = useSelector(state => state.uid);
+    //userUid localStroage
+    const userUid = localStorage.getItem('userUid');
     const { setCateLocalData } = useGetCateData(userUid);
     const flink = collection(db, 'link');
     const cate = collection(db, 'cate');

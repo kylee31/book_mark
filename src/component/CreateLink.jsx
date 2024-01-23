@@ -3,7 +3,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import { getDocs, collection, setDoc, doc } from 'firebase/firestore'
 import { db } from '../fbase';
-import { useSelector } from "react-redux";
 import useGetCateData from "../hook/useGetCateData";
 
 function CreateLink() {
@@ -15,7 +14,8 @@ function CreateLink() {
     const [img, setImg] = useState("https://ifh.cc/g/PDPkX5.png");
     const [color, setColor] = useState("");
 
-    const { userUid } = useSelector(state => state.uid)
+    //userUid localStroage
+    const userUid = localStorage.getItem('userUid');
     const { data } = useGetCateData(userUid);
 
     const flink = collection(db, 'link');
