@@ -39,7 +39,7 @@ function Login() {
                     .then((data) => {
                         const credential = GoogleAuthProvider.credentialFromResult(data);
                         const token = credential.accessToken;
-                        localStorage.setItem('userUid', data.user.uid)
+                        localStorage.setItem('userUid', data.user.uid) //uid 저장
                         setUserData(token); // user data 설정
                     })
                     .catch((err) => {
