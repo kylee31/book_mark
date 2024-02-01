@@ -16,8 +16,6 @@ function Login() {
     useEffect(() => {
         async function setUserData() {
             if (userData) {
-                //로그인 여부 저장 token (accessToken)
-                await localStorage.setItem('token', userData)
                 await navigate(`/main`)
             }
             else {
