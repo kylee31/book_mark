@@ -13,7 +13,6 @@ function Button() {
     function logout() {
         if (window.confirm("로그아웃 하시겠습니까?")) {
             authService.signOut();
-            localStorage.removeItem('token');
             localStorage.removeItem('cachedData');
             localStorage.removeItem('cachedItem');
             localStorage.removeItem('userUid');

@@ -15,8 +15,6 @@ function Login() {
 
     useEffect(() => {
         if (userData) {
-            //로그인 여부 저장 token (accessToken)
-            localStorage.setItem('token', userData)
             navigate(`/main`)
         }
         else {

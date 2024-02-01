@@ -1,1 +1,3 @@
-export const isLogin = () => !!localStorage.getItem('token');
+import { authService } from "../fbase";
+
+export const isLogin = () => !!authService.currentUser;
