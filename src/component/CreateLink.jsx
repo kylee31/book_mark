@@ -11,7 +11,7 @@ function CreateLink() {
     const [title, setTitle] = useState("");
     const [link, setLink] = useState("");
     const [name, setName] = useState("");
-    const [img, setImg] = useState("https://ifh.cc/g/PDPkX5.png");
+    const [img, setImg] = useState("/img/star.png");
     const [color, setColor] = useState("");
 
     const { userUid } = useSelector(state => state.uid)

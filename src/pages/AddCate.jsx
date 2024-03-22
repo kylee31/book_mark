@@ -13,7 +13,7 @@ function AddCate() {
 
     const [name, setName] = useState("💬");
     const [color, setColor] = useState("");
-    const [img, setImg] = useState("https://ifh.cc/g/PDPkX5.png");
+    const [img, setImg] = useState("/img/star.png");
     const [nameList, setNameList] = useState([]);
     const [same, setSame] = useState(false);
     const [newId, setId] = useState(0);

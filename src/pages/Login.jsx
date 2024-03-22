@@ -41,6 +41,7 @@ function Login() {
                         const credential = GoogleAuthProvider.credentialFromResult(data);
                         const token = credential.accessToken;
                         setUserData(token); // user data 설정
+                        localStorage.setItem('token', token)
                     })
                     .catch((err) => {
                         console.log(err);
@@ -68,6 +69,7 @@ function Login() {
                     const user = userCredential.user;
                     const token = user.accessToken;
                     setUserData(token);
+                    localStorage.setItem('token', token)
                 })
                 .catch((err) => {
                     window.confirm("인증 실패")
