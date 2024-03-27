@@ -21,6 +21,7 @@ function MyCate() {
     const cate = collection(db, 'cate');
 
     const { userUid } = useSelector(state => state.uid);
+    //TODO:카테고리 데이터 가져오기 로직 수정하기
     const { linkData } = useSelector(state => state.link);
     const dispatch = useDispatch();
     const setGetFirebaseLinkData = () => dispatch(getFirebaseLinkData({ myname }));
