@@ -31,6 +31,7 @@ function Login() {
         // provider를 구글로 설정
         const provider = new GoogleAuthProvider();
         //로그인 후 계정이 바로 연동되는 상황 방지
+        //TODO:팝업창 CORS 에러 해결하기
         provider.setCustomParameters({
             prompt: 'select_account'
         });
@@ -41,7 +42,6 @@ function Login() {
                         const credential = GoogleAuthProvider.credentialFromResult(data);
                         const token = credential.accessToken;
                         setUserData(token); // user data 설정
-                        localStorage.setItem('token', token)
                     })
                     .catch((err) => {
                         console.log(err);
@@ -69,7 +69,6 @@ function Login() {
                     const user = userCredential.user;
                     const token = user.accessToken;
                     setUserData(token);
-                    localStorage.setItem('token', token)
                 })
                 .catch((err) => {
                     window.confirm("인증 실패")
